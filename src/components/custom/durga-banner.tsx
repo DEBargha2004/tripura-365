@@ -64,7 +64,6 @@ export default function DurgaBanner() {
   useEffect(() => {
     const lastTithi = tithi_list[tithi_list.length - 1];
     const firstTithi = tithi_list[0];
-
     const currentDate = new Date();
 
     if (currentDate.getTime() > lastTithi.date_end.getTime()) {
