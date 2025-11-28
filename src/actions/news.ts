@@ -13,6 +13,7 @@ import {
   AdBannerImageData,
 } from "@/types/response";
 
+// THis is the origin host URL
 const origin = "https://master-news-service.onrender.com";
 
 export async function getTopNews() {
