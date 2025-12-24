@@ -15,12 +15,13 @@ import {
 
 // THis is the origin host URL
 const origin = "https://master-news-service.onrender.com";
+const hostId = "7a0e2ceb7b344f58a3245325440db44d";
 
 export async function getTopNews() {
   const [err, res] = await catchError<ApiResponseWithoutPagination>(
     retry(() =>
       fetch(`${origin}/api/index_delivery?intent=latest`, {
-        headers: { "Host-Id": "7a0e2ceb7b344f58a3245325440db44d" },
+        headers: { "Host-Id": hostId },
         next: { revalidate: 60 * 10 },
       }).then((res) => res.json())
     )
@@ -33,7 +34,7 @@ export async function getLatestNews() {
   const [err, res] = await catchError<ApiResponseWithPagination>(
     retry(() =>
       fetch(`${origin}/api/index_delivery?intent=recent`, {
-        headers: { "Host-Id": "7a0e2ceb7b344f58a3245325440db44d" },
+        headers: { "Host-Id": hostId },
         next: { revalidate: 60 * 10 },
       }).then((res) => res.json())
     )
@@ -46,7 +47,7 @@ export async function getTrendingNews() {
   const [err, res] = await catchError<ApiResponseWithPagination>(
     retry(() =>
       fetch(`${origin}/api/index_delivery?intent=most_read`, {
-        headers: { "Host-Id": "7a0e2ceb7b344f58a3245325440db44d" },
+        headers: { "Host-Id": hostId },
         next: { revalidate: 60 * 10 },
       }).then((res) => res.json())
     )
@@ -59,7 +60,7 @@ export async function getVideoNews() {
   const [err, res] = await catchError<ApiResponseWithPagination>(
     retry(() =>
       fetch(`${origin}/api/index_delivery?intent=recent_articles_with_videos`, {
-        headers: { "Host-Id": "7a0e2ceb7b344f58a3245325440db44d" },
+        headers: { "Host-Id": hostId },
         next: { revalidate: 60 * 10 },
       }).then((res) => res.json())
     )
@@ -72,7 +73,7 @@ export async function getAdVideos() {
   const [err, res] = await catchError<ApiResponseAdVideoWithPagination>(
     retry(() =>
       fetch(`${origin}/api/index_delivery?intent=ad_videos`, {
-        headers: { "Host-Id": "7a0e2ceb7b344f58a3245325440db44d" },
+        headers: { "Host-Id": hostId },
         next: { revalidate: 60 * 10 },
       }).then((res) => res.json())
     )
@@ -85,7 +86,7 @@ export async function getLandscapeAdBannerImages() {
   const [err, res] = await catchError<ApiResponseAdImageWithPagination>(
     retry(() =>
       fetch(`${origin}/api/index_delivery?intent=wide_ad_images`, {
-        headers: { "Host-Id": "7a0e2ceb7b344f58a3245325440db44d" },
+        headers: { "Host-Id": hostId },
         next: { revalidate: 60 * 10 },
       }).then((res) => res.json())
     )
@@ -98,7 +99,7 @@ export async function getPortraitAdBannerImages() {
   const [err, res] = await catchError<ApiResponseAdImageWithPagination>(
     retry(() =>
       fetch(`${origin}/api/index_delivery?intent=tall_ad_images`, {
-        headers: { "Host-Id": "7a0e2ceb7b344f58a3245325440db44d" },
+        headers: { "Host-Id": hostId },
         next: { revalidate: 60 * 10 },
       }).then((res) => res.json())
     )
@@ -112,7 +113,7 @@ export async function getNewsInfo(id: string) {
     retry(
       () =>
         fetch(`${origin}/api/article/${id}`, {
-          headers: { "Host-Id": "7a0e2ceb7b344f58a3245325440db44d" },
+          headers: { "Host-Id": hostId },
           next: { revalidate: 60 * 10 },
         }).then((res) => res.json()),
       { helperText: `news ${id}`, retriesCount: 3 }
@@ -127,7 +128,7 @@ export async function getCategoryWiseNews() {
     await catchError<ApiResponseCategoryWiseNewsWithPagination>(
       retry(() =>
         fetch(`${origin}/api/index_delivery?intent=category_wise_news`, {
-          headers: { "Host-Id": "7a0e2ceb7b344f58a3245325440db44d" },
+          headers: { "Host-Id": hostId },
           next: { revalidate: 60 * 10 },
         }).then((res) => res.json())
       )
@@ -147,7 +148,7 @@ export async function getQuotation() {
   const [err, res] = await catchError<ApiResponseQuotation>(
     retry(() =>
       fetch(`${origin}/api/cosmetic_data?intent=quote`, {
-        headers: { "Host-Id": "7a0e2ceb7b344f58a3245325440db44d" },
+        headers: { "Host-Id": hostId },
         next: { revalidate: 60 * 10 },
       }).then((res) => res.json())
     )
@@ -166,7 +167,7 @@ export async function getCategoryNewsInfo(id: string) {
     retry(
       () =>
         fetch(`${origin}/api/category/${id}`, {
-          headers: { "Host-Id": "7a0e2ceb7b344f58a3245325440db44d" },
+          headers: { "Host-Id": hostId },
           next: { revalidate: 60 * 10 },
         }).then((res) => res.json()),
       { helperText: `category ${id}`, retriesCount: 3 }

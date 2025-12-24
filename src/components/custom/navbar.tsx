@@ -1,5 +1,6 @@
 import Link from "next/link";
 import Logo from "./logo";
+import Timer from "./timer";
 
 export default function Navbar() {
   return (
@@ -8,12 +9,16 @@ export default function Navbar() {
         <div className="flex items-center justify-between h-16">
           {/* Logo */}
           <Link href={"/"}>
-            <div className="flex-shrink-0">
+            <div className="shrink-0">
               <h1 className="text-2xl font-bold text-blue-900">
                 <Logo />
               </h1>
             </div>
           </Link>
+          <h1 className="text-xl font-bold text-blue-900">ত্রিপুরা ৩৬৫</h1>
+          <div className="sm:block hidden">
+            <Timer />
+          </div>
         </div>
       </div>
     </nav>

@@ -1,5 +1,5 @@
 import Image, { ImageProps } from "next/image";
-import logo from "@/../public/newsTopLinkLogo.webp";
+import logo from "@/../public/logo.png";
 import { cn } from "@/lib/utils";
 
 export default function Logo({ className, ...props }: Partial<ImageProps>) {
@@ -7,10 +7,10 @@ export default function Logo({ className, ...props }: Partial<ImageProps>) {
     <Image
       {...props}
       src={logo}
-      alt="news-top-link"
-      height={40}
+      alt="tripura-365-logo"
+      height={50}
       width={100}
-      className={cn("h-10 w-auto", className)}
+      className={cn("h-14 w-auto", className)}
     />
   );
 }

@@ -3,7 +3,6 @@ import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import Navbar from "@/components/custom/navbar";
 import Footer from "@/components/custom/footer";
-import Script from "next/script";
 import DurgaBanner from "@/components/custom/durga-banner";
 
 const geistSans = Geist({
@@ -17,7 +16,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: { template: "%s | Newstoplink.com", default: "Newstoplink.com" },
+  title: { template: "%s | Tripura 365", default: "Tripura 365" },
 };
 
 export default function RootLayout({

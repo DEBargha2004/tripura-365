@@ -32,7 +32,7 @@ export default function AdImages({
               <h3 className="font-bold">Disclaimer</h3>
               <p className="text-muted-foreground">
                 Itegrity of any product/service/scheme is intelectual
-                responsibility of the Advertiser itself. Newstoplink.com takes
+                responsibility of the Advertiser itself. Tripura 365.com takes
                 no responsibility related to commitments made by an advertiser
                 to our readers.
               </p>

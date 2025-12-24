@@ -121,7 +121,7 @@ export default async function Page({
           {/* Featured Image */}
           <div className="mb-8">
             <div className="w-full h-64 md:h-96">
-              {article.images?.length && (
+              {!!article.images?.length && (
                 <Image
                   src={article.images[0]}
                   alt={article.title}

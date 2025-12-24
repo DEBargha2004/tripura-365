@@ -13,13 +13,13 @@ export async function generateMetadata(): Promise<Metadata> {
   const protocol = headerList.get("x-forwarded-proto") ?? "http";
 
   return {
-    title: "Newstoplink",
-    description: `NewsTopLink is a dynamic and trusted Indian news website that brings you 
+    title: "Tripura 365",
+    description: `Tripura 365 is a dynamic and trusted Indian news website that brings you 
     the latest and most relevant news from the vibrant state of Tripura.`,
     metadataBase: new URL(`${protocol}://${origin}`),
     openGraph: {
-      title: "Newstoplink",
-      description: `NewsTopLink is a dynamic and trusted Indian news website that brings you 
+      title: "Tripura 365",
+      description: `Tripura 365 is a dynamic and trusted Indian news website that brings you 
     the latest and most relevant news from the vibrant state of Tripura.`,
       url: `${protocol}://${origin}`,
       images: [
@@ -27,14 +27,14 @@ export async function generateMetadata(): Promise<Metadata> {
           url: siteLogo.src,
           width: 210,
           height: 70,
-          alt: "Newstoplink",
+          alt: "Tripura 365",
         },
       ],
     },
     twitter: {
       card: "summary_large_image",
-      title: "Newstoplink",
-      description: `NewsTopLink is a dynamic and trusted Indian news website that brings you 
+      title: "Tripura 365",
+      description: `Tripura 365 is a dynamic and trusted Indian news website that brings you 
     the latest and most relevant news from the vibrant state of Tripura.`,
       images: [siteLogo.src],
     },

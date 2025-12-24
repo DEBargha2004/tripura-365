@@ -52,17 +52,17 @@ export default async function Footer() {
               <Logo />
             </h3>
             <p className="text-gray-400 mb-4">
-              NewsTopLink is a dynamic and trusted Indian news website that
+              Tripura 365 is a dynamic and trusted Indian news website that
               brings you the latest and most relevant news from the vibrant
               state of Tripura.
             </p>
             <div className="flex space-x-4">
-              <Link
+              {/* <Link
                 href={"https://www.facebook.com/toplink.toplink.90"}
                 target="_blank"
               >
                 <Facebook className="h-5 w-5 text-gray-400 hover:text-white cursor-pointer transition-colors" />
-              </Link>
+              </Link> */}
             </div>
           </div>
 
@@ -122,7 +122,7 @@ export default async function Footer() {
             <div className="space-y-3">
               <div className="flex items-center space-x-3">
                 <Mail className="h-4 w-4 text-gray-400" />
-                <span className="text-gray-400">news@newstoplink.com</span>
+                <span className="text-gray-400">news@Tripura 365.com</span>
               </div>
               <div className="flex items-center space-x-3">
                 <Phone className="h-4 w-4 text-gray-400" />
@@ -139,7 +139,7 @@ export default async function Footer() {
         {/* Bottom Bar */}
         <div className="border-t border-gray-800 mt-8 pt-8 flex flex-col md:flex-row justify-between items-center">
           <p className="text-gray-400 text-sm">
-            &copy; {new Date().getFullYear()} NewsTopLink. All rights reserved.
+            &copy; {new Date().getFullYear()} Tripura 365. All rights reserved.
           </p>
           <div className="flex space-x-6 mt-4 md:mt-0">
             <a
