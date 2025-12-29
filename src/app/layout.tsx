@@ -28,18 +28,20 @@ export default function RootLayout({
     <html lang="en">
       <head>
         <link rel="alternate" type="application/rss+xml" href="/rss" />
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link
+          rel="preconnect"
+          href="https://fonts.gstatic.com"
+          crossOrigin="anonymous"
+        />
+        <link
+          href="https://fonts.googleapis.com/css2?family=Galada&family=Geist+Mono:wght@100..900&family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap"
+          rel="stylesheet"
+        />
       </head>
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased min-h-dvh`}
       >
-        {/* <div id="fb-root"></div>
-        <script
-          async
-          defer
-          //@ts-ignore
-          crossorigin="anonymous"
-          src={`https://connect.facebook.net/en_GB/sdk.js#xfbml=1&version=v23.0&appId=${process.env.FACEBOOK_APP_ID}`}
-        ></script> */}
         <div>
           <Navbar />
           <DurgaBanner />

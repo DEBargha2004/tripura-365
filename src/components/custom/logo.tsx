@@ -10,7 +10,7 @@ export default function Logo({ className, ...props }: Partial<ImageProps>) {
       alt="tripura-365-logo"
       height={50}
       width={100}
-      className={cn("h-14 w-auto", className)}
+      className={cn("h-18 w-auto", className)}
     />
   );
 }

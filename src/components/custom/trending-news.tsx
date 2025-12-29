@@ -10,7 +10,9 @@ export default function TrendingNews({ data }: { data?: Data[] }) {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center mb-8">
           <TrendingUp className="h-8 w-8 text-red-600 mr-3" />
-          <h2 className="text-3xl font-bold text-gray-900">Trending Now</h2>
+          <h2 className="text-3xl font-bold text-gray-900">
+            বর্তমানে জনপ্রিয়
+          </h2>
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">

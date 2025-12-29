@@ -47,13 +47,13 @@ export default function HeroCarousel({ data: slides }: { data: Data[] }) {
             </div>
             <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent" />
             <div className="absolute bottom-0 left-0 right-0 p-6 md:p-8">
-              <h2 className="text-2xl md:text-4xl font-bold text-white mb-3 leading-tight">
+              <h2 className="text-xl md:text-2xl font-bold text-white mb-3 leading-tight">
                 {slide.title}
               </h2>
 
-              <p className="text-gray-200 text-base md:text-lg max-w-3xl line-clamp-3">
+              {/* <p className="text-gray-200 text-base md:text-lg max-w-3xl line-clamp-3">
                 {slide.body}
-              </p>
+              </p> */}
             </div>
           </div>
         </Link>

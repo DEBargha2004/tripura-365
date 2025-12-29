@@ -1,5 +1,6 @@
 "use client";
 
+import { Calendar, Clock } from "lucide-react";
 import { useEffect, useState } from "react";
 
 export default function Timer() {
@@ -10,10 +11,9 @@ export default function Timer() {
     const timer = setInterval(() => {
       const now = new Date();
       const dayOptions: Intl.DateTimeFormatOptions = {
-        weekday: "long",
+        month: "short",
+        day: "2-digit",
         year: "numeric",
-        month: "long",
-        day: "numeric",
       };
       const timeOptions: Intl.DateTimeFormatOptions = {
         hour: "2-digit",
@@ -32,8 +32,14 @@ export default function Timer() {
   }, []);
   return (
     <div className="flex flex-col items-end">
-      <h3 className="font-bold">{day}</h3>
-      <h4 className="font-medium">{time}</h4>
+      <div className="flex items-center gap-2">
+        <Calendar size={16} />
+        <h3 className="font-bold">{day}</h3>
+      </div>
+      <div className="flex items-center gap-2">
+        <Clock size={16} />
+        <h4 className="font-medium">{time}</h4>
+      </div>
     </div>
   );
 }

@@ -96,6 +96,7 @@ export default function DurgaBanner() {
   }, [pujaStatus]);
 
   return (
+    pujaStatus &&
     pujaStatus !== "completed" && (
       <section className="py-12 bg-white">
         <div className={cn("max-w-7xl mx-auto px-4 sm:px-6 lg:px-8")}>

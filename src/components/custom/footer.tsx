@@ -10,14 +10,15 @@ import {
 } from "lucide-react";
 import Logo from "./logo";
 import Link from "next/link";
+import { FaInstagram, FaWhatsapp } from "react-icons/fa";
 
 export default async function Footer() {
   const categoryResponse = await getCategoryWiseNews();
   const importantLinks = [
     {
-      imageUrl:
-        "https://www.india.gov.in/sites/upload_files/npi/files/logo_1.png",
+      imageUrl: "https://india.gov.in/image/static/npi_logo_Beta_White.svg",
       webUrl: "https://www.india.gov.in",
+      bgColor: "black",
     },
     {
       imageUrl:
@@ -57,12 +58,18 @@ export default async function Footer() {
               state of Tripura.
             </p>
             <div className="flex space-x-4">
-              {/* <Link
-                href={"https://www.facebook.com/toplink.toplink.90"}
+              <Link
+                href={"https://www.facebook.com//profile.php?id=61581880808522"}
                 target="_blank"
               >
                 <Facebook className="h-5 w-5 text-gray-400 hover:text-white cursor-pointer transition-colors" />
-              </Link> */}
+              </Link>
+              <Link
+                href={"https://www.instagram.com/tripura365webmedia/"}
+                target="_blank"
+              >
+                <FaInstagram className="h-5 w-5 text-gray-400 hover:text-white cursor-pointer transition-colors" />
+              </Link>
             </div>
           </div>
 
@@ -121,16 +128,33 @@ export default async function Footer() {
             <h4 className="text-lg font-semibold mb-4">Contact</h4>
             <div className="space-y-3">
               <div className="flex items-center space-x-3">
-                <Mail className="h-4 w-4 text-gray-400" />
-                <span className="text-gray-400">news@Tripura 365.com</span>
+                <Mail className="h-4 w-4 text-white" />
+                <Link href={"mailto:tripura365.agt@gmail.com"}>
+                  <span className="text-gray-400 hover:text-white">
+                    tripura365.agt@gmail.com
+                  </span>
+                </Link>
               </div>
               <div className="flex items-center space-x-3">
-                <Phone className="h-4 w-4 text-gray-400" />
-                <span className="text-gray-400">+1 (555) 123-4567</span>
+                <Mail className="h-4 w-4 text-white" />
+                <Link href={"mailto:priyankumodak.agt25@gmail.com"}>
+                  <span className="text-gray-400 hover:text-white">
+                    priyankumodak.agt25@gmail.com
+                  </span>
+                </Link>
+              </div>
+
+              <div className="flex items-center space-x-3">
+                <FaWhatsapp className="h-4 w-4 text-white" />
+                <span className="text-gray-400 hover:text-white">
+                  +91 92337 49847
+                </span>
               </div>
               <div className="flex items-center space-x-3">
-                <MapPin className="h-4 w-4 text-gray-400" />
-                <span className="text-gray-400">New York, NY 10001</span>
+                <MapPin className="h-4 w-4 text-white" />
+                <span className="text-gray-400 hover:text-white">
+                  AD Nagar, Agartala, 799003
+                </span>
               </div>
             </div>
           </div>

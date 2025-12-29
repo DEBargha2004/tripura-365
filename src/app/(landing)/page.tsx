@@ -4,6 +4,8 @@ import { Metadata } from "next";
 import Link from "next/link";
 import siteLogo from "@/../public/newsTopLinkLogo.webp";
 import { headers } from "next/headers";
+import { Dot, Globe, Plane, TramFront } from "lucide-react";
+import { IconType } from "react-icons";
 
 export const relaidate = 60 * 10;
 
@@ -41,6 +43,25 @@ export async function generateMetadata(): Promise<Metadata> {
   };
 }
 
+type ImpLink = {
+  icon: IconType;
+  title: string;
+  url: string;
+};
+const impLinks: ImpLink[] = [
+  { icon: Globe, title: "আপৎকালীন নম্বর", url: "https://www.tripura.gov.in/" },
+  {
+    icon: TramFront,
+    title: "রেলওয়ের সময়সূচি",
+    url: "https://www.makemytrip.com/railways/agartala-agtl-railway-station.html",
+  },
+  {
+    icon: Plane,
+    title: "বিমানের সময়সূচি",
+    url: "https://www.skyscanner.co.in/flights/arrivals-departures/ixa/agartala-arrivals-departures",
+  },
+];
+
 export default async function Home() {
   const { data } = await getTopNews();
   const categories = await getCategoryWiseNews();
@@ -54,18 +75,61 @@ export default async function Home() {
               key={item.name}
               className="min-w-max px-6 py-3 text-gray-800 rounded hover:bg-gray-200 transition border-1 border-red-600 cursor-pointer"
             >
-              <Link href={`/category/${item.articles[0].category.id}`}>
-                {item.name}
+              <Link
+                href={`/category/${item.articles[0].category.id}`}
+                target="_blank"
+              >
+                <span className="text-sm font-semibold">{item.name}</span>
               </Link>
             </div>
           ))}
+          <div className="min-w-max px-6 py-3 text-gray-800 rounded hover:bg-gray-200 transition border-1 border-red-600 cursor-pointer">
+            <Link
+              href={`https://ica.tripura.gov.in/press-release`}
+              target="_blank"
+            >
+              <span className="text-sm font-semibold">তথ্য ও সংস্কৃতি</span>
+            </Link>
+          </div>
         </div>
       </div>
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 text-center">
         <b>{quoteData.data?.q}</b>
         <p>-{quoteData.data?.a}</p>
       </section>
-      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+      <section className="max-w-5xl mx-auto flex flex-col justify-start items-center gap-0">
+        {impLinks.map((link) => (
+          <Link
+            key={link.title}
+            href={link.url}
+            className="flex items-center gap-2 text-blue-600 font-medium w-40"
+            target="_blank"
+          >
+            <link.icon size={16} />
+            <span className="transition-colors from-blue-200 to-blue-700 animate-pulse">
+              {link.title}
+            </span>
+          </Link>
+        ))}
+      </section>
+      <section className="max-w-5xl mx-auto px-6">
+        <div className="flex justify-between items-center">
+          <h1 className="text-lg font-semibold text-red-800">
+            শিরোনামে <span className="text-2xl font-bold">৩৬৫</span>
+          </h1>
+        </div>
+
+        <div className="border border-black">
+          {/**@ts-ignore */}
+          <marquee>
+            <div className="flex items-center">
+              Headlines: <Dot size={16} className="scale-200" />
+            </div>
+            {/**@ts-ignore */}
+          </marquee>
+        </div>
+      </section>
+      <section className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         <HeroCarousel data={data ?? []} />
       </section>
     </div>
