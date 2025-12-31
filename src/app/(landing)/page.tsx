@@ -1,4 +1,9 @@
-import { getCategoryWiseNews, getTopNews, getQuotation } from "@/actions/news";
+import {
+  getCategoryWiseNews,
+  getTopNews,
+  getLatestNews,
+  getSlok,
+} from "@/actions/news";
 import HeroCarousel from "@/components/custom/hero-carousel";
 import { Metadata } from "next";
 import Link from "next/link";
@@ -6,6 +11,8 @@ import siteLogo from "@/../public/newsTopLinkLogo.webp";
 import { headers } from "next/headers";
 import { Dot, Globe, Plane, TramFront } from "lucide-react";
 import { IconType } from "react-icons";
+import { Galada } from "next/font/google";
+import { cn } from "@/lib/utils";
 
 export const relaidate = 60 * 10;
 
@@ -62,10 +69,13 @@ const impLinks: ImpLink[] = [
   },
 ];
 
+const galanda = Galada({ subsets: ["latin"], weight: ["400"] });
+
 export default async function Home() {
   const { data } = await getTopNews();
   const categories = await getCategoryWiseNews();
-  const quoteData = await getQuotation();
+  const slok = await getSlok();
+  const { data: latestNews } = await getLatestNews();
   return (
     <div>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full overflow-x-auto py-4 mb-0">
@@ -94,8 +104,10 @@ export default async function Home() {
         </div>
       </div>
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 text-center">
-        <b>{quoteData.data?.q}</b>
-        <p>-{quoteData.data?.a}</p>
+        <h4 className="font-semibold text-xl">{slok.body}</h4>
+        <p>
+          {slok.chapter} অধ্যায়, {slok.slok} শ্লোক
+        </p>
       </section>
       <section className="max-w-5xl mx-auto flex flex-col justify-start items-center gap-0">
         {impLinks.map((link) => (
@@ -115,15 +127,21 @@ export default async function Home() {
       <section className="max-w-5xl mx-auto px-6">
         <div className="flex justify-between items-center">
           <h1 className="text-lg font-semibold text-red-800">
-            শিরোনামে <span className="text-2xl font-bold">৩৬৫</span>
+            শিরোনামে{" "}
+            <span className={cn("text-2xl font-bold", galanda.className)}>
+              ৩৬৫
+            </span>
           </h1>
         </div>
 
         <div className="border border-black">
           {/**@ts-ignore */}
-          <marquee>
-            <div className="flex items-center">
-              Headlines: <Dot size={16} className="scale-200" />
+          <marquee
+            style={{ height: "30px", display: "flex", alignItems: "center" }}
+          >
+            <div className="flex items-center h-full">
+              {!!latestNews &&
+                `Headlines: ${latestNews?.[0]?.category.name}  ${latestNews?.[0]?.title}`}
             </div>
             {/**@ts-ignore */}
           </marquee>

@@ -82,3 +82,64 @@ export type ApiResponseQuotation = {
     h: string;
   };
 };
+
+export type WeatherApiResponse = {
+  status: boolean;
+  data: WeatherData;
+};
+
+export type WeatherData = {
+  coord: Coord;
+  weather: Weather[];
+  base: string;
+  main: MainWeather;
+  visibility: number;
+  wind: Wind;
+  clouds: Clouds;
+  dt: number; // unix timestamp (seconds)
+  sys: Sys;
+  timezone: number; // seconds from UTC
+  id: number; // city id
+  name: string; // city name
+  cod: number; // response code
+};
+
+export type Coord = {
+  lon: number;
+  lat: number;
+};
+
+export type Weather = {
+  id: number;
+  main: string;
+  description: string;
+  icon: string;
+};
+
+export type MainWeather = {
+  temp: number;
+  feels_like: number;
+  temp_min: number;
+  temp_max: number;
+  pressure: number;
+  humidity: number;
+  sea_level?: number; // optional (not always present)
+  grnd_level?: number; // optional
+};
+
+export type Wind = {
+  speed: number;
+  deg: number;
+};
+
+export type Clouds = {
+  all: number;
+};
+
+export type Sys = {
+  type?: number; // optional (sometimes missing)
+  id?: number;
+  country: string;
+  sunrise: number; // unix timestamp
+  sunset: number; // unix timestamp
+};

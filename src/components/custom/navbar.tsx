@@ -2,6 +2,10 @@ import Link from "next/link";
 import Logo from "./logo";
 import Timer from "./timer";
 import Weather from "./weather";
+import { Galada } from "next/font/google";
+import { cn } from "@/lib/utils";
+
+const galanda = Galada({ subsets: ["latin"], weight: ["400"] });
 
 export default function Navbar() {
   return (
@@ -16,7 +20,12 @@ export default function Navbar() {
               </h1>
             </div>
           </Link>
-          <h1 className="text-4xl font-bold text-red-700 galanda-regular sm:pr-0 pr-6">
+          <h1
+            className={cn(
+              "text-4xl font-bold text-red-700 sm:pr-0 pr-6 whitespace-nowrap",
+              galanda.className
+            )}
+          >
             ত্রিপুরা ৩৬৫
           </h1>
           <div className="sm:block hidden">

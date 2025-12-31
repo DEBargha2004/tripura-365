@@ -5,8 +5,33 @@ import { ChevronLeft, ChevronRight } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useState } from "react";
+import asset1 from "@/../public/news-365-1.jpeg";
+import asset2 from "@/../public/news-365-2.jpeg";
+import asset3 from "@/../public/news-365-3.jpeg";
+import durga from "@/../public/durga.png";
 
 export default function HeroCarousel({ data: slides }: { data: Data[] }) {
+  slides = [
+    //@ts-ignore
+    {
+      id: 78888,
+      images: [asset1],
+      title: "Sample News Title 1",
+    },
+    //@ts-ignore
+    {
+      id: 78889,
+      images: [asset2],
+      title: "Sample News Title 2",
+    },
+    //@ts-ignore
+    {
+      id: 78890,
+      images: [asset3],
+      title: "Sample News Title 3",
+    },
+    ...slides,
+  ];
   const [currentSlide, setCurrentSlide] = useState(0);
 
   useEffect(() => {
@@ -25,7 +50,7 @@ export default function HeroCarousel({ data: slides }: { data: Data[] }) {
   };
 
   return (
-    <div className="relative h-96 md:h-[500px] overflow-hidden bg-gray-900 rounded-lg">
+    <div className="relative h-96 md:h-125 overflow-hidden bg-gray-900 rounded-lg">
       {slides?.map((slide, index) => (
         <Link href={`/news/${slides[currentSlide].id}`} key={slide.id}>
           <div
@@ -45,7 +70,7 @@ export default function HeroCarousel({ data: slides }: { data: Data[] }) {
                 />
               )}
             </div>
-            <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent" />
+            <div className="absolute inset-0 bg-linear-to-t from-black/80 via-black/20 to-transparent" />
             <div className="absolute bottom-0 left-0 right-0 p-6 md:p-8">
               <h2 className="text-xl md:text-2xl font-bold text-white mb-3 leading-tight">
                 {slide.title}

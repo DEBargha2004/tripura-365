@@ -27,6 +27,8 @@ export async function generateMetadata({
   const protocol = headerInfo.get("x-forwarded-proto") ?? "http";
   const host = headerInfo.get("host");
 
+  if (!article || (article as any).error) return {};
+
   return {
     title: article?.title,
     description: article?.body.slice(0, 200),
@@ -79,93 +81,102 @@ export default async function Page({
 
   const article = await getNewsInfo(newsId);
 
+  if (!article || (article as any)?.error)
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+        <h2 className="text-2xl font-semibold text-gray-700">
+          Article Not Found
+        </h2>
+      </div>
+    );
+
   return (
-    !!article && (
-      <div className="min-h-screen bg-gray-50">
-        <article className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-          {/* Article Header */}
-          <header className="mb-8">
-            <GotoPrev className="items-center gap-3 mb-6">
-              <button className="flex items-center justify-center text-gray-600 hover:text-blue-600 transition-colors cursor-pointer size-10 border rounded-full">
-                <ArrowLeft className="h-5 w-5" />
-              </button>
-              <span className="text-lg font-medium">Back to Homepage</span>
-            </GotoPrev>
-            <div className="flex items-center space-x-3 mb-4">
-              <span className="px-3 py-1 bg-blue-600 text-white text-sm font-medium rounded-full">
-                {article.category.name}
-              </span>
-              <div className="flex items-center space-x-4 text-sm text-gray-600">
-                <div className="flex items-center space-x-1">
-                  <Clock className="h-4 w-4" />
-                  <span>{format(article.published_on, "PPP")}</span>
-                </div>
-                <div className="flex items-center space-x-1">
-                  <Eye className="h-4 w-4" />
-                  <span>
-                    {getViews({
-                      published_on: article.published_on,
-                      seed: article.body,
-                    })}
-                    &nbsp; views
-                  </span>
-                </div>
+    <div className="min-h-screen bg-gray-50">
+      <article className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        {/* Article Header */}
+        <header className="mb-8">
+          <GotoPrev className="items-center gap-3 mb-6">
+            <button className="flex items-center justify-center text-gray-600 hover:text-blue-600 transition-colors cursor-pointer size-10 border rounded-full">
+              <ArrowLeft className="h-5 w-5" />
+            </button>
+            <span className="text-lg font-medium">Back to Homepage</span>
+          </GotoPrev>
+          <div className="flex items-center space-x-3 mb-4">
+            <span className="px-3 py-1 bg-blue-600 text-white text-sm font-medium rounded-full">
+              {article?.category?.name}
+            </span>
+            <div className="flex items-center space-x-4 text-sm text-gray-600">
+              <div className="flex items-center space-x-1">
+                <Clock className="h-4 w-4" />
+                <span>
+                  {article.published_on && format(article.published_on, "PPP")}
+                </span>
+              </div>
+              <div className="flex items-center space-x-1">
+                <Eye className="h-4 w-4" />
+                <span>
+                  {getViews({
+                    published_on: article.published_on,
+                    seed: article.body,
+                  })}
+                  &nbsp; views
+                </span>
               </div>
             </div>
-
-            <h1 className="text-4xl md:text-5xl font-bold text-gray-900 leading-tight mb-4">
-              {article.title}
-            </h1>
-          </header>
-
-          {/* Featured Image */}
-          <div className="mb-8">
-            <div className="w-full h-64 md:h-96">
-              {!!article.images?.length && (
-                <Image
-                  src={article.images[0]}
-                  alt={article.title}
-                  height={200}
-                  width={650}
-                  className="size-full object-cover rounded-lg shadow-lg"
-                />
-              )}
-            </div>
           </div>
 
-          {/* Article Content */}
-          <div className="prose prose-lg max-w-none mb-12">
-            <article className="text-gray-800 leading-relaxed space-y-6 lg:text-xl text-lg">
-              {article.body}
-            </article>
-          </div>
+          <h1 className="text-4xl md:text-5xl font-bold text-gray-900 leading-tight mb-4">
+            {article.title}
+          </h1>
+        </header>
 
-          {/* Tags */}
-          <div className="mb-8">
-            <h4 className="text-lg font-semibold text-gray-900 mb-3">Tags</h4>
-            <div className="flex flex-wrap gap-2">
-              <span className="px-3 py-1 bg-gray-200 text-gray-700 text-sm rounded-full hover:bg-gray-300 cursor-pointer transition-colors">
-                {article.category.name}
-              </span>
-            </div>
+        {/* Featured Image */}
+        <div className="mb-8">
+          <div className="w-full h-64 md:h-96">
+            {!!article?.images?.length && (
+              <Image
+                src={article.images[0]}
+                alt={article.title}
+                height={200}
+                width={650}
+                className="size-full object-cover rounded-lg shadow-lg"
+              />
+            )}
           </div>
+        </div>
 
-          {/* Social Share */}
-          <div className="bg-white rounded-lg shadow-md p-6 mb-12">
-            <h4 className="text-lg font-semibold text-gray-900 mb-4">
-              Share this article
-            </h4>
-            <div className="flex items-center space-x-4">
-              <FbShare url={`${basePath}/news/${newsId}`}>
-                <button className="flex items-center space-x-2 bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg transition-colors">
-                  <Facebook className="h-4 w-4" />
-                  <span>Facebook</span>
-                </button>
-              </FbShare>
-            </div>
+        {/* Article Content */}
+        <div className="prose prose-lg max-w-none mb-12">
+          <article className="text-gray-800 leading-relaxed space-y-6 lg:text-xl text-lg">
+            {article.body}
+          </article>
+        </div>
+
+        {/* Tags */}
+        <div className="mb-8">
+          <h4 className="text-lg font-semibold text-gray-900 mb-3">Tags</h4>
+          <div className="flex flex-wrap gap-2">
+            <span className="px-3 py-1 bg-gray-200 text-gray-700 text-sm rounded-full hover:bg-gray-300 cursor-pointer transition-colors">
+              {article?.category?.name}
+            </span>
           </div>
-        </article>
-      </div>
-    )
+        </div>
+
+        {/* Social Share */}
+        <div className="bg-white rounded-lg shadow-md p-6 mb-12">
+          <h4 className="text-lg font-semibold text-gray-900 mb-4">
+            Share this article
+          </h4>
+          <div className="flex items-center space-x-4">
+            <FbShare url={`${basePath}/news/${newsId}`}>
+              <button className="flex items-center space-x-2 bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg transition-colors">
+                <Facebook className="h-4 w-4" />
+                <span>Facebook</span>
+              </button>
+            </FbShare>
+          </div>
+        </div>
+      </article>
+    </div>
   );
 }

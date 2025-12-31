@@ -1,5 +1,6 @@
 "use server";
 
+import { sloks } from "@/constants/sloks";
 import { catchError, createEmptyDataInstance, retry } from "@/lib/utils";
 import {
   ApiResponseAdImageWithPagination,
@@ -11,6 +12,7 @@ import {
   Data,
   AdVideoData,
   AdBannerImageData,
+  WeatherApiResponse,
 } from "@/types/response";
 
 // THis is the origin host URL
@@ -175,4 +177,25 @@ export async function getCategoryNewsInfo(id: string) {
   );
   if (err) return createEmptyDataInstance<Data[]>([]);
   return res;
+}
+
+export async function getWeatherInfo() {
+  const [err, res] = await catchError<WeatherApiResponse>(
+    retry(
+      () =>
+        fetch(`${origin}/api/cosmetic_data?intent=weather`, {
+          headers: { "Host-Id": hostId },
+          next: { revalidate: 60 * 10 },
+        }).then((res) => res.json()),
+      { helperText: `headline`, retriesCount: 3 }
+    )
+  );
+
+  if (err) return null;
+  return res;
+}
+
+export async function getSlok() {
+  const len = sloks.length;
+  return sloks[Math.trunc(Math.random() * len)];
 }
