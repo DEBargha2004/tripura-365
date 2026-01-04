@@ -7,12 +7,12 @@ import {
 import HeroCarousel from "@/components/custom/hero-carousel";
 import { Metadata } from "next";
 import Link from "next/link";
-import siteLogo from "@/../public/newsTopLinkLogo.webp";
 import { headers } from "next/headers";
 import { Dot, Globe, Plane, TramFront } from "lucide-react";
 import { IconType } from "react-icons";
 import { Galada } from "next/font/google";
 import { cn } from "@/lib/utils";
+import siteLogo from "@/../public/logo.png";
 
 export const relaidate = 60 * 10;
 
@@ -20,6 +20,7 @@ export async function generateMetadata(): Promise<Metadata> {
   const headerList = await headers();
   const origin = headerList.get("host");
   const protocol = headerList.get("x-forwarded-proto") ?? "http";
+  const res = await getTopNews();
 
   return {
     title: "Tripura 365",
@@ -33,7 +34,7 @@ export async function generateMetadata(): Promise<Metadata> {
       url: `${protocol}://${origin}`,
       images: [
         {
-          url: siteLogo.src,
+          url: res.data?.[0]?.images?.[0] || siteLogo.src,
           width: 210,
           height: 70,
           alt: "Tripura 365",
@@ -45,7 +46,7 @@ export async function generateMetadata(): Promise<Metadata> {
       title: "Tripura 365",
       description: `Tripura 365 is a dynamic and trusted Indian news website that brings you 
     the latest and most relevant news from the vibrant state of Tripura.`,
-      images: [siteLogo.src],
+      images: [res.data?.[0]?.images?.[0] || siteLogo.src],
     },
   };
 }
@@ -113,11 +114,15 @@ export default async function Home() {
           <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-orange-400 via-red-500 to-purple-600" />
           <div className="absolute -top-10 -left-10 w-40 h-40 bg-orange-100 rounded-full blur-3xl opacity-50 group-hover:opacity-70 transition-opacity" />
           <div className="absolute -bottom-10 -right-10 w-40 h-40 bg-purple-100 rounded-full blur-3xl opacity-50 group-hover:opacity-70 transition-opacity" />
-          
+
           <h4 className="relative text-2xl md:text-3xl font-bold text-gray-800 mb-4 leading-relaxed font-serif">
-            <span className="text-4xl text-orange-500 opacity-50 absolute -top-4 -left-2">❝</span>
+            <span className="text-4xl text-orange-500 opacity-50 absolute -top-4 -left-2">
+              ❝
+            </span>
             {slok.body}
-            <span className="text-4xl text-orange-500 opacity-50 absolute -bottom-8 -right-2">❞</span>
+            <span className="text-4xl text-orange-500 opacity-50 absolute -bottom-8 -right-2">
+              ❞
+            </span>
           </h4>
           <div className="relative inline-flex items-center gap-2 px-4 py-1.5 bg-orange-50 text-orange-700 rounded-full text-sm font-medium mt-2">
             <span className="w-2 h-2 bg-orange-500 rounded-full animate-pulse" />
@@ -153,44 +158,56 @@ export default async function Home() {
           <div className="bg-red-600 text-white px-6 py-3 flex items-center gap-2 shrink-0 z-10 relative overflow-hidden">
             <div className="absolute inset-0 bg-gradient-to-r from-red-700 to-red-500" />
             <div className="relative flex items-center gap-2">
-                <span className="relative flex h-3 w-3">
-                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-red-200 opacity-75"></span>
-                  <span className="relative inline-flex rounded-full h-3 w-3 bg-white"></span>
-                </span>
-                <h1 className="text-lg font-bold whitespace-nowrap">
-                    শিরোনামে <span className={cn("text-xl", galanda.className)}>৩৬৫</span>
-                </h1>
+              <span className="relative flex h-3 w-3">
+                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-red-200 opacity-75"></span>
+                <span className="relative inline-flex rounded-full h-3 w-3 bg-white"></span>
+              </span>
+              <h1 className="text-lg font-bold whitespace-nowrap">
+                শিরোনামে{" "}
+                <span className={cn("text-xl", galanda.className)}>৩৬৫</span>
+              </h1>
             </div>
             {/* Arrow for visual connection */}
             <div className="absolute right-0 top-0 bottom-0 w-4 bg-white transform skew-x-12 translate-x-2 hidden md:block" />
           </div>
-          
+
           <div className="flex-1 flex items-center py-3 bg-white relative">
-             {/* Gradient masks for marquee */}
-             <div className="absolute left-0 top-0 bottom-0 w-8 bg-gradient-to-r from-white to-transparent z-10" />
-             <div className="absolute right-0 top-0 bottom-0 w-8 bg-gradient-to-l from-white to-transparent z-10" />
-             
+            {/* Gradient masks for marquee */}
+            <div className="absolute left-0 top-0 bottom-0 w-8 bg-gradient-to-r from-white to-transparent z-10" />
+            <div className="absolute right-0 top-0 bottom-0 w-8 bg-gradient-to-l from-white to-transparent z-10" />
+
             {/**@ts-ignore */}
             <marquee
-              style={{ height: "100%", display: "flex", alignItems: "center", width: "100%" }}
+              style={{
+                height: "100%",
+                display: "flex",
+                alignItems: "center",
+                width: "100%",
+              }}
               scrollamount="6"
             >
               <div className="flex items-center h-full text-lg font-medium text-gray-800">
                 {!!latestNews && latestNews.length > 0 ? (
-                    <span className="flex items-center gap-4">
-                        {latestNews.map((news, idx) => (
-                            <span key={news.id} className="flex items-center gap-4">
-                                <span className="text-red-600 font-bold">[{news.category.name}]</span>
-                                <span className="hover:text-red-600 transition-colors cursor-pointer">{news.title}</span>
-                                {idx < latestNews.length - 1 && <span className="text-gray-300 mx-4">|</span>}
-                            </span>
-                        ))}
-                    </span>
+                  <span className="flex items-center gap-4">
+                    {latestNews.map((news, idx) => (
+                      <span key={news.id} className="flex items-center gap-4">
+                        <span className="text-red-600 font-bold">
+                          [{news?.category?.name}]
+                        </span>
+                        <span className="hover:text-red-600 transition-colors cursor-pointer">
+                          {news.title}
+                        </span>
+                        {idx < latestNews.length - 1 && (
+                          <span className="text-gray-300 mx-4">|</span>
+                        )}
+                      </span>
+                    ))}
+                  </span>
                 ) : (
-                    "Loading headlines..."
+                  "Loading headlines..."
                 )}
               </div>
-            {/**@ts-ignore */}
+              {/**@ts-ignore */}
             </marquee>
           </div>
         </div>
