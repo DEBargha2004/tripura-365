@@ -13,14 +13,22 @@ export default function Navbar() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-20">
           {/* Left: Logo */}
-          <div className="shrink-0 flex items-center">
+          <div className="shrink-0 flex items-center relative">
             <Link href={"/"} className="group relative z-10">
               <Logo className="transition-transform duration-300 group-hover:scale-105" />
             </Link>
+            <div
+              className={cn(
+                "bg-red-600 text-white text-sm font-semibold h-fit my-auto px-2 py-0.5 rounded-full animate-pulse",
+                "absolute left-14 whitespace-nowrap"
+              )}
+            >
+              Test Run
+            </div>
           </div>
 
           {/* Center: Title */}
-          <div className="flex-1 flex justify-center absolute left-0 right-0 pointer-events-none">
+          <div className="flex-1 flex justify-center pointer-events-none relative">
             <Link href={"/"} className="pointer-events-auto">
               <h1
                 className={cn(

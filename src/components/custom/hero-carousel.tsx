@@ -11,27 +11,27 @@ import asset3 from "@/../public/news-365-3.jpeg";
 import durga from "@/../public/durga.png";
 
 export default function HeroCarousel({ data: slides }: { data: Data[] }) {
-  slides = [
-    //@ts-ignore
-    {
-      id: 78888,
-      images: [asset1],
-      title: "Sample News Title 1",
-    },
-    //@ts-ignore
-    {
-      id: 78889,
-      images: [asset2],
-      title: "Sample News Title 2",
-    },
-    //@ts-ignore
-    {
-      id: 78890,
-      images: [asset3],
-      title: "Sample News Title 3",
-    },
-    ...slides,
-  ];
+  // slides = [
+  //   //@ts-ignore
+  //   {
+  //     id: 78888,
+  //     images: [asset1],
+  //     title: "Sample News Title 1",
+  //   },
+  //   //@ts-ignore
+  //   {
+  //     id: 78889,
+  //     images: [asset2],
+  //     title: "Sample News Title 2",
+  //   },
+  //   //@ts-ignore
+  //   {
+  //     id: 78890,
+  //     images: [asset3],
+  //     title: "Sample News Title 3",
+  //   },
+  //   ...slides,
+  // ];
   const [currentSlide, setCurrentSlide] = useState(0);
 
   useEffect(() => {
