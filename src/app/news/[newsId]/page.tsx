@@ -100,11 +100,13 @@ export default async function Page({
           <p className="text-gray-500">
             The article you are looking for does not exist or has been removed.
           </p>
-          <GotoPrev>
-            <button className="px-6 py-2 bg-blue-600 text-white rounded-full hover:bg-blue-700 transition-colors">
-              Go Back Home
-            </button>
-          </GotoPrev>
+          <div className="flex justify-center">
+            <GotoPrev>
+              <button className="px-6 py-2 bg-blue-600 text-white rounded-full hover:bg-blue-700 transition-colors">
+                Go Back Home
+              </button>
+            </GotoPrev>
+          </div>
         </div>
       </div>
     );
@@ -123,7 +125,7 @@ export default async function Page({
           />
         )}
         <div className="absolute inset-0 bg-linear-to-t from-gray-900 via-gray-900/60 to-transparent" />
-        
+
         <div className="absolute inset-0 flex flex-col justify-end pb-16 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
           <GotoPrev className="absolute top-8 left-4 sm:left-8 text-white/80 hover:text-white transition-colors flex items-center gap-2 group cursor-pointer">
             <div className="p-2 rounded-full bg-white/10 backdrop-blur-sm group-hover:bg-white/20 transition-colors">
@@ -156,8 +158,8 @@ export default async function Page({
                   {getViews({
                     published_on: article.published_on,
                     seed: article.body,
-                  })}
-                  {" "}views
+                  })}{" "}
+                  views
                 </span>
               </div>
             </div>
@@ -178,19 +180,28 @@ export default async function Page({
                 <p className="text-sm text-gray-500">Editorial Team</p>
               </div>
             </div>
-            
+
             <div className="flex items-center gap-2">
               <FbShare url={`${basePath}/news/${newsId}`}>
-                <button className="p-2.5 rounded-full bg-blue-50 text-blue-600 hover:bg-blue-100 transition-colors" title="Share on Facebook">
+                <button
+                  className="p-2.5 rounded-full bg-blue-50 text-blue-600 hover:bg-blue-100 transition-colors"
+                  title="Share on Facebook"
+                >
                   <Facebook className="h-5 w-5" />
                 </button>
               </FbShare>
               <WaShare url={`${basePath}/news/${newsId}`} title={article.title}>
-                <button className="p-2.5 rounded-full bg-green-50 text-green-600 hover:bg-green-100 transition-colors" title="Share on WhatsApp">
+                <button
+                  className="p-2.5 rounded-full bg-green-50 text-green-600 hover:bg-green-100 transition-colors"
+                  title="Share on WhatsApp"
+                >
                   <FaWhatsapp className="h-5 w-5" />
                 </button>
               </WaShare>
-              <button className="p-2.5 rounded-full bg-gray-50 text-gray-600 hover:bg-gray-100 transition-colors" title="Share">
+              <button
+                className="p-2.5 rounded-full bg-gray-50 text-gray-600 hover:bg-gray-100 transition-colors"
+                title="Share"
+              >
                 <Share2 className="h-5 w-5" />
               </button>
             </div>
