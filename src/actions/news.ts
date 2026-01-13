@@ -15,6 +15,8 @@ import {
   WeatherApiResponse,
   ApiResponseImageGallery,
   ImageItem,
+  ApiResponseCategories,
+  Category,
 } from "@/types/response";
 
 // THis is the origin host URL
@@ -57,6 +59,19 @@ export async function getTrendingNews() {
     )
   );
   if (err) return createEmptyDataInstance<Data[]>([]);
+  return res;
+}
+
+export async function getAllCategories() {
+  const [err, res] = await catchError<ApiResponseCategories>(
+    retry(() =>
+      fetch(`${origin}/api/index_delivery?intent=all_categories`, {
+        headers: { "Host-Id": hostId },
+        next: { revalidate: 60 * 10 },
+      }).then((res) => res.json())
+    )
+  );
+  if (err) return createEmptyDataInstance<Category[]>([]);
   return res;
 }
 

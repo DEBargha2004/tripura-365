@@ -4,6 +4,7 @@ import {
   getLatestNews,
   getSlok,
   getImageGallery,
+  getAllCategories,
 } from "@/actions/news";
 import HeroCarousel from "@/components/custom/hero-carousel";
 import { Metadata } from "next";
@@ -75,7 +76,7 @@ const galanda = Galada({ subsets: ["latin"], weight: ["400"] });
 
 export default async function Home() {
   const { data: imageGallery } = await getImageGallery();
-  const categories = await getCategoryWiseNews();
+  const categories = await getAllCategories();
   const slok = await getSlok();
   const { data: latestNews } = await getLatestNews();
 
@@ -85,17 +86,19 @@ export default async function Home() {
       <div className="sticky top-0 z-40 bg-white/90 backdrop-blur-md border-b border-gray-200 shadow-sm transition-all duration-300">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center gap-4 overflow-x-auto py-3 no-scrollbar mask-gradient-x">
-            {categories?.data?.map((item) => (
-              <Link
-                key={item.name}
-                href={`/category/${item.articles?.[0]?.category.id}`}
-                className="shrink-0"
-              >
-                <span className="px-5 py-2 rounded-full bg-gray-100 text-gray-700 text-sm font-semibold hover:bg-red-50 hover:text-red-600 transition-all duration-300 border border-transparent hover:border-red-200 block">
-                  {item.name}
-                </span>
-              </Link>
-            ))}
+            {categories?.data
+              ?.sort((a, b) => a.sequence - b.sequence)
+              .map((item) => (
+                <Link
+                  key={item.id}
+                  href={`/category/${item.id}`}
+                  className="shrink-0"
+                >
+                  <span className="px-5 py-2 rounded-full bg-gray-100 text-gray-700 text-sm font-semibold hover:bg-red-50 hover:text-red-600 transition-all duration-300 border border-transparent hover:border-red-200 block">
+                    {item.name}
+                  </span>
+                </Link>
+              ))}
             <Link
               href={`https://ica.tripura.gov.in/press-release`}
               target="_blank"

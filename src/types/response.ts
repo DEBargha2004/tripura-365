@@ -31,18 +31,20 @@ export type Data = {
   last_drafted: string;
   created_on: string;
   total_views: number;
-  category: {
-    id: number;
-    name: string;
-    parent: boolean;
-    sequence: number;
-    sub_category: any[]; // define if sub-category structure is known
-  }; // Replace with exact category structure
+  category: Category;
   published: boolean;
   images: any[]; // Replace with exact image structure
   thumbnail: string;
   videos: any[]; // Replace with exact video structure
 };
+
+export type Category = {
+  id: number;
+  name: string;
+  parent: boolean;
+  sequence: number;
+  sub_category: any[]; // define if sub-category structure is known
+}; // Replace with exact category structure
 
 export type ImageItem = {
   id: number;
@@ -80,7 +82,7 @@ export type ApiResponseAdImageWithPagination = BaseApiResonseWithPagination & {
 
 export type ApiResponseCategoryWiseNewsWithPagination =
   BaseApiResonseWithPagination & {
-    data?: { id: number; name: string; articles: Data[] }[];
+    data?: { name: string; articles: Data[] }[];
   };
 
 export type ApiResponseQuotation = {
@@ -90,6 +92,10 @@ export type ApiResponseQuotation = {
     a: string;
     h: string;
   };
+};
+
+export type ApiResponseCategories = BaseApiResonseWithPagination & {
+  data: Category[];
 };
 
 export type WeatherApiResponse = {
