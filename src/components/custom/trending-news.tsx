@@ -4,7 +4,13 @@ import { Eye, TrendingUp, ArrowRight } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 
-export default function TrendingNews({ data }: { data?: Data[] }) {
+export default function TrendingNews({
+  data,
+  hideViewAll,
+}: {
+  data?: Data[];
+  hideViewAll?: boolean;
+}) {
   return (
     <section className="py-12 md:py-20 bg-white">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -14,16 +20,32 @@ export default function TrendingNews({ data }: { data?: Data[] }) {
             বর্তমানে জনপ্রিয়
           </h2>
           <div className="h-1 flex-1 mx-6 bg-gray-100 rounded-full hidden md:block" />
+          {!hideViewAll && (
+            <div>
+              <Link href={"/trending-news"}>
+                <p className="text-red-500 font-semibold">View All</p>
+              </Link>
+            </div>
+          )}
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           {data?.map((post, index) => (
-            <Link href={`/news/${post.id}`} key={post.id} className="group block h-full">
+            <Link
+              href={`/news/${post.id}`}
+              key={post.id}
+              className="group block h-full"
+            >
               <article className="relative h-96 w-full rounded-3xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-1">
                 {/* Full Background Image */}
-                {(post.images.length > 0 || (post.videos && post.videos.length > 0)) && (
+                {(post.images.length > 0 ||
+                  (post.videos && post.videos.length > 0)) && (
                   <Image
-                    src={post.images.length > 0 ? post.images[0] : getYtThumbnail(post.videos[0])}
+                    src={
+                      post.images.length > 0
+                        ? post.images[0]
+                        : getYtThumbnail(post.videos[0])
+                    }
                     alt={post.title}
                     fill
                     className="object-cover transition-transform duration-700 group-hover:scale-110"
@@ -56,7 +78,8 @@ export default function TrendingNews({ data }: { data?: Data[] }) {
                       {getViews({
                         published_on: post.published_on,
                         seed: post.body,
-                      })} views
+                      })}{" "}
+                      views
                     </span>
                     <span className="w-1 h-1 bg-gray-400 rounded-full" />
                     <span className="flex items-center gap-1 text-orange-400">

@@ -27,14 +27,14 @@ export default async function Page() {
           <div className="@container relative w-full h-[500px] md:h-[600px] rounded-3xl overflow-hidden shadow-2xl">
             {/* Background Image with Zoom Effect */}
 
-            <Image
+            <img
               src={
                 post.images[0] ? post.images[0] : getYtThumbnail(post.videos[0])
               }
               alt={post.title}
-              fill
-              className="object-cover transition-transform duration-700 group-hover:scale-105"
-              priority
+              // fill
+              className="object-cover transition-transform duration-700 group-hover:scale-105 size-full"
+              // priority
             />
 
             {/* Gradient Overlay */}

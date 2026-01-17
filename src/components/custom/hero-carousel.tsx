@@ -41,12 +41,12 @@ export default function HeroCarousel({ data: slides }: { data: ImageItem[] }) {
         >
           <div className="w-full h-full">
             {slide && (
-              <Image
+              <img
                 src={slide.secure_url}
                 alt={slide.caption}
                 className="size-full object-cover"
-                width={800}
-                height={500}
+                // width={1000}
+                // height={1000}
               />
             )}
           </div>
