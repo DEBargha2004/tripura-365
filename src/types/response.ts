@@ -57,54 +57,17 @@ export type ImageItem = {
 
 export type AdVideoData = { id: number; link: string; published_on: string };
 
+export type Headline = {
+  id: number;
+  content: string;
+  created_on: string;
+};
+
 export type AdBannerImageData = {
   id: number;
   last_updated: string;
   image_url: string;
   image_id: string;
-};
-
-export type ApiResponseWithoutPagination = BaseApiResonseWithoutPagination & {
-  data?: Data[];
-};
-
-export type ApiResponseWithPagination = BaseApiResonseWithPagination & {
-  data?: Data[];
-};
-
-export type ApiResponseAdVideoWithPagination = BaseApiResonseWithPagination & {
-  data?: AdVideoData[];
-};
-
-export type ApiResponseAdImageWithPagination = BaseApiResonseWithPagination & {
-  data: AdBannerImageData[];
-};
-
-export type ApiResponseCategoryWiseNewsWithPagination =
-  BaseApiResonseWithPagination & {
-    data?: { name: string; articles: Data[] }[];
-  };
-
-export type ApiResponseQuotation = {
-  status: boolean;
-  data?: {
-    q: string;
-    a: string;
-    h: string;
-  };
-};
-
-export type ApiResponseCategories = BaseApiResonseWithPagination & {
-  data: Category[];
-};
-
-export type WeatherApiResponse = {
-  status: boolean;
-  data: WeatherData;
-};
-
-export type ApiResponseImageGallery = BaseApiResonseWithPagination & {
-  data: ImageItem[];
 };
 
 export type WeatherData = {
@@ -161,4 +124,52 @@ export type Sys = {
   country: string;
   sunrise: number; // unix timestamp
   sunset: number; // unix timestamp
+};
+
+export type ApiResponseHeadlinesWithPagination =
+  BaseApiResonseWithPagination & {
+    data: Headline[];
+  };
+
+export type ApiResponseWithoutPagination = BaseApiResonseWithoutPagination & {
+  data?: Data[];
+};
+
+export type ApiResponseWithPagination = BaseApiResonseWithPagination & {
+  data?: Data[];
+};
+
+export type ApiResponseAdVideoWithPagination = BaseApiResonseWithPagination & {
+  data?: AdVideoData[];
+};
+
+export type ApiResponseAdImageWithPagination = BaseApiResonseWithPagination & {
+  data: AdBannerImageData[];
+};
+
+export type ApiResponseCategoryWiseNewsWithPagination =
+  BaseApiResonseWithPagination & {
+    data?: { name: string; articles: Data[] }[];
+  };
+
+export type ApiResponseQuotation = {
+  status: boolean;
+  data?: {
+    q: string;
+    a: string;
+    h: string;
+  };
+};
+
+export type ApiResponseCategories = BaseApiResonseWithPagination & {
+  data: Category[];
+};
+
+export type WeatherApiResponse = {
+  status: boolean;
+  data: WeatherData;
+};
+
+export type ApiResponseImageGallery = BaseApiResonseWithPagination & {
+  data: ImageItem[];
 };

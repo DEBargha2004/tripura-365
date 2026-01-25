@@ -17,7 +17,10 @@ import {
   ImageItem,
   ApiResponseCategories,
   Category,
+  ApiResponseHeadlinesWithPagination,
+  Headline,
 } from "@/types/response";
+import { format } from "date-fns";
 
 // THis is the origin host URL
 const origin = process.env.ORIGIN ?? "https://master-news-service.onrender.com";
@@ -228,27 +231,21 @@ export async function getImageGallery() {
 }
 
 export async function getHeadline() {
-  const [err, res] = await catchError<string>(
+  const [err, res] = await catchError<ApiResponseHeadlinesWithPagination>(
     retry(() =>
-      fetch(`${adminUrl}/adminHeadlines`, {
-        headers: { Authorization: `Bearer ${adminJwt}` },
+      fetch(`${origin}/api/index_delivery?intent=headlines`, {
+        headers: { "Host-Id": hostId },
         next: { revalidate: 60 * 10 },
-      }).then((res) => res.text()),
+      }).then((res) => res.json()),
     ),
   );
-  if (err) return createEmptyDataInstance<string>("");
+  if (err) return createEmptyDataInstance<Headline[]>([]);
 
-  const startTag = "<h5>";
-  const endTag = "</h5>";
+  const data = res.data.filter(
+    (h) => format(h.created_on, "PP") === format(new Date(), "PP"),
+  );
 
-  const startIdx = res.indexOf(startTag);
-  const endIdx = res.indexOf(endTag);
-
-  if (startIdx === -1 || endIdx === -1) return { data: "" };
-
-  const headline = res.slice(startIdx + startTag.length, endIdx);
-
-  return { data: headline };
+  return { data };
 }
 
 export async function getSlok() {

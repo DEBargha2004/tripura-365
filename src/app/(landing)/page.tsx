@@ -91,7 +91,7 @@ export default async function Home() {
   const slok = await getSlok();
   const { data: latestNews } = await getLatestNews();
   const topNews = await getTopNews();
-  const headline = await getHeadline();
+  const headlines = await getHeadline();
 
   return (
     <div className="bg-gray-50 min-h-screen pb-12">
@@ -213,14 +213,14 @@ export default async function Home() {
               scrollamount="6"
             >
               <div className="flex items-center h-full text-lg font-medium text-gray-800">
-                {!!latestNews && latestNews.length > 0 ? (
+                {headlines.data.length > 0 ? (
                   <span className="flex items-center gap-4">
-                    {latestNews.map((news, idx) => (
-                      <span key={news.id} className="flex items-center gap-4">
+                    {headlines.data.map((hl, idx) => (
+                      <span key={hl.id} className="flex items-center gap-4">
                         <span className="hover:text-red-600 transition-colors cursor-pointer">
-                          {headline.data}
+                          {hl.content}
                         </span>
-                        {idx < latestNews.length - 1 && (
+                        {idx < headlines.data.length - 1 && (
                           <span className="text-gray-300 mx-4">|</span>
                         )}
                       </span>

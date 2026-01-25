@@ -15,7 +15,7 @@ export function getViews({
   const current = new Date();
   const published = new Date(published_on);
   let viewFactor = Math.floor(
-    (current.getTime() - published.getTime()) / (1000 * 60 * 60)
+    (current.getTime() - published.getTime()) / (1000 * 60 * 60),
   );
 
   const seed_len = (seed.length - seed.replaceAll(" ", "").length) * 10;
@@ -30,7 +30,9 @@ export function getViews({
   return viewFactor;
 }
 
-export async function catchError<T>(promise: Promise<T>) {
+export async function catchError<T>(
+  promise: Promise<[undefined, T] | [Error, undefined]>,
+) {
   try {
     return [undefined, await promise] as [undefined, T];
   } catch (error) {
@@ -43,8 +45,8 @@ export function createEmptyDataInstance<D>(data: D): { data: D } {
 }
 
 export async function retry<T>(
-  promiseFactory: () => Promise<T>,
-  options: { helperText?: string; retriesCount: number } = { retriesCount: 3 }
+  promiseFactory: () => Promise<[undefined, T] | [Error, undefined]>,
+  options: { helperText?: string; retriesCount: number } = { retriesCount: 3 },
 ) {
   let retires_local_count = options.retriesCount;
   while (retires_local_count > 0) {
@@ -53,8 +55,9 @@ export async function retry<T>(
     retires_local_count--;
     retires_local_count &&
       console.log(
-        `Retrying ${retires_local_count} of ${options.retriesCount} ${options?.helperText ?? ""
-        }`
+        `Retrying ${retires_local_count} of ${options.retriesCount} ${
+          options?.helperText ?? ""
+        }`,
       );
   }
   console.log(`Failed attempt ${options?.helperText ?? ""}`);
