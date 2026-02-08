@@ -4,6 +4,22 @@ import { ArrowRight, Calendar, Clock } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import { getYtThumbnail } from "@/lib/utils";
+import { categoriesOrder } from "@/constants/categories-order";
+import { Data } from "@/types/response";
+
+type CategoryWiseNews = {
+  name: string;
+  articles: Data[];
+};
+const sortCategories = (cat: CategoryWiseNews[]) => {
+  return categoriesOrder.reduce<CategoryWiseNews[]>((acc, name) => {
+    const found = cat.find((c) => c.name === name);
+    if (found) {
+      acc.push(found);
+    }
+    return acc;
+  }, []);
+};
 
 export default async function Page() {
   const res = await getCategoryWiseNews();
@@ -24,7 +40,7 @@ export default async function Page() {
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-x-12 gap-y-16">
-          {res.data?.map((category) => (
+          {sortCategories(res.data ?? [])?.map((category) => (
             <div key={category.name} className="flex flex-col gap-6">
               {/* Category Header */}
               <div className="flex items-center justify-between border-b border-gray-100 pb-4">

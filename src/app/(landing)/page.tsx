@@ -17,6 +17,8 @@ import { IconType } from "react-icons";
 import { Galada } from "next/font/google";
 import { cn, getYtThumbnail } from "@/lib/utils";
 import siteLogo from "@/../public/logo.png";
+import { Category } from "@/types/response";
+import { categoriesOrder } from "@/constants/categories-order";
 
 // export const revalidate = 600;
 
@@ -85,6 +87,16 @@ const impLinks: ImpLink[] = [
 
 const galanda = Galada({ subsets: ["latin"], weight: ["400"] });
 
+const sortcategories = (data: Category[]) => {
+  return categoriesOrder.reduce<Category[]>((acc, curr) => {
+    const found = data.find((c) => c.name === curr);
+    if (found) {
+      acc.push(found);
+    }
+    return acc;
+  }, []);
+};
+
 export default async function Home() {
   const { data: imageGallery } = await getImageGallery();
   const categories = await getAllCategories();
@@ -99,7 +111,7 @@ export default async function Home() {
       <div className="sticky top-0 z-40 bg-white/90 backdrop-blur-md border-b border-gray-200 shadow-sm transition-all duration-300">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center gap-4 overflow-x-auto py-3 no-scrollbar mask-gradient-x">
-            {categories?.data
+            {sortcategories(categories.data ?? [])
               ?.sort((a, b) => a.sequence - b.sequence)
               .map((item) => (
                 <Link

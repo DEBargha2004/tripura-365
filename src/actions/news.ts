@@ -160,7 +160,6 @@ export async function getCategoryWiseNews() {
   if (err)
     return createEmptyDataInstance<
       {
-        id: number;
         name: string;
         articles: Data[];
       }[]
