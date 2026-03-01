@@ -1,8 +1,9 @@
 import { getCategoryWiseNews } from "@/actions/news";
-import { Facebook, Mail, MapPin } from "lucide-react";
+import { Facebook, Mail, MapPin, ArrowRight } from "lucide-react";
 import Logo from "./logo";
 import Link from "next/link";
 import { FaInstagram, FaWhatsapp, FaYoutube } from "react-icons/fa";
+import { cn } from "@/lib/utils";
 
 export default async function Footer() {
   const categoryResponse = await getCategoryWiseNews();
@@ -41,70 +42,78 @@ export default async function Footer() {
   ];
 
   return (
-    <footer className="bg-gray-950 text-gray-300 border-t border-gray-900 font-sans">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-12">
+    <footer className="relative bg-black rounded-t-[3rem] md:rounded-t-[5rem] mt-20 overflow-hidden">
+      {/* Visual background elements */}
+      <div className="absolute top-0 left-0 w-full h-1 bg-linear-to-r from-red-600 via-blue-600 to-red-600 opacity-30" />
+      <div className="absolute -bottom-24 -left-24 w-96 h-96 bg-red-600/10 rounded-full blur-[100px]" />
+      <div className="absolute top-24 -right-24 w-96 h-96 bg-blue-600/5 rounded-full blur-[100px]" />
+
+      <div className="max-w-7xl mx-auto px-6 sm:px-8 lg:px-12 pt-20 pb-12 relative z-10">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-16 lg:gap-8">
           {/* Brand Section (4 cols) */}
-          <div className="lg:col-span-4 space-y-6">
-            <div className="inline-block">
+          <div className="lg:col-span-4 space-y-8">
+            <div className="inline-block transition-transform hover:scale-105 duration-500">
               <Logo />
             </div>
-            <p className="text-gray-400 leading-relaxed text-sm">
+            <p className="text-gray-400 leading-relaxed text-sm md:text-base font-medium max-w-sm">
               Tripura 365 is a dynamic and trusted Indian news website that
               brings you the latest and most relevant news from the vibrant
               state of Tripura.
             </p>
-            <div className="flex items-center gap-4 pt-2">
+
+            {/* Social Links: Premium Glassmorphism */}
+            <div className="flex items-center gap-4">
               <Link
                 href={"https://www.facebook.com//profile.php?id=61581880808522"}
                 target="_blank"
-                className="h-10 w-10 rounded-full bg-gray-900 flex items-center justify-center hover:bg-blue-600 hover:text-white transition-all duration-300 group"
+                className="h-12 w-12 rounded-2xl bg-white/5 backdrop-blur-xl border border-white/10 flex items-center justify-center text-gray-400 hover:bg-blue-600 hover:text-white hover:border-blue-500 transition-all duration-500 group"
               >
-                <Facebook className="h-5 w-5 group-hover:scale-110 transition-transform" />
+                <Facebook className="h-6 w-6 group-hover:scale-110 transition-transform" />
               </Link>
               <Link
                 href={"https://www.instagram.com/tripura365webmedia/"}
                 target="_blank"
-                className="h-10 w-10 rounded-full bg-gray-900 flex items-center justify-center hover:bg-pink-600 hover:text-white transition-all duration-300 group"
+                className="h-12 w-12 rounded-2xl bg-white/5 backdrop-blur-xl border border-white/10 flex items-center justify-center text-gray-400 hover:bg-pink-600 hover:text-white hover:border-pink-500 transition-all duration-500 group"
               >
-                <FaInstagram className="h-5 w-5 group-hover:scale-110 transition-transform" />
+                <FaInstagram className="h-6 w-6 group-hover:scale-110 transition-transform" />
               </Link>
               <Link
                 href={"https://www.youtube.com/@PriyankuModak/"}
                 target="_blank"
-                className="h-10 w-10 rounded-full bg-gray-900 flex items-center justify-center hover:bg-red-600 hover:text-white transition-all duration-300 group"
+                className="h-12 w-12 rounded-2xl bg-white/5 backdrop-blur-xl border border-white/10 flex items-center justify-center text-gray-400 hover:bg-red-600 hover:text-white hover:border-red-500 transition-all duration-500 group"
               >
-                <FaYoutube className="h-5 w-5 group-hover:scale-110 transition-transform" />
+                <FaYoutube className="h-6 w-6 group-hover:scale-110 transition-transform" />
               </Link>
             </div>
           </div>
 
           {/* Quick Links (3 cols) */}
           <div className="lg:col-span-3">
-            <h4 className="text-white font-bold text-lg mb-6 relative inline-block">
-              Quick Links
-              <span className="absolute -bottom-2 left-0 w-1/2 h-1 bg-red-600 rounded-full"></span>
+            <h4 className="text-white font-black text-xs uppercase tracking-[0.25em] mb-10 opacity-60">
+              Official Portals
             </h4>
-            <div className="grid grid-cols-1 gap-3">
+            <div className="grid grid-cols-1 gap-4">
               {importantLinks.map((impLink) => (
                 <a
                   key={impLink.webUrl}
                   href={impLink.webUrl}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="flex items-center gap-3 p-2 rounded-lg hover:bg-gray-900 transition-colors group"
+                  className="group relative flex items-center gap-4 p-1.5 rounded-2xl bg-white/5 hover:bg-white/10 border border-white/5 hover:border-white/20 transition-all duration-500 overflow-hidden"
                 >
                   <div
-                    className="h-14 md:w-64 w-full flex items-center justify-center rounded p-1"
+                    className="h-12 w-28 shrink-0 flex items-center justify-center rounded-xl p-2 shadow-inner"
                     style={{ backgroundColor: impLink.bgColor ?? "white" }}
                   >
                     <img
                       src={impLink.imageUrl}
                       alt={impLink.name}
-                      className="max-h-full max-w-full object-contain"
+                      className="max-h-full max-w-full object-contain grayscale group-hover:grayscale-0 transition-all duration-500"
                     />
                   </div>
-                  {/* <span className="text-sm font-medium group-hover:text-white transition-colors">{impLink.name}</span> */}
+                  <span className="text-[10px] font-black uppercase tracking-widest text-gray-500 group-hover:text-white transition-colors">
+                    {impLink.name.split(" ").slice(0, 2).join(" ")}
+                  </span>
                 </a>
               ))}
             </div>
@@ -112,19 +121,18 @@ export default async function Footer() {
 
           {/* Categories (2 cols) */}
           <div className="lg:col-span-2">
-            <h4 className="text-white font-bold text-lg mb-6 relative inline-block">
+            <h4 className="text-white font-black text-xs uppercase tracking-[0.25em] mb-10 opacity-60">
               Categories
-              <span className="absolute -bottom-2 left-0 w-1/2 h-1 bg-red-600 rounded-full"></span>
             </h4>
-            <ul className="space-y-3">
-              {categoryResponse?.map((category, idx) => (
+            <ul className="space-y-4">
+              {categoryResponse?.slice(0, 8).map((category, idx) => (
                 <li key={category.articles?.[0]?.category?.id ?? idx}>
                   <Link
                     href={`/category/${category?.articles?.[0]?.category?.id}`}
-                    className="text-sm md:text-base hover:text-red-500 transition-colors flex items-center gap-2 group"
+                    className="group flex items-center justify-between text-[11px] font-black uppercase tracking-widest text-gray-500 hover:text-red-500 transition-all duration-300"
                   >
-                    <span className="w-1.5 h-1.5 bg-gray-700 rounded-full group-hover:bg-red-500 transition-colors" />
-                    {category.name}
+                    <span>{category.name}</span>
+                    <ArrowRight className="w-3 h-3 opacity-0 -translate-x-2 group-hover:opacity-100 group-hover:translate-x-0 transition-all" />
                   </Link>
                 </li>
               ))}
@@ -133,93 +141,69 @@ export default async function Footer() {
 
           {/* Contact Info (3 cols) */}
           <div className="lg:col-span-3">
-            <h4 className="text-white font-bold text-lg mb-6 relative inline-block">
-              Contact Us
-              <span className="absolute -bottom-2 left-0 w-1/2 h-1 bg-red-600 rounded-full"></span>
+            <h4 className="text-white font-black text-xs uppercase tracking-[0.25em] mb-10 opacity-60">
+              Connect
             </h4>
-            <div className="space-y-4">
-              <div className="flex items-start gap-3 group">
-                <div className="mt-1 p-2 bg-gray-900 rounded-lg group-hover:bg-red-600/20 group-hover:text-red-500 transition-colors">
-                  <Mail className="h-4 w-4" />
-                </div>
-                <div className="flex flex-col text-sm">
-                  <span className="text-gray-500 text-xs uppercase tracking-wider font-semibold mb-0.5">
-                    Email
-                  </span>
+            <div className="space-y-8">
+              <div className="group">
+                <span className="text-blue-500 text-[9px] font-black uppercase tracking-[0.2em] mb-2 block">
+                  Enquiries
+                </span>
+                <div className="flex flex-col gap-1">
                   <Link
                     href={"mailto:tripura365.agt@gmail.com"}
-                    className="hover:text-white transition-colors"
+                    className="text-white font-black text-sm hover:text-blue-400 transition-colors tracking-tight"
                   >
                     tripura365.agt@gmail.com
                   </Link>
-                  <Link
-                    href={"mailto:priyankumodak.agt25@gmail.com"}
-                    className="hover:text-white transition-colors"
-                  >
-                    priyankumodak.agt25@gmail.com
-                  </Link>
                 </div>
               </div>
 
-              <div className="flex items-start gap-3 group">
-                <div className="mt-1 p-2 bg-gray-900 rounded-lg group-hover:bg-green-600/20 group-hover:text-green-500 transition-colors">
-                  <FaWhatsapp className="h-4 w-4" />
-                </div>
-                <div className="flex flex-col text-sm">
-                  <span className="text-gray-500 text-xs uppercase tracking-wider font-semibold mb-0.5">
-                    WhatsApp
-                  </span>
-                  <a href="https://wa.me/919233749847">
-                    <span className="hover:text-white transition-colors">
-                      +91 92337 49847
-                    </span>
-                  </a>
-                </div>
+              <div className="group">
+                <span className="text-green-500 text-[9px] font-black uppercase tracking-[0.2em] mb-2 block">
+                  WhatsApp
+                </span>
+                <a
+                  href="https://wa.me/919233749847"
+                  className="text-white font-black text-sm hover:text-green-400 transition-colors tracking-tight"
+                >
+                  +91 92337 49847
+                </a>
               </div>
 
-              <div className="flex items-start gap-3 group">
-                <div className="mt-1 p-2 bg-gray-900 rounded-lg group-hover:bg-blue-600/20 group-hover:text-blue-500 transition-colors">
-                  <MapPin className="h-4 w-4" />
-                </div>
-                <div className="flex flex-col text-sm">
-                  <span className="text-gray-500 text-xs uppercase tracking-wider font-semibold mb-0.5">
-                    Address
-                  </span>
-                  <span className="hover:text-white transition-colors">
-                    AD Nagar, Agartala, 799003
-                  </span>
-                </div>
+              <div className="group">
+                <span className="text-red-500 text-[9px] font-black uppercase tracking-[0.2em] mb-2 block">
+                  Location
+                </span>
+                <span className="text-white font-black text-sm tracking-tight block">
+                  Agartala, Tripura West
+                </span>
               </div>
             </div>
           </div>
         </div>
 
-        {/* Bottom Bar */}
-        <div className="border-t border-gray-900 mt-16 pt-8 flex flex-col md:flex-row justify-between items-center gap-4">
-          <p className="text-gray-500 text-sm text-center md:text-left">
-            &copy; {new Date().getFullYear()}{" "}
-            <span className="text-white font-semibold">Tripura 365</span>. All
-            rights reserved.
-          </p>
-          <div className="flex flex-wrap justify-center gap-6 md:gap-8">
-            <a
-              href="#"
-              className="text-gray-500 hover:text-white text-sm transition-colors"
-            >
-              Privacy Policy
-            </a>
-            <a
-              href="#"
-              className="text-gray-500 hover:text-white text-sm transition-colors"
-            >
-              Terms of Service
-            </a>
-            <a
-              href="#"
-              className="text-gray-500 hover:text-white text-sm transition-colors"
-            >
-              Advertise with Us
-            </a>
+        {/* Bottom Bar: Ultra Clean */}
+        <div className="border-t border-white/5 mt-24 pt-10 flex flex-col md:flex-row justify-between items-center gap-8">
+          <div className="flex flex-col items-center md:items-start gap-2">
+            <p className="text-[10px] font-black uppercase tracking-[0.3em] text-gray-600">
+              &copy; {new Date().getFullYear()} Tripura 365 Editorial
+            </p>
+            <p className="text-[9px] font-bold text-gray-800 uppercase tracking-widest">
+              Digital Excellence in Journalism
+            </p>
+          </div>
+
+          <div className="flex flex-wrap justify-center gap-8">
+            {["Privacy", "Terms", "Media Kit"].map((item) => (
+              <Link
+                key={item}
+                href="#"
+                className="text-[10px] font-black uppercase tracking-widest text-gray-500 hover:text-white transition-colors"
+              >
+                {item}
+              </Link>
+            ))}
           </div>
         </div>
       </div>

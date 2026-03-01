@@ -2,7 +2,6 @@
 
 import { Data, ImageItem } from "@/types/response";
 import { ChevronLeft, ChevronRight } from "lucide-react";
-import Image from "next/image";
 import { useEffect, useState } from "react";
 
 export default function HeroCarousel({ data: slides }: { data: ImageItem[] }) {
@@ -27,16 +26,15 @@ export default function HeroCarousel({ data: slides }: { data: ImageItem[] }) {
 
   return (
     <div
-      className="relative h-96 md:min-h-125 md:h-full overflow-hidden bg-gray-900 rounded-lg"
+      className="relative h-96 md:h-[500px] lg:h-full overflow-hidden bg-gray-900 rounded-4xl shadow-2xl group/carousel"
       onMouseEnter={() => setMouseOver(true)}
       onMouseLeave={() => setMouseOver(false)}
     >
       {slides?.map((slide, index) => (
-        // <Link href={`/news/${slides[currentSlide].id}`} key={slide.id}>
         <div
           key={slide.id}
-          className={`absolute inset-0 transition-opacity duration-500 ${
-            index === currentSlide ? "opacity-100" : "opacity-0"
+          className={`absolute inset-0 transition-opacity duration-1000 ease-in-out ${
+            index === currentSlide ? "opacity-100 z-10" : "opacity-0 z-0"
           }`}
         >
           <div className="w-full h-full">
@@ -44,48 +42,55 @@ export default function HeroCarousel({ data: slides }: { data: ImageItem[] }) {
               <img
                 src={slide.secure_url}
                 alt={slide.caption}
-                className="size-full object-cover"
-                // width={1000}
-                // height={1000}
+                className={`size-full object-cover transition-transform duration-[5s] ease-linear ${
+                  index === currentSlide ? "scale-110" : "scale-100"
+                }`}
               />
             )}
           </div>
-          <div className="absolute inset-0 bg-linear-to-t from-black/80 via-black/20 to-transparent" />
-          <div className="absolute bottom-0 left-0 right-0 p-6 md:p-8">
-            <h2 className="text-base md:text-lg font-bold text-white mb-3 leading-tight">
+
+          {/* Refined Cinematic Gradient */}
+          <div className="absolute inset-0 bg-linear-to-t from-black via-black/20 to-transparent opacity-80" />
+
+          <div className="absolute bottom-0 left-0 right-0 p-8 md:p-12 z-20">
+            {/* Featured Badge */}
+            {/* <div className="mb-4">
+              <span className="px-4 py-1.5 bg-blue-600/80 backdrop-blur-xl border border-white/20 text-white text-[10px] font-black tracking-widest uppercase rounded-full shadow-lg">
+                Spotlight
+              </span>
+            </div> */}
+
+            <h2 className="text-2xl md:text-4xl lg:text-5xl line-clamp-3 font-black text-white mb-4 leading-[1.1] tracking-tight max-w-4xl drop-shadow-2xl">
               {slide.caption}
             </h2>
-
-            {/* <p className="text-gray-200 text-base md:text-lg max-w-3xl line-clamp-3">
-                {slide.body}
-              </p> */}
           </div>
         </div>
-        // </Link>
       ))}
 
-      {/* Navigation Buttons */}
+      {/* Navigation Buttons: Premium Glassmorphism */}
       <button
         onClick={prevSlide}
-        className="absolute left-4 top-1/2 transform -translate-y-1/2 bg-white/20 hover:bg-white/30 text-white p-2 rounded-full backdrop-blur-sm transition-all duration-200"
+        className="absolute left-6 top-1/2 transform -translate-y-1/2 z-30 bg-white/10 hover:bg-white text-white hover:text-gray-900 p-4 rounded-full backdrop-blur-xl border border-white/20 transition-all duration-300 opacity-0 group-hover/carousel:opacity-100 hover:scale-110 shadow-2xl"
       >
         <ChevronLeft className="h-6 w-6" />
       </button>
       <button
         onClick={nextSlide}
-        className="absolute right-4 top-1/2 transform -translate-y-1/2 bg-white/20 hover:bg-white/30 text-white p-2 rounded-full backdrop-blur-sm transition-all duration-200"
+        className="absolute right-6 top-1/2 transform -translate-y-1/2 z-30 bg-white/10 hover:bg-white text-white hover:text-gray-900 p-4 rounded-full backdrop-blur-xl border border-white/20 transition-all duration-300 opacity-0 group-hover/carousel:opacity-100 hover:scale-110 shadow-2xl"
       >
         <ChevronRight className="h-6 w-6" />
       </button>
 
-      {/* Slide Indicators */}
-      <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 flex space-x-2">
+      {/* Slide Indicators: Refined dots */}
+      <div className="absolute bottom-8 right-12 z-30 flex items-center gap-3">
         {slides?.map((_, index) => (
           <button
             key={index}
             onClick={() => setCurrentSlide(index)}
-            className={`w-3 h-3 rounded-full transition-all duration-200 ${
-              index === currentSlide ? "bg-white" : "bg-white/50"
+            className={`transition-all duration-500 rounded-full ${
+              index === currentSlide
+                ? "w-10 h-2 bg-white shadow-[0_0_15px_rgba(255,255,255,0.8)]"
+                : "w-2 h-2 bg-white/40 hover:bg-white/60"
             }`}
           />
         ))}
