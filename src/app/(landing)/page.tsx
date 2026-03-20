@@ -158,7 +158,7 @@ export default async function Home() {
       </section>
 
       {/* Breaking News: Modern Animated Marquee */}
-      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-24">
+      {/* <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-24">
         <div className="bg-white rounded-4xl shadow-2xl shadow-black/5 border border-gray-100 overflow-hidden flex flex-col md:flex-row items-stretch min-h-[70px]">
           <div className="bg-red-600 text-white px-12 py-5 flex items-center justify-center gap-4 shrink-0 z-20 relative overflow-hidden">
             <div className="absolute inset-0 bg-gradient-to-r from-red-700 via-red-600 to-red-500" />
@@ -176,7 +176,7 @@ export default async function Home() {
 
           <Marquee items={headlines ?? []} />
         </div>
-      </section>
+      </section> */}
 
       {/* Hero Section: Carousel + Top News Sidebar */}
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-24">
