@@ -190,7 +190,7 @@ export default async function Page({
               <div className="h-16 w-16 rounded-3xl bg-white border border-gray-100 flex items-center justify-center text-gray-900 shadow-sm overflow-hidden p-2">
                 <img
                   src={siteLogo.src}
-                  alt="Tripura 365 Logo"
+                  alt="Public Now Logo"
                   className="size-full object-contain"
                 />
               </div>
@@ -199,7 +199,7 @@ export default async function Page({
                   Published By
                 </p>
                 <p className="font-black text-xl text-gray-900 tracking-tight">
-                  Tripura 365 Editorial
+                  Public Now Editorial
                 </p>
                 <div className="flex items-center gap-2 text-gray-400 text-[11px] font-bold uppercase tracking-widest mt-0.5">
                   <Clock className="w-3.5 h-3.5" />
@@ -273,7 +273,7 @@ export default async function Page({
                 {article?.category?.name}
               </span>
               <span className="px-6 py-2.5 bg-gray-50 text-gray-900 rounded-2xl hover:bg-blue-600 hover:text-white transition-all duration-300 cursor-pointer font-black text-xs uppercase tracking-widest border border-gray-100 hover:border-blue-600 shadow-sm">
-                Tripura 365 Original
+                Public Now Original
               </span>
               <span className="px-6 py-2.5 bg-gray-50 text-gray-900 rounded-2xl hover:bg-blue-600 hover:text-white transition-all duration-300 cursor-pointer font-black text-xs uppercase tracking-widest border border-gray-100 hover:border-blue-600 shadow-sm">
                 In-Depth News

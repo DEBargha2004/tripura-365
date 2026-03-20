@@ -29,13 +29,13 @@ export async function generateMetadata(): Promise<Metadata> {
   const res = await getTopNews();
 
   return {
-    title: "Tripura 365",
-    description: `Tripura 365 is a dynamic and trusted Indian news website that brings you 
+    title: "Public Now",
+    description: `Public Now is a dynamic and trusted Indian news website that brings you 
     the latest and most relevant news from the vibrant state of Tripura.`,
     metadataBase: new URL(`${protocol}://${origin}`),
     openGraph: {
-      title: "Tripura 365",
-      description: `Tripura 365 is a dynamic and trusted Indian news website that brings you 
+      title: "Public Now",
+      description: `Public Now is a dynamic and trusted Indian news website that brings you 
     the latest and most relevant news from the vibrant state of Tripura.`,
       url: `${protocol}://${origin}`,
       images: [
@@ -47,14 +47,14 @@ export async function generateMetadata(): Promise<Metadata> {
               : siteLogo.src),
           width: 210,
           height: 70,
-          alt: "Tripura 365",
+          alt: "Public Now",
         },
       ],
     },
     twitter: {
       card: "summary_large_image",
-      title: "Tripura 365",
-      description: `Tripura 365 is a dynamic and trusted Indian news website that brings you 
+      title: "Public Now",
+      description: `Public Now is a dynamic and trusted Indian news website that brings you 
     the latest and most relevant news from the vibrant state of Tripura.`,
       images: [
         res?.[0]?.photos?.[0]?.secure_urls ||

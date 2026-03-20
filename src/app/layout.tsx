@@ -18,7 +18,7 @@ export const metadata: Metadata = {
   metadataBase: new URL(
     process.env.NEXT_PUBLIC_SITE_URL ?? "https://tripura365.com",
   ),
-  title: { template: "%s | Tripura 365", default: "Tripura 365" },
+  title: { template: "%s | Public Now", default: "Public Now" },
   alternates: {
     canonical: "/",
   },

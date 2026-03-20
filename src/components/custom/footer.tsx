@@ -56,7 +56,7 @@ export default async function Footer() {
               <Logo />
             </div>
             <p className="text-gray-400 leading-relaxed text-sm md:text-base font-medium max-w-sm">
-              Tripura 365 is a dynamic and trusted Indian news website that
+              Public Now is a dynamic and trusted Indian news website that
               brings you the latest and most relevant news from the vibrant
               state of Tripura.
             </p>
@@ -154,7 +154,7 @@ export default async function Footer() {
                     href={"mailto:tripura365.agt@gmail.com"}
                     className="text-white font-black text-sm hover:text-blue-400 transition-colors tracking-tight"
                   >
-                    tripura365.agt@gmail.com
+                    dummy.agt@gmail.com
                   </Link>
                 </div>
               </div>
@@ -164,10 +164,10 @@ export default async function Footer() {
                   WhatsApp
                 </span>
                 <a
-                  href="https://wa.me/919233749847"
+                  href="https://wa.me/1111111111"
                   className="text-white font-black text-sm hover:text-green-400 transition-colors tracking-tight"
                 >
-                  +91 92337 49847
+                  +91 11111 11111
                 </a>
               </div>
 
@@ -187,7 +187,7 @@ export default async function Footer() {
         <div className="border-t border-white/5 mt-24 pt-10 flex flex-col md:flex-row justify-between items-center gap-8">
           <div className="flex flex-col items-center md:items-start gap-2">
             <p className="text-[10px] font-black uppercase tracking-[0.3em] text-gray-600">
-              &copy; {new Date().getFullYear()} Tripura 365 Editorial
+              &copy; {new Date().getFullYear()} Public Now Editorial
             </p>
             <p className="text-[9px] font-bold text-gray-800 uppercase tracking-widest">
               Digital Excellence in Journalism
