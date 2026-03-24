@@ -48,7 +48,7 @@ export default function Navbar() {
                   galanda.className,
                 )}
               >
-                ত্রিপুরা ৩৬৫
+                News Record
               </h1>
             </Link>
             <EventBadge className="hidden md:block" />

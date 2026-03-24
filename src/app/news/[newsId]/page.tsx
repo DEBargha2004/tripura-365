@@ -187,7 +187,7 @@ export default async function Page({
                 <span className="font-bold text-xl">T</span>
               </div>
               <div>
-                <p className="font-semibold text-gray-900">Tripura 365</p>
+                <p className="font-semibold text-gray-900">News Record</p>
                 <p className="text-sm text-gray-500">Editorial Team</p>
               </div>
             </div>

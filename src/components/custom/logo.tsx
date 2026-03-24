@@ -4,7 +4,7 @@ import { cn } from "@/lib/utils";
 
 export default function Logo({ className, ...props }: Partial<ImageProps>) {
   return (
-    <div className="relative size-16">
+    <div className="relative size-12">
       <img
         {...props}
         src={logo.src}
@@ -16,7 +16,7 @@ export default function Logo({ className, ...props }: Partial<ImageProps>) {
           className,
         )}
       />
-      <div className="size-10 rounded-full bg-white absolute bottom-0 left-1/2 -translate-x-1/2" />
+      <div className="size-12 rounded-full bg-white absolute bottom-0 left-1/2 -translate-x-1/2" />
     </div>
   );
 }

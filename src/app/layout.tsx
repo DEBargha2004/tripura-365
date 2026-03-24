@@ -15,7 +15,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: { template: "%s | Tripura 365", default: "Tripura 365" },
+  title: { template: "%s | News Record", default: "News Record" },
 };
 
 export default function RootLayout({
