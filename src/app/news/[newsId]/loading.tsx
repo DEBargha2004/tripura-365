@@ -4,19 +4,19 @@ export default function Loading() {
   return (
     <div className="min-h-screen bg-white">
       {/* Hero Section Skeleton */}
-      <div className="relative h-[70vh] w-full overflow-hidden bg-gray-900">
+      <div className="relative h-[70vh] w-full overflow-hidden bg-slate-900">
         <div className="absolute inset-0 flex flex-col justify-end pb-16 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
           {/* Back Button Skeleton */}
           <div className="absolute top-8 left-4 sm:left-8 flex items-center gap-2">
-            <Skeleton className="h-10 w-10 rounded-full bg-gray-800" />
-            <Skeleton className="h-6 w-16 bg-gray-800 hidden sm:block" />
+            <Skeleton className="h-10 w-10 rounded-full bg-slate-800" />
+            <Skeleton className="h-6 w-16 bg-slate-800 hidden sm:block" />
           </div>
 
           <div className="space-y-6">
             {/* Metadata Pills Skeleton */}
             <div className="flex flex-wrap items-center gap-3">
-              <Skeleton className="h-8 w-24 rounded-full bg-gray-800" />
-              <Skeleton className="h-8 w-32 rounded-full bg-gray-800" />
+              <Skeleton className="h-10 w-28 rounded-full bg-slate-800" />
+              <Skeleton className="h-10 w-40 rounded-full bg-slate-800" />
             </div>
 
             {/* Title Skeleton */}
@@ -27,16 +27,15 @@ export default function Loading() {
 
             {/* Views Skeleton */}
             <div className="flex items-center gap-2">
-              <Skeleton className="h-5 w-5 rounded-full bg-gray-800" />
-              <Skeleton className="h-5 w-20 bg-gray-800" />
+              <Skeleton className="h-10 w-32 rounded-full bg-slate-800" />
             </div>
           </div>
         </div>
       </div>
 
       {/* Content Card Skeleton */}
-      <article className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 -mt-10 relative z-10 pb-20">
-        <div className="bg-white rounded-t-3xl p-8 md:p-12 shadow-xl border border-gray-100">
+      <article className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 -mt-16 relative z-10 pb-20">
+        <div className="bg-white rounded-[2.5rem] p-8 md:p-14 shadow-[0_-10px_50px_rgba(0,0,0,0.1)] border border-slate-100">
           {/* Share Bar Skeleton */}
           <div className="flex items-center justify-between border-b border-gray-100 pb-8 mb-8">
             <div className="flex items-center gap-4">
@@ -73,10 +72,10 @@ export default function Loading() {
               <Skeleton className="h-5 w-5" />
               <Skeleton className="h-5 w-32" />
             </div>
-            <div className="flex flex-wrap gap-2">
-              <Skeleton className="h-9 w-24 rounded-lg" />
-              <Skeleton className="h-9 w-28 rounded-lg" />
-              <Skeleton className="h-9 w-20 rounded-lg" />
+            <div className="flex flex-wrap gap-3">
+              <Skeleton className="h-10 w-24 rounded-xl" />
+              <Skeleton className="h-10 w-32 rounded-xl" />
+              <Skeleton className="h-10 w-28 rounded-xl" />
             </div>
           </div>
         </div>

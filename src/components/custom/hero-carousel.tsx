@@ -27,7 +27,7 @@ export default function HeroCarousel({ data: slides }: { data: ImageItem[] }) {
 
   return (
     <div
-      className="relative h-96 md:min-h-125 md:h-full overflow-hidden bg-gray-900 rounded-lg"
+      className="relative h-96 md:min-h-[500px] md:h-full overflow-hidden bg-slate-900 rounded-[2.5rem] shadow-[0_20px_50px_rgba(0,0,0,0.1)] group transition-all duration-700"
       onMouseEnter={() => setMouseOver(true)}
       onMouseLeave={() => setMouseOver(false)}
     >
@@ -50,13 +50,13 @@ export default function HeroCarousel({ data: slides }: { data: ImageItem[] }) {
               />
             )}
           </div>
-          <div className="absolute inset-0 bg-linear-to-t from-black/80 via-black/20 to-transparent" />
-          <div className="absolute bottom-0 left-0 right-0 p-6 md:p-8">
-            <h2 className="text-base md:text-lg font-bold text-white mb-3 leading-tight">
+          <div className="absolute inset-0 bg-gradient-to-t from-slate-900/95 via-slate-900/20 to-transparent opacity-90 transition-opacity duration-500" />
+          <div className="absolute bottom-0 left-0 w-full p-6 md:p-10 flex flex-col gap-3">
+            <h2 className="text-2xl md:text-3xl lg:text-4xl font-extrabold text-white mb-2 leading-tight drop-shadow-md">
               {slide.caption}
             </h2>
 
-            {/* <p className="text-gray-200 text-base md:text-lg max-w-3xl line-clamp-3">
+            {/* <p className="text-slate-200 text-base md:text-lg max-w-3xl line-clamp-3">
                 {slide.body}
               </p> */}
           </div>
@@ -67,25 +67,25 @@ export default function HeroCarousel({ data: slides }: { data: ImageItem[] }) {
       {/* Navigation Buttons */}
       <button
         onClick={prevSlide}
-        className="absolute left-4 top-1/2 transform -translate-y-1/2 bg-white/20 hover:bg-white/30 text-white p-2 rounded-full backdrop-blur-sm transition-all duration-200"
+        className="absolute left-6 top-1/2 transform -translate-y-1/2 bg-white/10 hover:bg-white/30 text-white p-3 rounded-full backdrop-blur-md transition-all duration-300 opacity-0 group-hover:opacity-100 hover:scale-110 shadow-[0_4px_15px_rgba(0,0,0,0.1)] border border-white/20"
       >
-        <ChevronLeft className="h-6 w-6" />
+        <ChevronLeft className="h-6 w-6 stroke-[2.5]" />
       </button>
       <button
         onClick={nextSlide}
-        className="absolute right-4 top-1/2 transform -translate-y-1/2 bg-white/20 hover:bg-white/30 text-white p-2 rounded-full backdrop-blur-sm transition-all duration-200"
+        className="absolute right-6 top-1/2 transform -translate-y-1/2 bg-white/10 hover:bg-white/30 text-white p-3 rounded-full backdrop-blur-md transition-all duration-300 opacity-0 group-hover:opacity-100 hover:scale-110 shadow-[0_4px_15px_rgba(0,0,0,0.1)] border border-white/20"
       >
-        <ChevronRight className="h-6 w-6" />
+        <ChevronRight className="h-6 w-6 stroke-[2.5]" />
       </button>
 
       {/* Slide Indicators */}
-      <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 flex space-x-2">
+      <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 flex gap-2 z-10">
         {slides?.map((_, index) => (
           <button
             key={index}
             onClick={() => setCurrentSlide(index)}
-            className={`w-3 h-3 rounded-full transition-all duration-200 ${
-              index === currentSlide ? "bg-white" : "bg-white/50"
+            className={`h-2.5 rounded-full transition-all duration-500 ${
+              index === currentSlide ? "w-10 bg-gradient-to-r from-rose-400 to-orange-400 shadow-[0_0_15px_rgba(244,63,94,0.5)]" : "w-2.5 bg-white/40 hover:bg-white/60"
             }`}
           />
         ))}

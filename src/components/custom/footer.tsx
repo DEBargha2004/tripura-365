@@ -147,16 +147,16 @@ export default async function Footer() {
                     Email
                   </span>
                   <Link
-                    href={"mailto:tripura365.agt@gmail.com"}
+                    href={"mailto:contact@example.com"}
                     className="hover:text-white transition-colors"
                   >
-                    tripura365.agt@gmail.com
+                    contact@example.com
                   </Link>
                   <Link
-                    href={"mailto:priyankumodak.agt25@gmail.com"}
+                    href={"mailto:support@example.com"}
                     className="hover:text-white transition-colors"
                   >
-                    priyankumodak.agt25@gmail.com
+                    support@example.com
                   </Link>
                 </div>
               </div>
@@ -169,9 +169,9 @@ export default async function Footer() {
                   <span className="text-gray-500 text-xs uppercase tracking-wider font-semibold mb-0.5">
                     WhatsApp
                   </span>
-                  <a href="https://wa.me/919233749847">
+                  <a href="https://wa.me/1234567890">
                     <span className="hover:text-white transition-colors">
-                      +91 92337 49847
+                      +1 (234) 567-8900
                     </span>
                   </a>
                 </div>
@@ -186,7 +186,7 @@ export default async function Footer() {
                     Address
                   </span>
                   <span className="hover:text-white transition-colors">
-                    AD Nagar, Agartala, 799003
+                    123 Example Street, Fake City, 12345
                   </span>
                 </div>
               </div>

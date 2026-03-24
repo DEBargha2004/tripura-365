@@ -135,7 +135,7 @@ export default async function Page({
             // priority
           />
         )}
-        <div className="absolute inset-0 bg-linear-to-t from-gray-900 via-gray-900/60 to-transparent" />
+        <div className="absolute inset-0 bg-gradient-to-t from-slate-900/95 via-slate-900/40 to-transparent opacity-90" />
 
         <div className="absolute inset-0 flex flex-col justify-end pb-16 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
           <GotoPrev className="absolute top-8 left-4 sm:left-8 text-white/80 hover:text-white transition-colors flex items-center gap-2 group cursor-pointer">
@@ -147,25 +147,25 @@ export default async function Page({
 
           <div className="space-y-6 animate-in fade-in slide-in-from-bottom-8 duration-700">
             <div className="flex flex-wrap items-center gap-3">
-              <span className="px-4 py-1.5 bg-blue-600 text-white text-sm font-semibold rounded-full shadow-lg shadow-blue-600/20">
+              <span className="px-5 py-2 bg-white/20 backdrop-blur-md border border-white/30 text-white text-sm font-semibold rounded-full shadow-[0_4px_10px_rgba(0,0,0,0.1)]">
                 {article?.category?.name}
               </span>
-              <div className="flex items-center gap-2 text-gray-300 text-sm bg-black/30 backdrop-blur-sm px-3 py-1.5 rounded-full">
-                <Clock className="h-4 w-4" />
+              <div className="flex items-center gap-2 text-slate-100 font-medium text-sm bg-black/30 backdrop-blur-md border border-white/20 px-4 py-2 rounded-full shadow-[0_4px_10px_rgba(0,0,0,0.1)]">
+                <Calendar className="h-4 w-4 text-rose-300" />
                 <span>
                   {article.published_on && format(article.published_on, "PPP")}
                 </span>
               </div>
             </div>
 
-            <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-white leading-tight max-w-4xl drop-shadow-lg">
+            <h1 className="text-4xl md:text-5xl lg:text-6xl font-extrabold text-white leading-tight max-w-4xl drop-shadow-[0_2px_10px_rgba(0,0,0,0.5)]">
               {article.title}
             </h1>
 
-            <div className="flex items-center gap-6 text-gray-300">
-              <div className="flex items-center gap-2">
-                <Eye className="h-5 w-5" />
-                <span className="font-medium">
+            <div className="flex items-center gap-6 text-slate-200">
+              <div className="flex items-center gap-2 bg-white/10 backdrop-blur-md px-4 py-2 rounded-full border border-white/10">
+                <Eye className="h-5 w-5 text-rose-300" />
+                <span className="font-medium tracking-wide">
                   {getViews({
                     published_on: article.published_on,
                     seed: article.body,
@@ -178,12 +178,12 @@ export default async function Page({
         </div>
       </div>
 
-      <article className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 -mt-10 relative z-10 pb-20">
-        <div className="bg-white rounded-t-3xl p-8 md:p-12 shadow-xl border border-gray-100">
+      <article className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 -mt-16 relative z-10 pb-20">
+        <div className="bg-white rounded-[2.5rem] p-8 md:p-14 shadow-[0_-10px_50px_rgba(0,0,0,0.1)] border border-slate-100">
           {/* Share Bar */}
           <div className="flex items-center justify-between border-b border-gray-100 pb-8 mb-8">
             <div className="flex items-center gap-4">
-              <div className="h-12 w-12 rounded-full bg-gray-100 flex items-center justify-center text-gray-500">
+              <div className="h-12 w-12 rounded-full bg-gradient-to-br from-rose-100 to-orange-100 flex items-center justify-center text-rose-600 shadow-sm border border-rose-200/50">
                 <span className="font-bold text-xl">T</span>
               </div>
               <div>
@@ -195,7 +195,7 @@ export default async function Page({
             <div className="flex items-center gap-2">
               <FbShare url={`${basePath}/news/${newsId}`}>
                 <button
-                  className="p-2.5 rounded-full bg-blue-50 text-blue-600 hover:bg-blue-100 transition-colors"
+                  className="p-3 rounded-full bg-blue-50/80 text-blue-600 hover:bg-blue-50 hover:-translate-y-1 hover:shadow-md transition-all duration-300"
                   title="Share on Facebook"
                 >
                   <Facebook className="h-5 w-5" />
@@ -203,14 +203,14 @@ export default async function Page({
               </FbShare>
               <WaShare url={`${basePath}/news/${newsId}`} title={article.title}>
                 <button
-                  className="p-2.5 rounded-full bg-green-50 text-green-600 hover:bg-green-100 transition-colors"
+                  className="p-3 rounded-full bg-green-50/80 text-green-600 hover:bg-green-50 hover:-translate-y-1 hover:shadow-md transition-all duration-300"
                   title="Share on WhatsApp"
                 >
                   <FaWhatsapp className="h-5 w-5" />
                 </button>
               </WaShare>
               <button
-                className="p-2.5 rounded-full bg-gray-50 text-gray-600 hover:bg-gray-100 transition-colors"
+                className="p-3 rounded-full bg-slate-50 text-slate-600 hover:bg-slate-100 hover:-translate-y-1 hover:shadow-md transition-all duration-300"
                 title="Share"
               >
                 <Share2 className="h-5 w-5" />
@@ -232,8 +232,8 @@ export default async function Page({
           )}
 
           {/* Article Body */}
-          <div className="prose prose-lg md:prose-xl max-w-none text-gray-700 leading-relaxed">
-            <p className="first-letter:text-5xl first-letter:font-bold first-letter:text-gray-900 first-letter:mr-3 first-letter:float-left">
+          <div className="prose prose-lg md:prose-xl max-w-none text-slate-800 leading-relaxed font-serif">
+            <p className="first-letter:text-[5rem] first-letter:-mt-2 first-letter:font-extrabold first-letter:text-transparent first-letter:bg-clip-text first-letter:bg-gradient-to-br first-letter:from-rose-500 first-letter:to-orange-500 first-letter:mr-3 first-letter:float-left first-letter:leading-[0.8] mb-6">
               {article.body}
             </p>
           </div>
@@ -244,14 +244,14 @@ export default async function Page({
               <Tag className="h-5 w-5" />
               <span>Related Topics</span>
             </div>
-            <div className="flex flex-wrap gap-2">
-              <span className="px-4 py-2 bg-gray-50 text-gray-700 rounded-lg hover:bg-gray-100 transition-colors cursor-pointer font-medium text-sm">
+            <div className="flex flex-wrap gap-3">
+              <span className="px-5 py-2 bg-slate-50 text-slate-700 rounded-xl hover:bg-slate-100 border border-slate-200 hover:border-slate-300 transition-colors cursor-pointer font-semibold text-sm shadow-sm">
                 {article?.category?.name}
               </span>
-              <span className="px-4 py-2 bg-gray-50 text-gray-700 rounded-lg hover:bg-gray-100 transition-colors cursor-pointer font-medium text-sm">
+              <span className="px-5 py-2 bg-slate-50 text-slate-700 rounded-xl hover:bg-slate-100 border border-slate-200 hover:border-slate-300 transition-colors cursor-pointer font-semibold text-sm shadow-sm">
                 Tripura News
               </span>
-              <span className="px-4 py-2 bg-gray-50 text-gray-700 rounded-lg hover:bg-gray-100 transition-colors cursor-pointer font-medium text-sm">
+              <span className="px-5 py-2 bg-slate-50 text-slate-700 rounded-xl hover:bg-slate-100 border border-slate-200 hover:border-slate-300 transition-colors cursor-pointer font-semibold text-sm shadow-sm">
                 Latest Updates
               </span>
             </div>

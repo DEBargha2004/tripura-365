@@ -106,11 +106,13 @@ export default async function Home() {
   const headlines = await getHeadline();
 
   return (
-    <div className="bg-gray-50 min-h-screen pb-12">
+    <div className="bg-slate-50/50 min-h-screen pb-12 relative overflow-hidden">
+      <div className="absolute top-0 inset-x-0 h-[500px] bg-gradient-to-b from-rose-50/50 to-transparent pointer-events-none" />
+      
       {/* Category Navigation - Sticky & Horizontal Scroll */}
-      <div className="sticky top-0 z-40 bg-white/90 backdrop-blur-md border-b border-gray-200 shadow-sm transition-all duration-300">
+      <div className="sticky top-0 z-40 bg-white/80 backdrop-blur-xl border-b border-slate-200/50 shadow-[0_4px_20px_rgba(0,0,0,0.02)] transition-all duration-500">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex items-center gap-4 overflow-x-auto py-3 no-scrollbar mask-gradient-x">
+          <div className="flex items-center gap-3 overflow-x-auto py-3.5 no-scrollbar mask-gradient-x">
             {sortcategories(categories ?? [])
               ?.sort((a, b) => a.sequence - b.sequence)
               .map((item) => (
@@ -119,7 +121,7 @@ export default async function Home() {
                   href={`/category/${item.id}`}
                   className="shrink-0"
                 >
-                  <span className="px-5 py-2 rounded-full bg-gray-100 text-gray-700 text-sm font-semibold hover:bg-red-50 hover:text-red-600 transition-all duration-300 border border-transparent hover:border-red-200 block">
+                  <span className="px-5 py-2.5 rounded-full bg-white text-slate-600 text-sm font-medium hover:bg-gradient-to-r hover:from-rose-50 hover:to-orange-50 hover:text-rose-700 transition-all duration-300 border border-slate-100 shadow-[0_2px_8px_rgba(0,0,0,0.02)] hover:shadow-[0_8px_16px_rgba(244,63,94,0.08)] block hover:-translate-y-0.5">
                     {item.name}
                   </span>
                 </Link>
@@ -129,7 +131,7 @@ export default async function Home() {
               target="_blank"
               className="shrink-0"
             >
-              <span className="px-5 py-2 rounded-full bg-red-50 text-red-700 text-sm font-semibold hover:bg-red-100 transition-all duration-300 border border-red-100 block">
+              <span className="px-5 py-2.5 rounded-full bg-gradient-to-r from-rose-500 to-orange-500 text-white text-sm font-semibold hover:shadow-[0_8px_20px_rgba(244,63,94,0.25)] hover:-translate-y-0.5 transition-all duration-300 border border-transparent block">
                 তথ্য ও সংস্কৃতি
               </span>
             </Link>
@@ -138,23 +140,23 @@ export default async function Home() {
       </div>
 
       {/* Daily Shlok Section */}
-      <section className="max-w-2xl mx-auto px-4 sm:px-6 lg:px-4 py-6">
-        <div className="relative bg-white rounded-3xl p-6 md:p-8 shadow-xl border border-gray-100 text-center overflow-hidden group hover:shadow-2xl transition-shadow duration-500">
-          <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-orange-400 via-red-500 to-purple-600" />
-          <div className="absolute -top-10 -left-10 w-40 h-40 bg-orange-100 rounded-full blur-3xl opacity-50 group-hover:opacity-70 transition-opacity" />
-          <div className="absolute -bottom-10 -right-10 w-40 h-40 bg-purple-100 rounded-full blur-3xl opacity-50 group-hover:opacity-70 transition-opacity" />
+      <section className="max-w-2xl mx-auto px-4 sm:px-6 lg:px-4 py-8 relative">
+        <div className="relative bg-white/80 backdrop-blur-xl rounded-3xl p-8 md:p-10 shadow-[0_8px_30px_rgb(0,0,0,0.04)] border border-white/60 text-center overflow-hidden group hover:shadow-[0_20px_40px_-15px_rgba(244,63,94,0.15)] transition-all duration-700 hover:-translate-y-1">
+          <div className="absolute top-0 left-0 w-full h-1.5 bg-gradient-to-r from-rose-400 via-red-500 to-orange-500 opacity-90" />
+          <div className="absolute -top-20 -left-20 w-60 h-60 bg-rose-100/50 rounded-full blur-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-700" />
+          <div className="absolute -bottom-20 -right-20 w-60 h-60 bg-orange-100/50 rounded-full blur-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-700" />
 
-          <h4 className="relative text-xl md:text-2xl font-bold text-gray-800 mb-4 leading-relaxed font-serif">
-            <span className="text-4xl text-orange-500 opacity-50 absolute -top-4 -left-2">
+          <h4 className="relative text-xl md:text-2xl font-medium text-slate-800 mb-6 leading-relaxed font-serif px-4">
+            <span className="text-5xl text-rose-500/20 absolute -top-4 left-0 select-none">
               ❝
             </span>
             {slok.body}
-            <span className="text-4xl text-orange-500 opacity-50 absolute -bottom-8 -right-2">
+            <span className="text-5xl text-rose-500/20 absolute -bottom-6 right-0 select-none">
               ❞
             </span>
           </h4>
-          <div className="relative inline-flex items-center gap-2 px-4 py-1.5 bg-orange-50 text-orange-700 rounded-full text-sm font-medium mt-2">
-            <span className="w-2 h-2 bg-orange-500 rounded-full animate-pulse" />
+          <div className="relative inline-flex items-center gap-2.5 px-5 py-2 bg-gradient-to-r from-rose-50 to-orange-50 text-rose-700 rounded-full text-sm font-semibold mt-2 border border-rose-100/50 shadow-sm">
+            <span className="w-2 h-2 bg-rose-500 rounded-full animate-pulse shadow-[0_0_8px_rgba(244,63,94,0.6)]" />
             {slok.chapter} অধ্যায়, {slok.slok} শ্লোক
           </div>
         </div>
@@ -168,12 +170,12 @@ export default async function Home() {
               key={link.title}
               href={link.url}
               target="_blank"
-              className="group flex items-center justify-center gap-3 p-4 bg-white rounded-xl shadow-sm border border-gray-100 hover:shadow-md hover:border-blue-100 transition-all duration-300"
+              className="group flex items-center justify-center gap-3 p-5 bg-white/80 backdrop-blur-sm rounded-2xl shadow-[0_4px_20px_rgba(0,0,0,0.02)] border border-slate-100/80 hover:shadow-[0_10px_30px_rgba(0,0,0,0.06)] hover:border-slate-200 hover:-translate-y-1 transition-all duration-500"
             >
-              <div className="p-2 bg-blue-50 text-blue-600 rounded-lg group-hover:scale-110 transition-transform duration-300">
-                <link.icon size={20} />
+              <div className="p-2.5 bg-gradient-to-br from-slate-50 to-slate-100 text-slate-600 rounded-xl group-hover:text-rose-600 group-hover:scale-110 group-hover:shadow-sm transition-all duration-500 border border-slate-200/50">
+                <link.icon size={22} />
               </div>
-              <span className="font-semibold text-gray-700 group-hover:text-blue-700 transition-colors">
+              <span className="font-semibold text-slate-700 group-hover:text-slate-900 transition-colors">
                 {link.title}
               </span>
             </Link>

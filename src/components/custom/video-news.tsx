@@ -12,17 +12,17 @@ export default function VideoNews({
   hideShowAll?: boolean;
 }) {
   return (
-    <section className="py-12 md:py-20 bg-white">
+    <section className="py-12 md:py-20 bg-slate-50/50 relative overflow-hidden">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between mb-12">
-          <h2 className="text-3xl md:text-4xl font-bold text-gray-900 tracking-tight">
+          <h2 className="text-3xl md:text-4xl font-extrabold bg-gradient-to-r from-slate-900 to-slate-700 bg-clip-text text-transparent tracking-tight">
             ভিডিও সংবাদ
           </h2>
-          <div className="h-1 flex-1 mx-6 bg-gray-100 rounded-full hidden md:block" />
+          <div className="h-[2px] flex-1 mx-6 bg-gradient-to-r from-slate-200 to-transparent rounded-full hidden md:block" />
           {!hideShowAll && (
             <Link
               href={"video-news"}
-              className="group flex items-center gap-2 text-red-600 font-semibold hover:text-red-700 transition-colors"
+              className="group flex items-center gap-2 text-rose-600 font-semibold hover:text-rose-700 transition-colors"
             >
               Watch All
               <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
@@ -37,7 +37,7 @@ export default function VideoNews({
               key={news.id}
               className="group block h-full"
             >
-              <article className="relative h-96 w-full rounded-3xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-1 bg-black">
+              <article className="relative h-96 w-full rounded-3xl overflow-hidden shadow-[0_8px_30px_rgb(0,0,0,0.06)] hover:shadow-[0_20px_40px_-15px_rgb(0,0,0,0.15)] transition-all duration-500 transform hover:-translate-y-1.5 bg-slate-900 group-hover:ring-2 ring-white/30">
                 {/* Full Background Video (Iframe) */}
                 {news.videos?.[0] && (
                   <iframe
@@ -49,7 +49,7 @@ export default function VideoNews({
                 )}
 
                 {/* Strong Gradient Overlay for Text Readability */}
-                <div className="absolute inset-0 bg-linear-to-t from-black/90 via-black/40 to-transparent opacity-90 transition-opacity duration-300" />
+                <div className="absolute inset-0 bg-gradient-to-t from-slate-900/95 via-slate-900/40 to-transparent opacity-90 transition-opacity duration-500" />
 
                 {/* Bottom Content Overlay */}
                 <div className="absolute bottom-0 left-0 w-full p-6 z-10 flex flex-col gap-3">
@@ -73,7 +73,7 @@ export default function VideoNews({
                   </div>
 
                   {/* Title */}
-                  <h3 className="text-xl md:text-2xl font-bold text-white leading-snug line-clamp-2 group-hover:text-red-400 transition-colors">
+                  <h3 className="text-xl md:text-2xl font-bold text-white leading-snug line-clamp-2 group-hover:text-rose-400 transition-colors">
                     {news.title}
                   </h3>
                 </div>

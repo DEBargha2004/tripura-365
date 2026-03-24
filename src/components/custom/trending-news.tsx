@@ -1,4 +1,4 @@
-import { getViews, getYtThumbnail } from "@/lib/utils";
+import { cn, getViews, getYtThumbnail } from "@/lib/utils";
 import { Data } from "@/types/response";
 import { Eye, TrendingUp, ArrowRight } from "lucide-react";
 import Image from "next/image";
@@ -12,18 +12,18 @@ export default function TrendingNews({
   hideViewAll?: boolean;
 }) {
   return (
-    <section className="py-12 md:py-20 bg-white">
+    <section className="py-12 md:py-20 bg-white relative overflow-hidden">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center mb-12">
-          <TrendingUp className="h-8 w-8 text-red-600 mr-3" />
-          <h2 className="text-3xl md:text-4xl font-bold text-gray-900 tracking-tight">
+          <TrendingUp className="h-8 w-8 text-rose-600 mr-3" />
+          <h2 className="text-3xl md:text-4xl font-extrabold bg-gradient-to-r from-slate-900 to-slate-700 bg-clip-text text-transparent tracking-tight">
             বর্তমানে জনপ্রিয়
           </h2>
-          <div className="h-1 flex-1 mx-6 bg-gray-100 rounded-full hidden md:block" />
+          <div className="h-[2px] flex-1 mx-6 bg-gradient-to-r from-slate-200 to-transparent rounded-full hidden md:block" />
           {!hideViewAll && (
             <div>
               <Link href={"/trending-news"}>
-                <p className="text-red-500 font-semibold">View All</p>
+                <p className="group flex items-center gap-2 text-rose-600 font-semibold hover:text-rose-700 transition-colors">View All <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" /></p>
               </Link>
             </div>
           )}
@@ -36,7 +36,7 @@ export default function TrendingNews({
               key={post.id}
               className="group block h-full"
             >
-              <article className="relative h-96 w-full rounded-3xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-1">
+              <article className="relative h-96 w-full rounded-3xl overflow-hidden shadow-[0_4px_20px_rgba(0,0,0,0.06)] hover:shadow-[0_20px_40px_-5px_rgba(0,0,0,0.15)] transition-all duration-500 transform hover:-translate-y-1.5 group-hover:ring-2 ring-white/50">
                 {/* Full Background Image */}
                 {(post.photos?.length > 0 || post.videos?.length > 0) && (
                   <img
@@ -52,18 +52,18 @@ export default function TrendingNews({
                 )}
 
                 {/* Strong Gradient Overlay */}
-                <div className="absolute inset-0 bg-linear-to-t from-black/90 via-black/50 to-transparent opacity-90 transition-opacity duration-300" />
+                <div className="absolute inset-0 bg-gradient-to-t from-slate-900/95 via-slate-900/40 to-transparent opacity-90 transition-opacity duration-500" />
 
                 {/* Top Badges */}
-                <div className="absolute top-4 left-4 flex flex-col gap-2 z-10">
-                  <span className="self-start px-3 py-1 bg-red-600/90 backdrop-blur-sm text-white text-xs font-bold rounded-full shadow-sm">
+                <div className={cn("absolute top-4 left-4 flex flex-col gap-2 z-10", !post.category?.name && "hidden")}>
+                  <span className="self-start px-4 py-1.5 bg-orange-600/90 backdrop-blur-sm text-white text-xs font-bold rounded-full shadow-[0_4px_10px_rgba(234,88,12,0.3)]">
                     {post.category?.name}
                   </span>
                 </div>
 
                 {/* Ranking / Trending Badge */}
                 <div className="absolute top-4 right-4 z-10">
-                  <span className="flex items-center justify-center w-10 h-10 bg-white/20 backdrop-blur-md border border-white/30 text-white font-bold rounded-full shadow-lg">
+                  <span className="flex items-center justify-center w-10 h-10 bg-gradient-to-br from-rose-500 to-orange-500 backdrop-blur-md border border-white/20 text-white font-bold rounded-full shadow-[0_0_15px_rgba(244,63,94,0.4)]">
                     #{index + 1}
                   </span>
                 </div>
@@ -88,7 +88,7 @@ export default function TrendingNews({
                   </div>
 
                   {/* Title */}
-                  <h3 className="text-xl md:text-2xl font-bold text-white leading-snug line-clamp-2 group-hover:text-red-400 transition-colors">
+                  <h3 className="text-xl md:text-2xl font-bold text-white leading-snug line-clamp-2 group-hover:text-orange-400 transition-colors">
                     {post.title}
                   </h3>
 

@@ -13,7 +13,7 @@ function EventBadge({ className, ...props }: React.ComponentProps<"div">) {
       <img
         src={"https://d2ros3ibvdm942.cloudfront.net/tripura365/event.jpeg"}
         alt="Event"
-        className="size-full rounded-full border-4 border-white shadow-lg object-cover"
+        className="size-full rounded-full border-[3px] border-white shadow-[0_8px_25px_rgba(244,63,94,0.2)] object-cover hover:scale-110 transition-transform duration-500"
       />
     </div>
   );
@@ -21,7 +21,7 @@ function EventBadge({ className, ...props }: React.ComponentProps<"div">) {
 
 export default function Navbar() {
   return (
-    <nav className="sticky top-0 z-50 bg-white/80 backdrop-blur-md border-b border-gray-200 transition-all duration-300">
+    <nav className="sticky top-0 z-50 bg-white/90 backdrop-blur-2xl border-b border-gray-100/50 shadow-[0_4px_30px_rgba(0,0,0,0.03)] transition-all duration-500">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-20">
           {/* Left: Logo */}
@@ -31,8 +31,8 @@ export default function Navbar() {
             </Link>
             <div
               className={cn(
-                "bg-red-600 text-white text-sm font-semibold h-fit my-auto px-2 py-0.5 rounded-full animate-pulse",
-                "absolute left-14 whitespace-nowrap",
+                "bg-gradient-to-r from-rose-500 to-orange-500 text-white text-xs font-bold tracking-wider h-fit my-auto px-3 py-1 rounded-full animate-pulse shadow-[0_0_15px_rgba(244,63,94,0.4)]",
+                "absolute left-14 whitespace-nowrap border border-white/20",
               )}
             >
               Test Run
@@ -44,7 +44,7 @@ export default function Navbar() {
             <Link href={"/"} className="pointer-events-auto">
               <h1
                 className={cn(
-                  "text-3xl md:text-5xl font-bold text-red-700 whitespace-nowrap tracking-tight hover:scale-105 transition-transform duration-300 cursor-pointer drop-shadow-sm",
+                  "text-3xl md:text-5xl font-extrabold bg-gradient-to-br from-rose-600 via-red-500 to-orange-500 bg-clip-text text-transparent whitespace-nowrap tracking-tight hover:scale-105 transition-all duration-500 cursor-pointer drop-shadow-sm",
                   galanda.className,
                 )}
               >
@@ -56,9 +56,9 @@ export default function Navbar() {
 
           {/* Right: Utilities */}
           <div className="hidden md:flex items-center gap-4 z-10">
-            <div className="bg-gray-100/80 px-4 py-2 rounded-full border border-gray-200 flex items-center gap-4 text-sm font-medium text-gray-600 shadow-sm hover:shadow-md transition-shadow duration-300">
+            <div className="bg-white px-5 py-2.5 rounded-full border border-gray-100/80 flex items-center gap-4 text-sm font-medium text-slate-600 shadow-[0_2px_15px_rgba(0,0,0,0.03)] hover:shadow-[0_8px_25px_rgba(0,0,0,0.06)] hover:-translate-y-0.5 transition-all duration-300">
               <Timer />
-              <div className="h-4 w-px bg-gray-300" />
+              <div className="h-5 w-px bg-slate-200" />
               <Weather />
             </div>
           </div>

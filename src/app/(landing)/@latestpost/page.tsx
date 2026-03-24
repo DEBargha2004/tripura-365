@@ -17,14 +17,14 @@ export default async function Page() {
     <section className="py-12 md:py-20 bg-white" id="latest">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between mb-10">
-          <h2 className="text-3xl md:text-5xl font-bold text-gray-900 tracking-tight">
+          <h2 className="text-3xl md:text-5xl font-extrabold bg-gradient-to-r from-slate-900 to-slate-700 bg-clip-text text-transparent tracking-tight">
             সর্বশেষ খবর
           </h2>
-          <div className="h-1 flex-1 mx-6 bg-gray-100 rounded-full hidden md:block" />
+          <div className="h-[2px] flex-1 mx-6 bg-gradient-to-r from-slate-200 to-transparent rounded-full hidden md:block" />
         </div>
 
         <Link href={`/news/${post.id}`} className="group block">
-          <div className="@container relative w-full h-[500px] md:h-[600px] rounded-3xl overflow-hidden shadow-2xl">
+          <div className="@container relative w-full h-[500px] md:h-[600px] rounded-[2.5rem] overflow-hidden shadow-[0_20px_50px_rgba(0,0,0,0.1)] group-hover:shadow-[0_30px_60px_rgba(0,0,0,0.15)] transition-all duration-700">
             {/* Background Image with Zoom Effect */}
 
             <img
@@ -40,28 +40,28 @@ export default async function Page() {
             />
 
             {/* Gradient Overlay */}
-            <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-transparent opacity-90 transition-opacity duration-300 group-hover:opacity-100" />
+            <div className="absolute inset-0 bg-gradient-to-t from-slate-900/95 via-slate-900/40 to-transparent opacity-90 transition-opacity duration-500 group-hover:opacity-100" />
 
             {/* Content Container */}
-            <div className="absolute bottom-0 left-0 w-full p-6 md:p-12 flex flex-col md:flex-row items-end justify-between gap-6">
+            <div className="absolute bottom-0 left-0 w-full p-6 md:p-12 flex flex-col md:flex-row items-end justify-between gap-6 z-10">
               <div className="max-w-3xl space-y-4">
                 {/* Badges */}
                 <div className="flex flex-wrap items-center gap-3">
-                  <span className="px-4 py-1.5 bg-blue-600/90 backdrop-blur-sm text-white text-sm font-semibold rounded-full shadow-sm">
+                  <span className="px-5 py-2 bg-white/20 backdrop-blur-md border border-white/30 text-white text-sm font-semibold rounded-full shadow-[0_4px_10px_rgba(0,0,0,0.1)]">
                     {post?.category?.name}
                   </span>
-                  <span className="px-4 py-1.5 bg-red-600/90 backdrop-blur-sm text-white text-sm font-semibold rounded-full shadow-sm animate-pulse">
+                  <span className="px-5 py-2 bg-gradient-to-r from-rose-500 to-orange-500 text-white text-sm font-bold tracking-wide rounded-full shadow-[0_0_15px_rgba(244,63,94,0.5)] animate-pulse border border-white/20">
                     Latest
                   </span>
                 </div>
 
                 {/* Title */}
-                <h1 className="text-3xl font-bold text-white leading-tight drop-shadow-lg @sm:line-clamp-3 line-clamp-1">
+                <h1 className="text-3xl md:text-5xl font-bold text-white leading-tight drop-shadow-lg @sm:line-clamp-3 line-clamp-1">
                   {post.title}
                 </h1>
 
                 {/* Meta Info */}
-                <div className="flex items-center gap-6 text-gray-200 text-sm md:text-base">
+                <div className="flex items-center gap-6 text-slate-200 text-sm md:text-base">
                   <div className="flex items-center gap-2">
                     <Calendar className="w-4 h-4" />
                     <span>
@@ -71,14 +71,14 @@ export default async function Page() {
                 </div>
 
                 {/* Description */}
-                <p className="text-gray-300 text-lg line-clamp-2 md:line-clamp-3 max-w-2xl leading-relaxed">
+                <p className="text-slate-300 text-lg line-clamp-2 md:line-clamp-3 max-w-2xl leading-relaxed">
                   {post.body}
                 </p>
               </div>
 
               {/* CTA Button */}
-              <div className="hidden md:block">
-                <button className="text-nowrap flex items-center gap-2 bg-white text-gray-900 px-8 py-4 rounded-full font-bold transition-all duration-300 hover:bg-blue-50 hover:scale-105 shadow-lg group-hover:shadow-blue-900/20">
+              <div className="hidden md:block shrink-0">
+                <button className="text-nowrap flex items-center gap-2 bg-white/95 backdrop-blur-md text-slate-900 px-8 py-4 rounded-full font-bold transition-all duration-300 hover:bg-white hover:scale-105 shadow-[0_8px_30px_rgba(0,0,0,0.1)] group-hover:shadow-[0_15px_40px_rgba(255,255,255,0.2)]">
                   Read Full Article
                   <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
                 </button>

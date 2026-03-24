@@ -28,7 +28,7 @@ export default function AdCarousel({ data }: { data?: AdBannerImageData[] }) {
               height={100}
               width={200}
               className={cn(
-                "size-full transition-all duration-500 delay-500 absolute top-0 left-0",
+                "size-full transition-all duration-500 delay-500 absolute top-0 left-0 rounded-3xl object-cover",
               )}
               onClick={() => setActiveAd(ad)}
             />
