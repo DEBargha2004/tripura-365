@@ -112,7 +112,7 @@ export default async function Home() {
       {/* Category Navigation - Sticky & Horizontal Scroll */}
       <div className="sticky top-0 z-40 bg-white/80 backdrop-blur-xl border-b border-slate-200/50 shadow-[0_4px_20px_rgba(0,0,0,0.02)] transition-all duration-500">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex items-center gap-3 overflow-x-auto py-3.5 no-scrollbar mask-gradient-x">
+          <div className="flex lg:justify-center items-center gap-3 overflow-x-auto py-3.5 no-scrollbar mask-gradient-x">
             {sortcategories(categories ?? [])
               ?.sort((a, b) => a.sequence - b.sequence)
               .map((item) => (

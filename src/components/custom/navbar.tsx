@@ -29,14 +29,7 @@ export default function Navbar() {
             <Link href={"/"} className="group relative z-10">
               <Logo className="transition-transform duration-300 group-hover:scale-105" />
             </Link>
-            <div
-              className={cn(
-                "bg-gradient-to-r from-rose-500 to-orange-500 text-white text-xs font-bold tracking-wider h-fit my-auto px-3 py-1 rounded-full animate-pulse shadow-[0_0_15px_rgba(244,63,94,0.4)]",
-                "absolute left-14 whitespace-nowrap border border-white/20",
-              )}
-            >
-              Test Run
-            </div>
+            
           </div>
 
           {/* Center: Title */}
