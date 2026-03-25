@@ -50,7 +50,7 @@ export default async function Footer() {
               <Logo />
             </div>
             <p className="text-gray-400 leading-relaxed text-sm">
-              News Record is a dynamic and trusted Indian news website that
+              Rastriya Samachar is a dynamic and trusted Indian news website that
               brings you the latest and most relevant news from the vibrant
               state of Tripura.
             </p>
@@ -198,7 +198,7 @@ export default async function Footer() {
         <div className="border-t border-gray-900 mt-16 pt-8 flex flex-col md:flex-row justify-between items-center gap-4">
           <p className="text-gray-500 text-sm text-center md:text-left">
             &copy; {new Date().getFullYear()}{" "}
-            <span className="text-white font-semibold">News Record</span>. All
+            <span className="text-white font-semibold">Rastriya Samachar</span>. All
             rights reserved.
           </p>
           <div className="flex flex-wrap justify-center gap-6 md:gap-8">

@@ -23,7 +23,7 @@ export default function TopNews({
           {!hideViewAll && (
             <Link
               href="/top-news"
-              className="group flex items-center gap-2 text-rose-600 font-semibold hover:text-rose-700 transition-colors"
+              className="group flex items-center gap-2 text-red-600 font-semibold hover:text-red-700 transition-colors"
             >
               View All
               <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
@@ -38,7 +38,7 @@ export default function TopNews({
               key={news.id}
               className="group block h-full"
             >
-              <article className="relative h-96 w-full rounded-3xl overflow-hidden shadow-[0_4px_20px_rgba(0,0,0,0.06)] hover:shadow-[0_20px_40px_-5px_rgba(0,0,0,0.15)] transition-all duration-500 transform hover:-translate-y-1.5 group-hover:ring-2 ring-white/50">
+              <article className="relative h-96 w-full rounded-none overflow-hidden shadow-[0_4px_20px_rgba(0,0,0,0.06)] hover:shadow-[0_20px_40px_-5px_rgba(0,0,0,0.15)] transition-all duration-500 transform hover:-translate-y-1.5 group-hover:ring-2 ring-white/50 border-l-4 border-l-red-600">
                 {(news.photos?.length > 0 || news.videos?.length > 0) && (
                   <img
                     src={
@@ -57,8 +57,8 @@ export default function TopNews({
 
                 {/* Top Badges */}
                 <div className={cn("absolute top-4 left-4 z-10", !news.category?.name && "hidden")}>
-                  <span className="px-4 py-1.5 bg-rose-600/90 backdrop-blur-sm text-white text-xs font-bold rounded-full shadow-[0_4px_10px_rgba(244,63,94,0.3)]">
-                    {news.category?.name}
+                  <span className="px-4 py-1.5 bg-red-600/90 backdrop-blur-sm text-white text-xs font-bold rounded-none -skew-x-12 shadow-[0_4px_10px_rgba(237,28,36,0.3)] inline-block">
+                    <span className="skew-x-12 block">{news.category?.name}</span>
                   </span>
                 </div>
 
@@ -71,7 +71,7 @@ export default function TopNews({
                   </div>
 
                   {/* Title */}
-                  <h3 className="text-xl md:text-2xl font-bold text-white leading-snug line-clamp-2 group-hover:text-rose-400 transition-colors">
+                  <h3 className="text-xl md:text-2xl font-bold text-white leading-snug line-clamp-2 group-hover:text-red-400 transition-colors">
                     {news.title}
                   </h3>
 

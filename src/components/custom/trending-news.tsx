@@ -15,15 +15,15 @@ export default function TrendingNews({
     <section className="py-12 md:py-20 bg-white relative overflow-hidden">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center mb-12">
-          <TrendingUp className="h-8 w-8 text-rose-600 mr-3" />
+          <TrendingUp className="h-8 w-8 text-red-600 mr-3" />
           <h2 className="text-3xl md:text-4xl font-extrabold bg-gradient-to-r from-slate-900 to-slate-700 bg-clip-text text-transparent tracking-tight">
             বর্তমানে জনপ্রিয়
           </h2>
           <div className="h-[2px] flex-1 mx-6 bg-gradient-to-r from-slate-200 to-transparent rounded-full hidden md:block" />
           {!hideViewAll && (
-            <div>
+            <div className="ml-auto">
               <Link href={"/trending-news"}>
-                <p className="group flex items-center gap-2 text-rose-600 font-semibold hover:text-rose-700 transition-colors">View All <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" /></p>
+                <p className="group flex items-center gap-2 text-red-600 font-semibold hover:text-red-700 transition-colors">View All <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" /></p>
               </Link>
             </div>
           )}
@@ -36,7 +36,7 @@ export default function TrendingNews({
               key={post.id}
               className="group block h-full"
             >
-              <article className="relative h-96 w-full rounded-3xl overflow-hidden shadow-[0_4px_20px_rgba(0,0,0,0.06)] hover:shadow-[0_20px_40px_-5px_rgba(0,0,0,0.15)] transition-all duration-500 transform hover:-translate-y-1.5 group-hover:ring-2 ring-white/50">
+              <article className="relative h-96 w-full rounded-none overflow-hidden shadow-[0_4px_20px_rgba(0,0,0,0.06)] hover:shadow-[0_20px_40px_-5px_rgba(0,0,0,0.15)] transition-all duration-500 transform hover:-translate-y-1.5 group-hover:ring-2 ring-white/50 border-l-4 border-l-red-600">
                 {/* Full Background Image */}
                 {(post.photos?.length > 0 || post.videos?.length > 0) && (
                   <img
@@ -56,15 +56,15 @@ export default function TrendingNews({
 
                 {/* Top Badges */}
                 <div className={cn("absolute top-4 left-4 flex flex-col gap-2 z-10", !post.category?.name && "hidden")}>
-                  <span className="self-start px-4 py-1.5 bg-orange-600/90 backdrop-blur-sm text-white text-xs font-bold rounded-full shadow-[0_4px_10px_rgba(234,88,12,0.3)]">
-                    {post.category?.name}
+                  <span className="self-start px-4 py-1.5 bg-red-600/90 backdrop-blur-sm text-white text-xs font-bold rounded-none -skew-x-12 shadow-[0_4px_10px_rgba(237,28,36,0.3)]">
+                    <span className="skew-x-12 block">{post.category?.name}</span>
                   </span>
                 </div>
 
                 {/* Ranking / Trending Badge */}
                 <div className="absolute top-4 right-4 z-10">
-                  <span className="flex items-center justify-center w-10 h-10 bg-gradient-to-br from-rose-500 to-orange-500 backdrop-blur-md border border-white/20 text-white font-bold rounded-full shadow-[0_0_15px_rgba(244,63,94,0.4)]">
-                    #{index + 1}
+                  <span className="flex items-center justify-center w-10 h-10 bg-red-600 backdrop-blur-md border border-white/20 text-white font-bold rounded-none -skew-x-12 shadow-[0_0_15px_rgba(237,28,36,0.4)]">
+                    <span className="skew-x-12">#{index + 1}</span>
                   </span>
                 </div>
 
@@ -80,15 +80,15 @@ export default function TrendingNews({
                       })}{" "}
                       views
                     </span>
-                    <span className="w-1 h-1 bg-gray-400 rounded-full" />
-                    <span className="flex items-center gap-1 text-orange-400">
+                    <span className="w-1.5 h-1.5 bg-gray-400 rounded-none transform rotate-45" />
+                    <span className="flex items-center gap-1 text-red-500">
                       <TrendingUp className="h-3 w-3" />
                       Trending
                     </span>
                   </div>
 
                   {/* Title */}
-                  <h3 className="text-xl md:text-2xl font-bold text-white leading-snug line-clamp-2 group-hover:text-orange-400 transition-colors">
+                  <h3 className="text-xl md:text-2xl font-bold text-white leading-snug line-clamp-2 group-hover:text-red-400 transition-colors">
                     {post.title}
                   </h3>
 

@@ -79,7 +79,7 @@ export default async function Page({
             We couldn't find any articles in this category.
           </p>
           <GotoPrev>
-            <button className="px-6 py-2 bg-blue-600 text-white rounded-full hover:bg-blue-700 transition-colors">
+            <button className="px-8 py-3 bg-red-600 text-white font-bold tracking-wide hover:bg-black transition-colors border-b-4 border-b-red-800 hover:border-b-black shadow-md rounded-none">
               Go Back Home
             </button>
           </GotoPrev>
@@ -94,7 +94,7 @@ export default async function Page({
       <div className="bg-white border-b border-gray-100">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
           <GotoPrev className="inline-flex items-center gap-2 text-slate-500 hover:text-slate-900 transition-colors mb-6 group cursor-pointer">
-            <div className="p-1.5 rounded-full bg-slate-100 group-hover:bg-slate-200 transition-colors">
+            <div className="p-1.5 rounded-none border-l-2 border-l-red-500 bg-slate-100 group-hover:bg-slate-200 transition-colors">
               <ArrowLeft className="h-4 w-4" />
             </div>
             <span className="font-medium">Back to Home</span>
@@ -108,7 +108,7 @@ export default async function Page({
               {newsList?.length} Articles
             </span>
           </div>
-          <div className="h-[2px] w-24 bg-gradient-to-r from-rose-500 to-orange-500 rounded-full mt-6" />
+          <div className="h-1.5 w-24 bg-red-600 rounded-none mt-6" />
         </div>
       </div>
 
@@ -117,11 +117,11 @@ export default async function Page({
         {featuredNews && (
           <section className="mb-16">
             <h2 className="text-2xl font-bold text-slate-900 mb-6 flex items-center gap-2">
-              <span className="w-1.5 h-8 bg-gradient-to-b from-rose-500 to-orange-500 rounded-full shadow-[0_0_10px_rgba(244,63,94,0.4)]" />
+              <span className="w-1.5 h-8 bg-red-600 rounded-none shadow-[0_0_10px_rgba(237,28,36,0.4)]" />
               Featured Story
             </h2>
             <Link href={`/news/${featuredNews.id}`} className="group block">
-              <div className="relative w-full h-[500px] md:h-[600px] rounded-[2.5rem] overflow-hidden shadow-[0_20px_50px_rgba(0,0,0,0.1)] group-hover:shadow-[0_30px_60px_rgba(0,0,0,0.15)] transition-all duration-700">
+              <div className="relative w-full h-[500px] md:h-[600px] rounded-none border-l-8 border-l-red-600 overflow-hidden shadow-[0_20px_50px_rgba(0,0,0,0.1)] group-hover:shadow-[0_30px_60px_rgba(0,0,0,0.15)] transition-all duration-700">
                 {/* Background Image with Zoom Effect */}
                 {(featuredNews.images?.length > 0 ||
                   featuredNews.videos?.length > 0) && (
@@ -146,11 +146,11 @@ export default async function Page({
                   <div className="max-w-3xl space-y-4">
                     {/* Badges */}
                     <div className="flex flex-wrap items-center gap-3">
-                      <span className="px-5 py-2 bg-white/20 backdrop-blur-md border border-white/30 text-white text-sm font-semibold rounded-full shadow-[0_4px_10px_rgba(0,0,0,0.1)]">
-                        {featuredNews.category?.name}
+                      <span className="px-6 py-2 bg-white/20 backdrop-blur-md border border-white/30 text-white text-sm font-semibold rounded-none -skew-x-12 shadow-[0_4px_10px_rgba(0,0,0,0.1)]">
+                        <span className="skew-x-12 block">{featuredNews.category?.name}</span>
                       </span>
-                      <span className="px-5 py-2 bg-gradient-to-r from-rose-500 to-orange-500 text-white text-sm font-bold tracking-wide rounded-full shadow-[0_0_15px_rgba(244,63,94,0.5)] animate-pulse border border-white/20">
-                        Featured
+                      <span className="px-6 py-2 bg-red-600 text-white text-sm font-bold tracking-wide rounded-none -skew-x-12 shadow-[0_0_15px_rgba(237,28,36,0.5)] animate-pulse border border-white/20">
+                        <span className="skew-x-12 block">Featured</span>
                       </span>
                     </div>
 
@@ -178,7 +178,7 @@ export default async function Page({
 
                   {/* CTA Button */}
                   <div className="hidden md:block shrink-0">
-                    <button className="text-nowrap flex items-center gap-2 bg-white/95 backdrop-blur-md text-slate-900 px-8 py-4 rounded-full font-bold transition-all duration-300 hover:bg-white hover:scale-105 shadow-[0_8px_30px_rgba(0,0,0,0.1)] group-hover:shadow-[0_15px_40px_rgba(255,255,255,0.2)]">
+                    <button className="text-nowrap flex items-center gap-2 bg-white/95 backdrop-blur-md text-slate-900 px-8 py-4 rounded-none border-b-4 border-b-red-600 font-bold transition-all duration-300 hover:bg-white hover:scale-105 shadow-[0_8px_30px_rgba(0,0,0,0.1)] group-hover:shadow-[0_15px_40px_rgba(255,255,255,0.2)]">
                       Read Full Article
                       <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
                     </button>
@@ -193,7 +193,7 @@ export default async function Page({
         {otherNews?.length > 0 && (
           <section>
             <h2 className="text-2xl font-bold text-slate-900 mb-6 flex items-center gap-2">
-              <span className="w-1.5 h-8 bg-slate-800 rounded-full" />
+              <span className="w-1.5 h-8 bg-black rounded-none" />
               Latest Stories
             </h2>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
@@ -203,7 +203,7 @@ export default async function Page({
                   key={news.id}
                   className="group block h-full @container"
                 >
-                  <article className="relative h-96 w-full rounded-[2.5rem] overflow-hidden shadow-[0_4px_15px_rgba(0,0,0,0.05)] hover:shadow-[0_15px_30px_rgba(0,0,0,0.1)] transition-all duration-500 transform hover:-translate-y-1 ring-1 ring-slate-900/5 group-hover:ring-white/50">
+                  <article className="relative h-96 w-full rounded-none overflow-hidden shadow-[0_4px_15px_rgba(0,0,0,0.05)] hover:shadow-[0_15px_30px_rgba(0,0,0,0.1)] transition-all duration-500 transform hover:-translate-y-1 ring-1 ring-slate-200 border-l-4 border-l-red-600 group-hover:border-l-black">
                     {/* Full Background Image */}
                     {(news.images?.length > 0 || news.videos?.length > 0) && (
                       <img
@@ -223,8 +223,8 @@ export default async function Page({
 
                     {/* Top Badges */}
                     <div className="absolute top-5 left-5 z-10">
-                      <span className="px-3.5 py-1.5 bg-white/20 backdrop-blur-md border border-white/20 text-white text-[11px] font-bold rounded-full shadow-[0_2px_10px_rgba(0,0,0,0.1)] uppercase tracking-wider">
-                        {news.category.name}
+                      <span className="px-4 py-1.5 bg-white/20 backdrop-blur-md border border-white/20 text-white text-[11px] font-bold rounded-none -skew-x-12 shadow-[0_2px_10px_rgba(0,0,0,0.1)] uppercase tracking-wider inline-block">
+                        <span className="skew-x-12 block">{news.category.name}</span>
                       </span>
                     </div>
 
@@ -237,7 +237,7 @@ export default async function Page({
                       </div>
 
                       {/* Title */}
-                      <h3 className="text-xl md:text-2xl font-bold text-white leading-snug line-clamp-2 group-hover:text-rose-400 transition-colors drop-shadow-sm">
+                      <h3 className="text-xl md:text-2xl font-bold text-white leading-snug line-clamp-2 group-hover:text-red-400 transition-colors drop-shadow-sm">
                         {news.title}
                       </h3>
 

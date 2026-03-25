@@ -29,13 +29,13 @@ export async function generateMetadata(): Promise<Metadata> {
   const res = await getTopNews();
 
   return {
-    title: "News Record",
-    description: `News Record is a dynamic and trusted Indian news website that brings you 
+    title: "Rastriya Samachar",
+    description: `Rastriya Samachar is a dynamic and trusted Indian news website that brings you 
     the latest and most relevant news from the vibrant state of Tripura.`,
     metadataBase: new URL(`${protocol}://${origin}`),
     openGraph: {
-      title: "News Record",
-      description: `News Record is a dynamic and trusted Indian news website that brings you 
+      title: "Rastriya Samachar",
+      description: `Rastriya Samachar is a dynamic and trusted Indian news website that brings you 
     the latest and most relevant news from the vibrant state of Tripura.`,
       url: `${protocol}://${origin}`,
       images: [
@@ -47,14 +47,14 @@ export async function generateMetadata(): Promise<Metadata> {
               : siteLogo.src),
           width: 210,
           height: 70,
-          alt: "News Record",
+          alt: "Rastriya Samachar",
         },
       ],
     },
     twitter: {
       card: "summary_large_image",
-      title: "News Record",
-      description: `News Record is a dynamic and trusted Indian news website that brings you 
+      title: "Rastriya Samachar",
+      description: `Rastriya Samachar is a dynamic and trusted Indian news website that brings you 
     the latest and most relevant news from the vibrant state of Tripura.`,
       images: [
         res?.[0]?.photos?.[0]?.secure_urls ||
@@ -107,7 +107,7 @@ export default async function Home() {
 
   return (
     <div className="bg-slate-50/50 min-h-screen pb-12 relative overflow-hidden">
-      <div className="absolute top-0 inset-x-0 h-[500px] bg-gradient-to-b from-rose-50/50 to-transparent pointer-events-none" />
+      <div className="absolute top-0 inset-x-0 h-[500px] bg-gradient-to-b from-red-50/40 to-transparent pointer-events-none" />
       
       {/* Category Navigation - Sticky & Horizontal Scroll */}
       <div className="sticky top-0 z-40 bg-white/80 backdrop-blur-xl border-b border-slate-200/50 shadow-[0_4px_20px_rgba(0,0,0,0.02)] transition-all duration-500">
@@ -119,21 +119,21 @@ export default async function Home() {
                 <Link
                   key={item.id}
                   href={`/category/${item.id}`}
-                  className="shrink-0"
+                  className="shrink-0 group"
                 >
-                  <span className="px-5 py-2.5 rounded-full bg-white text-slate-600 text-sm font-medium hover:bg-gradient-to-r hover:from-rose-50 hover:to-orange-50 hover:text-rose-700 transition-all duration-300 border border-slate-100 shadow-[0_2px_8px_rgba(0,0,0,0.02)] hover:shadow-[0_8px_16px_rgba(244,63,94,0.08)] block hover:-translate-y-0.5">
-                    {item.name}
-                  </span>
+                  <div className="px-6 py-2.5 -skew-x-12 bg-white text-slate-700 text-sm font-bold tracking-wide group-hover:bg-red-50 group-hover:text-red-700 transition-all duration-300 border border-slate-200 border-b-[3px] group-hover:border-b-red-600 shadow-[0_2px_8px_rgba(0,0,0,0.02)] group-hover:shadow-[0_4px_12px_rgba(237,28,36,0.1)] flex items-center justify-center min-w-[100px]">
+                    <span className="skew-x-12 block group-hover:-translate-y-0.5 transition-transform duration-300">{item.name}</span>
+                  </div>
                 </Link>
               ))}
             <Link
               href={`https://ica.tripura.gov.in/press-release`}
               target="_blank"
-              className="shrink-0"
+              className="shrink-0 group"
             >
-              <span className="px-5 py-2.5 rounded-full bg-gradient-to-r from-rose-500 to-orange-500 text-white text-sm font-semibold hover:shadow-[0_8px_20px_rgba(244,63,94,0.25)] hover:-translate-y-0.5 transition-all duration-300 border border-transparent block">
-                তথ্য ও সংস্কৃতি
-              </span>
+              <div className="px-6 py-2.5 -skew-x-12 bg-red-600 group-hover:bg-red-700 text-white text-sm font-bold tracking-wide transition-all duration-300 border-b-[3px] border-b-red-900 shadow-[0_4px_12px_rgba(237,28,36,0.25)] flex items-center justify-center min-w-[120px]">
+                <span className="skew-x-12 block group-hover:-translate-y-0.5 transition-transform duration-300">তথ্য ও সংস্কৃতি</span>
+              </div>
             </Link>
           </div>
         </div>
@@ -141,23 +141,23 @@ export default async function Home() {
 
       {/* Daily Shlok Section */}
       <section className="max-w-2xl mx-auto px-4 sm:px-6 lg:px-4 py-8 relative">
-        <div className="relative bg-white/80 backdrop-blur-xl rounded-3xl p-8 md:p-10 shadow-[0_8px_30px_rgb(0,0,0,0.04)] border border-white/60 text-center overflow-hidden group hover:shadow-[0_20px_40px_-15px_rgba(244,63,94,0.15)] transition-all duration-700 hover:-translate-y-1">
-          <div className="absolute top-0 left-0 w-full h-1.5 bg-gradient-to-r from-rose-400 via-red-500 to-orange-500 opacity-90" />
-          <div className="absolute -top-20 -left-20 w-60 h-60 bg-rose-100/50 rounded-full blur-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-700" />
-          <div className="absolute -bottom-20 -right-20 w-60 h-60 bg-orange-100/50 rounded-full blur-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-700" />
+        <div className="relative bg-white/95 backdrop-blur-xl rounded-none p-8 md:p-10 shadow-[0_8px_30px_rgb(0,0,0,0.04)] border border-slate-200 border-l-12 border-l-red-600 text-center overflow-hidden group hover:shadow-[0_20px_40px_-15px_rgba(237,28,36,0.15)] transition-all duration-700">
+          {/* Angled Background Accents */}
+          <div className="absolute top-0 right-0 w-32 h-full bg-slate-50 -skew-x-12 translate-x-16 opacity-50" />
+          <div className="absolute bottom-0 left-0 w-24 h-full bg-red-50/50 -skew-x-12 -translate-x-12 opacity-50" />
 
           <h4 className="relative text-xl md:text-2xl font-medium text-slate-800 mb-6 leading-relaxed font-serif px-4">
-            <span className="text-5xl text-rose-500/20 absolute -top-4 left-0 select-none">
+            <span className="text-5xl text-red-500/20 absolute -top-4 left-0 select-none">
               ❝
             </span>
             {slok.body}
-            <span className="text-5xl text-rose-500/20 absolute -bottom-6 right-0 select-none">
+            <span className="text-5xl text-red-500/20 absolute -bottom-6 right-0 select-none">
               ❞
             </span>
           </h4>
-          <div className="relative inline-flex items-center gap-2.5 px-5 py-2 bg-gradient-to-r from-rose-50 to-orange-50 text-rose-700 rounded-full text-sm font-semibold mt-2 border border-rose-100/50 shadow-sm">
-            <span className="w-2 h-2 bg-rose-500 rounded-full animate-pulse shadow-[0_0_8px_rgba(244,63,94,0.6)]" />
-            {slok.chapter} অধ্যায়, {slok.slok} শ্লোক
+          <div className="relative inline-flex items-center gap-2.5 px-6 py-2 -skew-x-12 bg-black text-white text-sm font-bold tracking-widest uppercase mt-4 border-b-[3px] border-b-red-600 shadow-[0_4px_12px_rgba(0,0,0,0.15)]">
+            <span className="w-2 h-2 bg-red-600 rounded-none animate-pulse shadow-[0_0_8px_rgba(237,28,36,0.6)] skew-x-12" />
+            <span className="skew-x-12">{slok.chapter} অধ্যায়, {slok.slok} শ্লোক</span>
           </div>
         </div>
       </section>
@@ -170,9 +170,9 @@ export default async function Home() {
               key={link.title}
               href={link.url}
               target="_blank"
-              className="group flex items-center justify-center gap-3 p-5 bg-white/80 backdrop-blur-sm rounded-2xl shadow-[0_4px_20px_rgba(0,0,0,0.02)] border border-slate-100/80 hover:shadow-[0_10px_30px_rgba(0,0,0,0.06)] hover:border-slate-200 hover:-translate-y-1 transition-all duration-500"
+              className="group flex items-center justify-center gap-3 p-5 bg-white/90 backdrop-blur-sm rounded-none shadow-[0_4px_20px_rgba(0,0,0,0.02)] border border-slate-200 border-b-4 border-b-slate-200 hover:shadow-[0_10px_30px_rgba(0,0,0,0.06)] hover:border-b-red-600 hover:-translate-y-1 transition-all duration-300"
             >
-              <div className="p-2.5 bg-gradient-to-br from-slate-50 to-slate-100 text-slate-600 rounded-xl group-hover:text-rose-600 group-hover:scale-110 group-hover:shadow-sm transition-all duration-500 border border-slate-200/50">
+              <div className="p-2.5 bg-slate-50 text-slate-600 rounded-none group-hover:bg-black group-hover:text-white group-hover:scale-110 shadow-sm transition-all duration-300 border-l-[3px] border-l-red-600">
                 <link.icon size={22} />
               </div>
               <span className="font-semibold text-slate-700 group-hover:text-slate-900 transition-colors">

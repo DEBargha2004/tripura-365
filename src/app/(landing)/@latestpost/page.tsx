@@ -1,5 +1,5 @@
 import { getLatestNews } from "@/actions/news";
-import { getYtThumbnail } from "@/lib/utils";
+import { cn, getYtThumbnail } from "@/lib/utils";
 import { format } from "date-fns";
 import { ArrowRight, Calendar } from "lucide-react";
 import Image from "next/image";
@@ -24,7 +24,7 @@ export default async function Page() {
         </div>
 
         <Link href={`/news/${post.id}`} className="group block">
-          <div className="@container relative w-full h-[500px] md:h-[600px] rounded-[2.5rem] overflow-hidden shadow-[0_20px_50px_rgba(0,0,0,0.1)] group-hover:shadow-[0_30px_60px_rgba(0,0,0,0.15)] transition-all duration-700">
+          <div className="@container relative w-full h-[500px] md:h-[600px] rounded-none border-t-8 border-t-red-600 overflow-hidden shadow-[0_20px_50px_rgba(0,0,0,0.1)] group-hover:shadow-[0_30px_60px_rgba(0,0,0,0.15)] transition-all duration-700">
             {/* Background Image with Zoom Effect */}
 
             <img
@@ -47,11 +47,11 @@ export default async function Page() {
               <div className="max-w-3xl space-y-4">
                 {/* Badges */}
                 <div className="flex flex-wrap items-center gap-3">
-                  <span className="px-5 py-2 bg-white/20 backdrop-blur-md border border-white/30 text-white text-sm font-semibold rounded-full shadow-[0_4px_10px_rgba(0,0,0,0.1)]">
-                    {post?.category?.name}
+                  <span className={cn("px-6 py-2 bg-white/20 backdrop-blur-md border border-white/30 text-white text-sm font-semibold rounded-none -skew-x-12 shadow-[0_4px_10px_rgba(0,0,0,0.1)]", !post.category?.name && "hidden")}>
+                    <span className="skew-x-12 block">{post?.category?.name}</span>
                   </span>
-                  <span className="px-5 py-2 bg-gradient-to-r from-rose-500 to-orange-500 text-white text-sm font-bold tracking-wide rounded-full shadow-[0_0_15px_rgba(244,63,94,0.5)] animate-pulse border border-white/20">
-                    Latest
+                  <span className="px-6 py-2 bg-red-600 text-white text-sm font-bold tracking-wide rounded-none -skew-x-12 shadow-[0_0_15px_rgba(237,28,36,0.5)] animate-pulse border border-white/20">
+                    <span className="skew-x-12 block">Latest</span>
                   </span>
                 </div>
 
@@ -78,7 +78,7 @@ export default async function Page() {
 
               {/* CTA Button */}
               <div className="hidden md:block shrink-0">
-                <button className="text-nowrap flex items-center gap-2 bg-white/95 backdrop-blur-md text-slate-900 px-8 py-4 rounded-full font-bold transition-all duration-300 hover:bg-white hover:scale-105 shadow-[0_8px_30px_rgba(0,0,0,0.1)] group-hover:shadow-[0_15px_40px_rgba(255,255,255,0.2)]">
+                <button className="text-nowrap flex items-center gap-2 bg-white/95 backdrop-blur-md text-slate-900 px-8 py-4 rounded-none border-b-4 border-b-red-600 font-bold transition-all duration-300 hover:bg-white hover:scale-105 shadow-[0_8px_30px_rgba(0,0,0,0.1)] group-hover:shadow-[0_15px_40px_rgba(255,255,255,0.2)]">
                   Read Full Article
                   <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
                 </button>

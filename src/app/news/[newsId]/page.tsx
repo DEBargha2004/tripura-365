@@ -97,17 +97,22 @@ export default async function Page({
 
   if (!article || (article as any)?.error)
     return (
-      <div className="min-h-[60vh] flex items-center justify-center bg-gray-50">
-        <div className="text-center flex flex-col items-center space-y-4">
-          <h2 className="text-3xl font-bold text-gray-900">
-            Article Not Found
-          </h2>
-          <p className="text-gray-500">
-            The article you are looking for does not exist or has been removed.
-          </p>
-          <div className="flex justify-center">
+      <div className="min-h-[60vh] flex items-center justify-center bg-slate-50">
+        <div className="text-center flex flex-col items-center space-y-6 bg-white p-12 shadow-[0_10px_40px_rgba(0,0,0,0.05)] border-t-8 border-t-red-600">
+          <div className="w-16 h-16 bg-red-100 flex items-center justify-center text-red-600 font-extrabold text-3xl border-l-4 border-l-red-600">
+            !
+          </div>
+          <div className="space-y-2">
+            <h2 className="text-3xl font-bold text-slate-800 tracking-tight">
+              Article Not Found
+            </h2>
+            <p className="text-slate-500 max-w-sm">
+              The article you are looking for does not exist or has been removed.
+            </p>
+          </div>
+          <div className="flex justify-center pt-2">
             <GotoPrev>
-              <button className="px-6 py-2 bg-blue-600 text-white rounded-full hover:bg-blue-700 transition-colors">
+              <button className="px-8 py-3 bg-red-600 text-white font-bold tracking-wide hover:bg-black transition-colors border-b-4 border-b-red-800 hover:border-b-black shadow-md">
                 Go Back Home
               </button>
             </GotoPrev>
@@ -139,7 +144,7 @@ export default async function Page({
 
         <div className="absolute inset-0 flex flex-col justify-end pb-16 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
           <GotoPrev className="absolute top-8 left-4 sm:left-8 text-white/80 hover:text-white transition-colors flex items-center gap-2 group cursor-pointer">
-            <div className="p-2 rounded-full bg-white/10 backdrop-blur-sm group-hover:bg-white/20 transition-colors">
+            <div className="p-2 rounded-none bg-white/10 backdrop-blur-sm group-hover:bg-white/20 transition-colors border-l-2 border-l-red-500">
               <ArrowLeft className="h-6 w-6" />
             </div>
             <span className="font-medium hidden sm:block">Back</span>
@@ -147,14 +152,16 @@ export default async function Page({
 
           <div className="space-y-6 animate-in fade-in slide-in-from-bottom-8 duration-700">
             <div className="flex flex-wrap items-center gap-3">
-              <span className="px-5 py-2 bg-white/20 backdrop-blur-md border border-white/30 text-white text-sm font-semibold rounded-full shadow-[0_4px_10px_rgba(0,0,0,0.1)]">
-                {article?.category?.name}
+              <span className="px-6 py-2 bg-white/20 backdrop-blur-md border border-white/30 text-white text-sm font-semibold rounded-none -skew-x-12 shadow-[0_4px_10px_rgba(0,0,0,0.1)]">
+                <span className="skew-x-12 block">{article?.category?.name}</span>
               </span>
-              <div className="flex items-center gap-2 text-slate-100 font-medium text-sm bg-black/30 backdrop-blur-md border border-white/20 px-4 py-2 rounded-full shadow-[0_4px_10px_rgba(0,0,0,0.1)]">
-                <Calendar className="h-4 w-4 text-rose-300" />
-                <span>
-                  {article.published_on && format(article.published_on, "PPP")}
-                </span>
+              <div className="flex items-center gap-2 text-slate-100 font-medium text-sm bg-black/30 backdrop-blur-md border border-white/20 px-5 py-2 rounded-none -skew-x-12 shadow-[0_4px_10px_rgba(0,0,0,0.1)]">
+                <div className="skew-x-12 flex items-center gap-2">
+                  <Calendar className="h-4 w-4 text-red-400" />
+                  <span>
+                    {article.published_on && format(article.published_on, "PPP")}
+                  </span>
+                </div>
               </div>
             </div>
 
@@ -162,9 +169,9 @@ export default async function Page({
               {article.title}
             </h1>
 
-            <div className="flex items-center gap-6 text-slate-200">
-              <div className="flex items-center gap-2 bg-white/10 backdrop-blur-md px-4 py-2 rounded-full border border-white/10">
-                <Eye className="h-5 w-5 text-rose-300" />
+            <div className="flex items-center gap-6 text-slate-200 mt-4">
+              <div className="flex items-center gap-2 bg-white/10 backdrop-blur-md px-5 py-2 rounded-none border-l-4 border-l-red-500 shadow-[0_4px_10px_rgba(0,0,0,0.1)]">
+                <Eye className="h-5 w-5 text-red-400" />
                 <span className="font-medium tracking-wide">
                   {getViews({
                     published_on: article.published_on,
@@ -179,15 +186,15 @@ export default async function Page({
       </div>
 
       <article className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 -mt-16 relative z-10 pb-20">
-        <div className="bg-white rounded-[2.5rem] p-8 md:p-14 shadow-[0_-10px_50px_rgba(0,0,0,0.1)] border border-slate-100">
+        <div className="bg-white rounded-none border-t-8 border-t-red-600 p-8 md:p-14 shadow-[0_-10px_50px_rgba(0,0,0,0.1)]">
           {/* Share Bar */}
           <div className="flex items-center justify-between border-b border-gray-100 pb-8 mb-8">
             <div className="flex items-center gap-4">
-              <div className="h-12 w-12 rounded-full bg-gradient-to-br from-rose-100 to-orange-100 flex items-center justify-center text-rose-600 shadow-sm border border-rose-200/50">
-                <span className="font-bold text-xl">T</span>
+              <div className="h-12 w-12 rounded-none flex items-center justify-center text-white bg-black border-l-4 border-l-red-600 shadow-sm">
+                <span className="font-bold text-xl">R</span>
               </div>
               <div>
-                <p className="font-semibold text-gray-900">News Record</p>
+                <p className="font-semibold text-gray-900">Rastriya Samachar</p>
                 <p className="text-sm text-gray-500">Editorial Team</p>
               </div>
             </div>
@@ -195,7 +202,7 @@ export default async function Page({
             <div className="flex items-center gap-2">
               <FbShare url={`${basePath}/news/${newsId}`}>
                 <button
-                  className="p-3 rounded-full bg-blue-50/80 text-blue-600 hover:bg-blue-50 hover:-translate-y-1 hover:shadow-md transition-all duration-300"
+                  className="p-3 rounded-none bg-blue-50/80 text-blue-600 hover:bg-black hover:text-white hover:-translate-y-1 hover:shadow-md transition-all duration-300 border-b-2 border-b-blue-600 hover:border-b-blue-400"
                   title="Share on Facebook"
                 >
                   <Facebook className="h-5 w-5" />
@@ -203,14 +210,14 @@ export default async function Page({
               </FbShare>
               <WaShare url={`${basePath}/news/${newsId}`} title={article.title}>
                 <button
-                  className="p-3 rounded-full bg-green-50/80 text-green-600 hover:bg-green-50 hover:-translate-y-1 hover:shadow-md transition-all duration-300"
+                  className="p-3 rounded-none bg-green-50/80 text-green-600 hover:bg-black hover:text-white hover:-translate-y-1 hover:shadow-md transition-all duration-300 border-b-2 border-b-green-600 hover:border-b-green-400"
                   title="Share on WhatsApp"
                 >
                   <FaWhatsapp className="h-5 w-5" />
                 </button>
               </WaShare>
               <button
-                className="p-3 rounded-full bg-slate-50 text-slate-600 hover:bg-slate-100 hover:-translate-y-1 hover:shadow-md transition-all duration-300"
+                className="p-3 rounded-none bg-slate-50 text-slate-600 hover:bg-black hover:text-white hover:-translate-y-1 hover:shadow-md transition-all duration-300 border-b-2 border-b-slate-400 hover:border-b-slate-300"
                 title="Share"
               >
                 <Share2 className="h-5 w-5" />
@@ -220,7 +227,7 @@ export default async function Page({
 
           {/* Video Section */}
           {article.videos?.length > 0 && (
-            <div className="mb-8 w-full aspect-video rounded-2xl overflow-hidden shadow-lg">
+            <div className="mb-8 w-full aspect-video rounded-none border-b-[6px] border-b-red-600 overflow-hidden shadow-lg">
               <iframe
                 src={`https://www.youtube.com/embed/${article.videos[0]}`}
                 className="w-full h-full object-cover"
@@ -233,7 +240,7 @@ export default async function Page({
 
           {/* Article Body */}
           <div className="prose prose-lg md:prose-xl max-w-none text-slate-800 leading-relaxed font-serif">
-            <p className="first-letter:text-[5rem] first-letter:-mt-2 first-letter:font-extrabold first-letter:text-transparent first-letter:bg-clip-text first-letter:bg-gradient-to-br first-letter:from-rose-500 first-letter:to-orange-500 first-letter:mr-3 first-letter:float-left first-letter:leading-[0.8] mb-6">
+            <p className="first-letter:text-[5rem] first-letter:-mt-2 first-letter:font-extrabold first-letter:text-red-600 first-letter:mr-3 first-letter:float-left first-letter:leading-[0.8] mb-6">
               {article.body}
             </p>
           </div>
@@ -245,13 +252,13 @@ export default async function Page({
               <span>Related Topics</span>
             </div>
             <div className="flex flex-wrap gap-3">
-              <span className="px-5 py-2 bg-slate-50 text-slate-700 rounded-xl hover:bg-slate-100 border border-slate-200 hover:border-slate-300 transition-colors cursor-pointer font-semibold text-sm shadow-sm">
+              <span className="px-6 py-2.5 bg-slate-50 text-slate-700 rounded-none border-b-2 border-transparent hover:border-red-600 transition-colors cursor-pointer font-bold text-sm shadow-sm hover:shadow-md hover:-translate-y-0.5 transform">
                 {article?.category?.name}
               </span>
-              <span className="px-5 py-2 bg-slate-50 text-slate-700 rounded-xl hover:bg-slate-100 border border-slate-200 hover:border-slate-300 transition-colors cursor-pointer font-semibold text-sm shadow-sm">
+              <span className="px-6 py-2.5 bg-slate-50 text-slate-700 rounded-none border-b-2 border-transparent hover:border-red-600 transition-colors cursor-pointer font-bold text-sm shadow-sm hover:shadow-md hover:-translate-y-0.5 transform">
                 Tripura News
               </span>
-              <span className="px-5 py-2 bg-slate-50 text-slate-700 rounded-xl hover:bg-slate-100 border border-slate-200 hover:border-slate-300 transition-colors cursor-pointer font-semibold text-sm shadow-sm">
+              <span className="px-6 py-2.5 bg-slate-50 text-slate-700 rounded-none border-b-2 border-transparent hover:border-red-600 transition-colors cursor-pointer font-bold text-sm shadow-sm hover:shadow-md hover:-translate-y-0.5 transform">
                 Latest Updates
               </span>
             </div>

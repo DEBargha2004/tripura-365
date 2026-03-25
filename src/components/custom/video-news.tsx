@@ -22,7 +22,7 @@ export default function VideoNews({
           {!hideShowAll && (
             <Link
               href={"video-news"}
-              className="group flex items-center gap-2 text-rose-600 font-semibold hover:text-rose-700 transition-colors"
+              className="group flex items-center gap-2 text-red-600 font-semibold hover:text-red-700 transition-colors"
             >
               Watch All
               <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
@@ -37,7 +37,7 @@ export default function VideoNews({
               key={news.id}
               className="group block h-full"
             >
-              <article className="relative h-96 w-full rounded-3xl overflow-hidden shadow-[0_8px_30px_rgb(0,0,0,0.06)] hover:shadow-[0_20px_40px_-15px_rgb(0,0,0,0.15)] transition-all duration-500 transform hover:-translate-y-1.5 bg-slate-900 group-hover:ring-2 ring-white/30">
+              <article className="relative h-96 w-full rounded-none overflow-hidden shadow-[0_8px_30px_rgb(0,0,0,0.06)] hover:shadow-[0_20px_40px_-15px_rgb(0,0,0,0.15)] transition-all duration-500 transform hover:-translate-y-1.5 bg-slate-900 group-hover:ring-2 ring-white/30 border-l-4 border-l-red-600">
                 {/* Full Background Video (Iframe) */}
                 {news.videos?.[0] && (
                   <iframe
@@ -65,7 +65,7 @@ export default function VideoNews({
                         views
                       </span>
                     </div>
-                    <span className="w-1 h-1 bg-gray-400 rounded-full" />
+                    <span className="w-1.5 h-1.5 bg-gray-400 rounded-none transform rotate-45" />
                     <div className="flex items-center gap-1.5">
                       <Calendar className="w-3.5 h-3.5" />
                       <span>{format(new Date(news.published_on), "PPP")}</span>
@@ -73,7 +73,7 @@ export default function VideoNews({
                   </div>
 
                   {/* Title */}
-                  <h3 className="text-xl md:text-2xl font-bold text-white leading-snug line-clamp-2 group-hover:text-rose-400 transition-colors">
+                  <h3 className="text-xl md:text-2xl font-bold text-white leading-snug line-clamp-2 group-hover:text-red-400 transition-colors">
                     {news.title}
                   </h3>
                 </div>
