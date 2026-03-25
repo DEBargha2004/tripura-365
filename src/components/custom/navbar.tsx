@@ -29,10 +29,10 @@ export default function Navbar() {
             <Link href={"/"} className="group relative z-10">
               <Logo className="transition-transform duration-300 group-hover:scale-105" />
             </Link>
-            <div className="absolute left-16 flex items-center gap-1.5 bg-black text-white px-2.5 py-1 -skew-x-12 h-fit my-auto border-l-4 border-red-600 shadow-[0_2px_10px_rgba(0,0,0,0.2)] z-20 pointer-events-none">
+            {/* <div className="absolute left-16 flex items-center gap-1.5 bg-black text-white px-2.5 py-1 -skew-x-12 h-fit my-auto border-l-4 border-red-600 shadow-[0_2px_10px_rgba(0,0,0,0.2)] z-20 pointer-events-none">
               <span className="w-1.5 h-1.5 bg-red-600 rounded-none animate-pulse" />
               <span className="text-[10px] font-bold tracking-widest skew-x-12 uppercase pt-0.5">Live</span>
-            </div>
+            </div> */}
           </div>
 
           {/* Center: Title */}
@@ -51,7 +51,7 @@ export default function Navbar() {
           </div>
 
           {/* Right: Utilities */}
-          <div className="hidden md:flex items-center gap-4 z-10">
+          <div className="hidden lg:flex items-center gap-4 z-10">
             <div className="bg-white px-5 py-2.5 rounded-none border border-slate-200 border-b-[3px] border-b-red-600 flex items-center gap-4 text-sm font-medium text-slate-800 shadow-[0_2px_15px_rgba(0,0,0,0.03)] hover:shadow-[0_8px_25px_rgba(0,0,0,0.06)] hover:-translate-y-0.5 transition-all duration-300">
               <Timer />
               <div className="h-5 w-px bg-slate-300" />
