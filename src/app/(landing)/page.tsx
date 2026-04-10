@@ -1,3 +1,4 @@
+import React from "react";
 import {
   getCategoryWiseNews,
   getTopNews,
@@ -29,13 +30,13 @@ export async function generateMetadata(): Promise<Metadata> {
   const res = await getTopNews();
 
   return {
-    title: "Rastriya Samachar",
-    description: `Rastriya Samachar is a dynamic and trusted Indian news website that brings you 
+    title: "Janamat News",
+    description: `Janamat News is a dynamic and trusted Indian news website that brings you 
     the latest and most relevant news from the vibrant state of Tripura.`,
     metadataBase: new URL(`${protocol}://${origin}`),
     openGraph: {
-      title: "Rastriya Samachar",
-      description: `Rastriya Samachar is a dynamic and trusted Indian news website that brings you 
+      title: "Janamat News",
+      description: `Janamat News is a dynamic and trusted Indian news website that brings you 
     the latest and most relevant news from the vibrant state of Tripura.`,
       url: `${protocol}://${origin}`,
       images: [
@@ -47,14 +48,14 @@ export async function generateMetadata(): Promise<Metadata> {
               : siteLogo.src),
           width: 210,
           height: 70,
-          alt: "Rastriya Samachar",
+          alt: "Janamat News",
         },
       ],
     },
     twitter: {
       card: "summary_large_image",
-      title: "Rastriya Samachar",
-      description: `Rastriya Samachar is a dynamic and trusted Indian news website that brings you 
+      title: "Janamat News",
+      description: `Janamat News is a dynamic and trusted Indian news website that brings you 
     the latest and most relevant news from the vibrant state of Tripura.`,
       images: [
         res?.[0]?.photos?.[0]?.secure_urls ||
@@ -107,22 +108,29 @@ export default async function Home() {
 
   return (
     <div className="bg-slate-50/50 min-h-screen pb-12 relative overflow-hidden">
-      <div className="absolute top-0 inset-x-0 h-[500px] bg-gradient-to-b from-red-50/40 to-transparent pointer-events-none" />
-      
+      <div className="absolute top-0 inset-x-0 h-[500px] bg-linear-to-b from-red-50/40 to-transparent pointer-events-none" />
+
       {/* Category Navigation - Sticky & Horizontal Scroll */}
       <div className="sticky top-0 z-40 bg-white/80 backdrop-blur-xl border-b border-slate-200/50 shadow-[0_4px_20px_rgba(0,0,0,0.02)] transition-all duration-500">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center gap-3 overflow-x-auto py-3.5 no-scrollbar mask-gradient-x">
             {sortcategories(categories ?? [])
               ?.sort((a, b) => a.sequence - b.sequence)
-              .map((item) => (
+              .map((item, idx) => (
                 <Link
                   key={item.id}
                   href={`/category/${item.id}`}
                   className="shrink-0 group"
                 >
-                  <div className="px-6 py-2.5 -skew-x-12 bg-white text-slate-700 text-sm font-bold tracking-wide group-hover:bg-red-50 group-hover:text-red-700 transition-all duration-300 border border-slate-200 border-b-[3px] group-hover:border-b-red-600 shadow-[0_2px_8px_rgba(0,0,0,0.02)] group-hover:shadow-[0_4px_12px_rgba(237,28,36,0.1)] flex items-center justify-center min-w-[100px]">
-                    <span className="skew-x-12 block group-hover:-translate-y-0.5 transition-transform duration-300">{item.name}</span>
+                  <div className="px-6 py-2.5 -skew-x-12 bg-white text-slate-700 text-sm font-bold tracking-wide group-hover:bg-red-50 group-hover:text-red-700 transition-all duration-300 border border-slate-200 border-b-4 group-hover:border-b-red-600 shadow-[0_2px_8px_rgba(0,0,0,0.02)] group-hover:shadow-[0_4px_12px_rgba(237,28,36,0.1)] flex items-center justify-center min-w-[100px] relative">
+                    <span className="skew-x-12 flex items-center gap-1.5 group-hover:-translate-y-0.5 transition-transform duration-300 relative">
+                      {item.name}
+                      {idx < 2 && (
+                        <span className="inline-flex items-center px-1.5 py-0.5 rounded-sm text-[9px] font-bold bg-[#ED1C24] text-white tracking-widest uppercase">
+                          New
+                        </span>
+                      )}
+                    </span>
                   </div>
                 </Link>
               ))}
@@ -132,7 +140,9 @@ export default async function Home() {
               className="shrink-0 group"
             >
               <div className="px-6 py-2.5 -skew-x-12 bg-red-600 group-hover:bg-red-700 text-white text-sm font-bold tracking-wide transition-all duration-300 border-b-[3px] border-b-red-900 shadow-[0_4px_12px_rgba(237,28,36,0.25)] flex items-center justify-center min-w-[120px]">
-                <span className="skew-x-12 block group-hover:-translate-y-0.5 transition-transform duration-300">তথ্য ও সংস্কৃতি</span>
+                <span className="skew-x-12 block group-hover:-translate-y-0.5 transition-transform duration-300">
+                  তথ্য ও সংস্কৃতি
+                </span>
               </div>
             </Link>
           </div>
@@ -157,7 +167,9 @@ export default async function Home() {
           </h4>
           <div className="relative inline-flex items-center gap-2.5 px-6 py-2 -skew-x-12 bg-black text-white text-sm font-bold tracking-widest uppercase mt-4 border-b-[3px] border-b-red-600 shadow-[0_4px_12px_rgba(0,0,0,0.15)]">
             <span className="w-2 h-2 bg-red-600 rounded-none animate-pulse shadow-[0_0_8px_rgba(237,28,36,0.6)] skew-x-12" />
-            <span className="skew-x-12">{slok.chapter} অধ্যায়, {slok.slok} শ্লোক</span>
+            <span className="skew-x-12">
+              {slok.chapter} অধ্যায়, {slok.slok} শ্লোক
+            </span>
           </div>
         </div>
       </section>
@@ -192,20 +204,64 @@ export default async function Home() {
         </div>
       </section> */}
 
+      {/* Breaking News Marquee */}
+      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-6">
+        <div className="bg-white rounded-none border-l-[6px] border-l-[#ED1C24] shadow-sm flex items-center h-12 overflow-hidden font-sans border-y border-r border-slate-200">
+          <div className="bg-[#ED1C24] text-white px-5 h-full flex items-center shrink-0 z-10 relative">
+            <h2 className="text-sm font-black tracking-widest uppercase flex items-center gap-2">
+              <span className="relative flex h-2 w-2">
+                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-red-200 opacity-75"></span>
+                <span className="relative inline-flex rounded-full h-2 w-2 bg-white"></span>
+              </span>
+              TRENDING
+            </h2>
+            <div className="absolute top-0 right-auto left-full border-l-12 border-l-[#ED1C24] border-t-24 border-t-transparent border-b-24 border-b-transparent"></div>
+          </div>
+          <div className="flex-1 overflow-hidden relative ml-6 h-full flex items-center justify-start">
+            {React.createElement(
+              "marquee" as any,
+              {
+                className:
+                  "text-sm font-bold text-slate-800 h-full flex items-center",
+                scrollamount: "6",
+              },
+              headlines?.map((hl) => (
+                <span
+                  key={hl.id}
+                  className="mr-8 hover:text-[#ED1C24] transition-colors cursor-pointer"
+                >
+                  {hl.content}
+                </span>
+              )),
+            )}
+          </div>
+        </div>
+      </section>
 
-      {/* Hero Section: Carousel + Top News Sidebar */}
+      {/* Hero Section: 70/30 Matrix */}
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="grid grid-cols-1 lg:grid-cols-4 gap-6 items-stretch">
-          {/* Main Carousel */}
-          <div className="lg:col-span-3">
+        <div className="grid grid-cols-1 lg:grid-cols-10 gap-6 items-start">
+          {/* Main Rail (70%) */}
+          <div className="lg:col-span-7 flex flex-col gap-6">
             <HeroCarousel data={imageGallery ?? []} />
           </div>
 
-          {/* Side News */}
-          <div className="lg:col-span-1 h-full overflow-hidden">
-            <TopNewsSidebar data={topNews?.slice(0, 3) ?? []} />
+          {/* Side Rail (30%) */}
+          <div className="lg:col-span-3 flex flex-col gap-6">
+            <div className="bg-slate-100 flex-1 min-h-[250px] max-h-[300px] border border-slate-200 flex flex-col items-center justify-center text-slate-400 text-xs font-bold tracking-widest uppercase relative p-4 group">
+              <span className="mb-2">Advertisement</span>
+              <span className="px-3 py-1 bg-slate-200 rounded text-slate-500">
+                300 x 250
+              </span>
+              <div className="absolute inset-0 bg-linear-to-tr from-slate-200/50 to-transparent pointer-events-none group-hover:opacity-70 transition-opacity"></div>
+            </div>
           </div>
         </div>
+      </section>
+
+      {/* Full-Width Trending News Matrix */}
+      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-12 mb-8">
+        <TopNewsSidebar data={topNews?.slice(0, 3) ?? []} />
       </section>
     </div>
   );

@@ -27,7 +27,7 @@ export default function HeroCarousel({ data: slides }: { data: ImageItem[] }) {
 
   return (
     <div
-      className="relative h-96 md:min-h-[500px] md:h-full overflow-hidden bg-slate-900 rounded-none border-b-[6px] border-b-red-600 shadow-[0_20px_50px_rgba(0,0,0,0.1)] group transition-all duration-700"
+      className="relative w-full aspect-video overflow-hidden bg-slate-900 rounded-none border-b-[6px] border-b-red-600 shadow-[0_20px_50px_rgba(0,0,0,0.1)] group transition-all duration-700"
       onMouseEnter={() => setMouseOver(true)}
       onMouseLeave={() => setMouseOver(false)}
     >
@@ -50,7 +50,7 @@ export default function HeroCarousel({ data: slides }: { data: ImageItem[] }) {
               />
             )}
           </div>
-          <div className="absolute inset-0 bg-gradient-to-t from-slate-900/95 via-slate-900/20 to-transparent opacity-90 transition-opacity duration-500" />
+          <div className="absolute inset-0 bg-linear-to-t from-slate-900/95 via-slate-900/20 to-transparent opacity-90 transition-opacity duration-500" />
           <div className="absolute bottom-0 left-0 w-full p-6 md:p-10 flex flex-col gap-3">
             <h2 className="text-2xl md:text-3xl lg:text-4xl font-extrabold text-white mb-2 leading-tight drop-shadow-md">
               {slide.caption}
@@ -67,13 +67,13 @@ export default function HeroCarousel({ data: slides }: { data: ImageItem[] }) {
       {/* Navigation Buttons */}
       <button
         onClick={prevSlide}
-        className="absolute left-6 top-1/2 transform -translate-y-1/2 bg-black/60 hover:bg-red-600 text-white p-3 rounded-none backdrop-blur-md transition-all duration-300 opacity-0 group-hover:opacity-100 shadow-[0_4px_15px_rgba(0,0,0,0.2)] border border-white/10"
+        className="absolute left-6 top-1/2 transform -translate-y-1/2 bg-black/60 hover:bg-black/90 text-white p-3 rounded-full backdrop-blur-md transition-all duration-300 opacity-0 group-hover:opacity-100 shadow-md border-2 border-white/50"
       >
         <ChevronLeft className="h-6 w-6 stroke-[2.5]" />
       </button>
       <button
         onClick={nextSlide}
-        className="absolute right-6 top-1/2 transform -translate-y-1/2 bg-black/60 hover:bg-red-600 text-white p-3 rounded-none backdrop-blur-md transition-all duration-300 opacity-0 group-hover:opacity-100 shadow-[0_4px_15px_rgba(0,0,0,0.2)] border border-white/10"
+        className="absolute right-6 top-1/2 transform -translate-y-1/2 bg-black/60 hover:bg-black/90 text-white p-3 rounded-full backdrop-blur-md transition-all duration-300 opacity-0 group-hover:opacity-100 shadow-md border-2 border-white/50"
       >
         <ChevronRight className="h-6 w-6 stroke-[2.5]" />
       </button>
@@ -85,7 +85,9 @@ export default function HeroCarousel({ data: slides }: { data: ImageItem[] }) {
             key={index}
             onClick={() => setCurrentSlide(index)}
             className={`h-1.5 rounded-none transition-all duration-500 ${
-              index === currentSlide ? "w-12 bg-red-600 shadow-[0_0_15px_rgba(237,28,36,0.5)]" : "w-6 bg-white/40 hover:bg-white/60"
+              index === currentSlide
+                ? "w-12 bg-red-600 shadow-[0_0_15px_rgba(237,28,36,0.5)]"
+                : "w-6 bg-white/40 hover:bg-white/60"
             }`}
           />
         ))}

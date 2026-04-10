@@ -1,3 +1,5 @@
+"use client";
+
 import { cn } from "@/lib/utils";
 import { AdBannerImageData } from "@/types/response";
 import Image from "next/image";

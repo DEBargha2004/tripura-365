@@ -16,60 +16,83 @@ export default function TopNewsSidebar({
 }: TopNewsSidebarProps) {
   return (
     <div className={cn("flex flex-col gap-4 h-full", className)}>
-      <div className="flex items-center justify-between pb-3 border-b border-slate-200/60">
-        <h3 className="font-extrabold text-xl lg:text-2xl bg-gradient-to-r from-slate-900 to-slate-700 bg-clip-text text-transparent">শীর্ষ খবর</h3>
+      <div className="flex items-center justify-between pb-6 border-b-2 border-slate-100 mb-8">
+        <div className="space-y-1">
+          <h3 className="font-black text-2xl lg:text-3xl text-slate-900 tracking-tighter flex items-center gap-3">
+            <span className="w-2 h-7 bg-red-600 block" />
+            শীর্ষ খবর
+          </h3>
+          <p className="text-[8px] font-black text-slate-300 uppercase tracking-[0.3em] ml-5">
+            Editor's Choice
+          </p>
+        </div>
         <Link
           href="/top-news"
-          className="text-xs font-bold text-red-600 hover:text-red-700 transition-all hover:translate-x-0.5 uppercase tracking-wider"
+          className="text-[9px] font-black text-slate-400 hover:text-red-600 transition-all uppercase tracking-[0.2em]"
         >
           View All
         </Link>
       </div>
 
-      <div className="flex-1 grid lg:grid-rows-3 lg:grid-cols-1 sm:grid-cols-2 gap-3">
-        {data.map((news) => (
+      <div className="flex-1 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mt-6">
+        {data.map((news, index) => (
           <Link
             key={news.id}
             href={`/news/${news.id}`}
-            className="@container group relative w-full lg:h-full aspect-video rounded-none overflow-hidden shadow-[0_4px_15px_rgba(0,0,0,0.05)] hover:shadow-[0_15px_30px_rgba(0,0,0,0.1)] transition-all duration-500 transform hover:-translate-y-1 ring-1 ring-slate-200 border-l-4 border-l-red-600 hover:ring-red-500"
+            className="group flex gap-4 p-6 bg-white border border-slate-100 shadow-[0_4px_20px_rgba(0,0,0,0.03)] hover:shadow-[0_20px_40px_rgba(0,0,0,0.06)] transition-all duration-500 items-start relative overflow-hidden"
           >
-            {/* Background Image */}
-            {news.photos?.length > 0 || news.videos?.length > 0 ? (
-              <img
-                src={
-                  news.photos?.length > 0
-                    ? news.photos[0]?.secure_urls
-                    : getYtThumbnail(news.videos[0])
-                }
-                alt={news.title}
-                // fill
-                className="size-full object-cover transition-transform duration-700 group-hover:scale-110"
-              />
-            ) : (
-              <div className="w-full h-full bg-slate-100" />
-            )}
+            {/* Elite Numbering */}
+            <div className="text-6xl font-black text-slate-50 group-hover:text-red-500/5 transition-colors duration-700 absolute -top-2 -left-2 select-none leading-none z-0">
+              {index + 1 < 10 ? `0${index + 1}` : index + 1}
+            </div>
 
-            {/* Gradient Overlay */}
-            <div className="absolute inset-0 bg-gradient-to-t from-slate-900/95 via-slate-900/40 to-transparent opacity-90 transition-opacity duration-500" />
+            <div className="flex-1 flex flex-col gap-3 relative z-10 pl-4 border-l-2 border-slate-50 group-hover:border-red-600/20 transition-colors">
+              {/* "Live" Category Badge */}
+              <div className="flex items-center gap-2">
+                <span className="w-1.5 h-1.5 bg-red-600 rounded-full animate-pulse shadow-[0_0_8px_rgba(237,28,36,0.6)]" />
+                <span
+                  className={cn(
+                    "text-[10px] uppercase font-black text-red-600 tracking-[0.15em]",
+                    !news.category?.name && "hidden",
+                  )}
+                >
+                  {news.category?.name}
+                </span>
+              </div>
 
-            {/* Content */}
-            <div className={"absolute bottom-0 left-0 w-full p-4 lg:p-5 z-10 flex flex-col gap-1.5"}>
-              {/* Category Badge */}
-              <span className={cn("inline-block px-3 py-1 bg-black text-white text-[10px] uppercase font-bold rounded-none w-fit shadow-[0_2px_10px_rgba(0,0,0,0.1)] mb-1 -skew-x-12", !news.category?.name && "hidden")}>
-                <span className="skew-x-12 block">{news.category?.name}</span>
-              </span>
-
-              <h4 className="lg:text-base font-bold text-white line-clamp-1 @sm:line-clamp-2 leading-tight group-hover:text-red-400 transition-colors drop-shadow-sm">
+              <h4 className="text-sm md:text-base font-bold text-slate-900 line-clamp-2 leading-snug group-hover:text-red-600 transition-colors duration-300 tracking-tight">
                 {news.title}
               </h4>
 
-              <div className="flex items-center gap-1.5 text-[11px] text-slate-300 font-medium mt-0.5">
-                <Calendar className="w-3 h-3" />
+              <div className="flex items-center gap-2 text-[9px] text-slate-300 font-bold uppercase tracking-widest mt-auto">
+                <Calendar className="w-3 h-3 text-slate-200" />
                 <span>
                   {format(new Date(news.created ?? ""), "MMM d, yyyy")}
                 </span>
               </div>
             </div>
+
+            {/* Elite Thumbnail Wrap */}
+            <div className="w-20 h-20 md:w-24 md:h-24 shrink-0 overflow-hidden relative shadow-inner ring-1 ring-slate-100 bg-slate-50">
+              {news.photos?.length > 0 || news.videos?.length > 0 ? (
+                <img
+                  src={
+                    news.photos?.length > 0
+                      ? news.photos[0]?.secure_urls
+                      : getYtThumbnail(news.videos[0])
+                  }
+                  alt={news.title}
+                  className="size-full object-cover grayscale-[0.2] group-hover:grayscale-0 transition-all duration-700 group-hover:scale-110"
+                />
+              ) : (
+                <div className="w-full h-full bg-slate-100" />
+              )}
+              {/* Thumbnail Overlay */}
+              <div className="absolute inset-0 bg-linear-to-t from-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
+            </div>
+
+            {/* Interactive Vertical Signal */}
+            <div className="absolute top-0 right-0 w-1 h-0 bg-red-600 group-hover:h-full transition-all duration-700" />
           </Link>
         ))}
       </div>
