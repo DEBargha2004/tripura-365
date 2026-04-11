@@ -3,6 +3,7 @@ import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import Navbar from "@/components/custom/navbar";
 import Footer from "@/components/custom/footer";
+import { GoogleTagManager } from "@next/third-parties/google";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -33,7 +34,7 @@ export default function RootLayout({
       >
         <div>
           <Navbar />
-
+          <GoogleTagManager gtmId={process.env.GOOGLE_MEASUREMENT_ID ?? ""} />
           <main>{children}</main>
           <Footer />
         </div>
