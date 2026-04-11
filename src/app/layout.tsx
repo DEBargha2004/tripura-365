@@ -34,7 +34,7 @@ export default function RootLayout({
       >
         <div>
           <Navbar />
-          <GoogleAnalytics gaId={process.env.NEXT_PUBLIC_GTM_ID ?? ""} />
+          <GoogleAnalytics gaId={process.env.NEXT_PUBLIC_GA_ID ?? ""} />
           <main>{children}</main>
           <Footer />
         </div>
