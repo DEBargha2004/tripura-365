@@ -34,7 +34,7 @@ export default function RootLayout({
       >
         <div>
           <Navbar />
-          <GoogleTagManager gtmId={process.env.GOOGLE_MEASUREMENT_ID ?? ""} />
+          <GoogleTagManager gtmId={process.env.NEXT_PUBLIC_GTM_ID ?? ""} />
           <main>{children}</main>
           <Footer />
         </div>
