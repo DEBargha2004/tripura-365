@@ -55,9 +55,9 @@ export default function TopNewsSidebar({
             {/* Content */}
             <div className="absolute bottom-0 left-0 w-full p-3 z-10 flex flex-col gap-0.5">
               {/* Category Badge */}
-              <span className="inline-block px-1.5 py-0.5 bg-red-600 text-white text-[9px] font-bold rounded-full w-fit mb-1">
+              {/* <span className="inline-block px-1.5 py-0.5 bg-red-600 text-white text-[9px] font-bold rounded-full w-fit mb-1">
                 {news.category?.name}
-              </span>
+              </span> */}
 
               <h4 className="lg:text-sm font-bold text-white line-clamp-1 @sm:line-clamp-2 leading-tight group-hover:text-red-400 transition-colors">
                 {news.title}

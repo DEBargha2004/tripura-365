@@ -56,9 +56,9 @@ export default function TrendingNews({
 
                 {/* Top Badges */}
                 <div className="absolute top-4 left-4 flex flex-col gap-2 z-10">
-                  <span className="self-start px-3 py-1 bg-red-600/90 backdrop-blur-sm text-white text-xs font-bold rounded-full shadow-sm">
+                  {/* <span className="self-start px-3 py-1 bg-red-600/90 backdrop-blur-sm text-white text-xs font-bold rounded-full shadow-sm">
                     {post.category?.name}
-                  </span>
+                  </span> */}
                 </div>
 
                 {/* Ranking / Trending Badge */}
