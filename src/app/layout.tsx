@@ -16,7 +16,7 @@ const playfair = Playfair_Display({
 });
 
 export const metadata: Metadata = {
-  title: { template: "%s | Tripura 365", default: "Tripura 365" },
+  title: { template: "%s | Bar and Bench", default: "Bar and Bench" },
 };
 
 export default function RootLayout({

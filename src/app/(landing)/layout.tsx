@@ -9,6 +9,7 @@ export default async function Layout({
   videos,
   advideos,
   adimages,
+  combinednews,
 }: {
   children: React.ReactNode;
   category: React.ReactNode;
@@ -18,6 +19,7 @@ export default async function Layout({
   videos: React.ReactNode;
   advideos: React.ReactNode;
   adimages: React.ReactNode;
+  combinednews: React.ReactNode;
 }) {
   const slok = await getSlok();
 
@@ -25,17 +27,17 @@ export default async function Layout({
     <main className="space-y-4">
       {/* 1. Marquee (children / page.tsx) */}
       {children}
-      
+
       {/* 2. Top News */}
       {topnews}
-      
-      {/* 3. News (Interviews) */}
-      {latestpost}
-      
+
+      {/* 3. Latest News */}
+      {combinednews}
+
       {/* 4. Categories + Carousel */}
       {category}
-      
-      {/* Daily Shlok Section at the bottom */}
+
+      {/* Daily Shlok Section at the bottom
       <section className="max-w-4xl mx-auto px-4 py-16">
         <div className="relative text-center space-y-8">
           <div className="absolute -top-10 left-1/2 -translate-x-1/2 text-8xl font-serif text-primary/5 opacity-10 select-none">
@@ -51,7 +53,7 @@ export default async function Layout({
             </div>
           </div>
         </div>
-      </section>
+      </section> */}
     </main>
   );
 }

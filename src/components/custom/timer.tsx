@@ -31,12 +31,12 @@ export default function Timer() {
     return () => clearInterval(timer);
   }, []);
   return (
-    <div className="flex flex-col items-end">
-      <div className="flex items-center gap-2">
+    <div className="flex flex-col w-full items-end">
+      <div className="flex justify-start w-full items-center gap-2">
         <Calendar size={16} />
         <h3 className="font-bold">{day}</h3>
       </div>
-      <div className="flex items-center gap-2">
+      <div className="flex justify-start w-full items-center gap-2">
         <Clock size={16} />
         <h4 className="font-medium">{time}</h4>
       </div>

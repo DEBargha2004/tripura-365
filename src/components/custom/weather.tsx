@@ -21,10 +21,10 @@ export default function Weather() {
 
   return (
     <section className="flex gap-2 items-center">
-      <CloudSunIcon size={17} />
+      <CloudSunIcon size={20} className="shrink-0" />
       <div>
         {weatherData === undefined ? (
-          <Skeleton className="h-4 w-10" />
+          <Skeleton className="h-5 w-12" />
         ) : weatherData === null ? (
           "N/A"
         ) : (

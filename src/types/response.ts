@@ -31,7 +31,7 @@ export type Data = {
   last_drafted: string;
   created: string;
   total_views: number;
-  category: Category;
+  category_id: number;
   published: boolean;
   photos: { public_id: string; secure_urls: string }[]; // Replace with exact image structure
   thumbnail: string;

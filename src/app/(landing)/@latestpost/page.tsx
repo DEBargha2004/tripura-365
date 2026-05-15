@@ -12,7 +12,7 @@ export default async function Page() {
   if (!featured) return null;
 
   return (
-    <section className="py-12 bg-white" id="latest">
+    <section className="py-8 bg-white" id="latest">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center mb-10 border-b border-primary/20 pb-2">
           <h2 className="text-3xl font-serif font-black text-gray-900 border-b-2 border-primary pb-2 -mb-[10px] uppercase tracking-tight">
@@ -21,7 +21,7 @@ export default async function Page() {
         </div>
 
         {/* Featured Article */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 mb-12 items-center">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 mb-16 items-center">
           <div className="lg:col-span-7">
             <Link href={`/news/${featured.id}`} className="group block">
               <div className="relative aspect-video rounded-xl overflow-hidden shadow-lg">
@@ -34,27 +34,20 @@ export default async function Page() {
                   alt={featured.title}
                   className="object-cover size-full group-hover:scale-105 transition-transform duration-500"
                 />
-                {featured.category && (
-                  <div className="absolute top-4 right-4">
-                    <span className="bg-primary text-white text-[10px] font-black uppercase tracking-widest px-3 py-1 rounded-full shadow-lg">
-                      {featured.category.name}
-                    </span>
-                  </div>
-                )}
               </div>
             </Link>
           </div>
           <div className="lg:col-span-5 space-y-4">
             <Link href={`/news/${featured.id}`} className="group block">
-              <h1 className="text-3xl md:text-4xl font-serif font-bold text-gray-900 leading-[1.15] group-hover:text-primary transition-colors">
+              <h1 className="text-4xl md:text-6xl font-serif font-black text-gray-900 leading-[1.05] group-hover:text-primary transition-colors">
                 {featured.title}
               </h1>
             </Link>
-            <p className="text-gray-600 text-lg line-clamp-3 leading-relaxed">
+            <p className="text-gray-600 text-xl font-serif line-clamp-4 leading-relaxed italic border-l-4 border-primary/10 pl-6 py-2">
               {featured.body}
             </p>
             <div className="flex items-center gap-2 text-xs font-black uppercase tracking-widest text-primary/60">
-              <span>{"By Team Tripura 365"}</span>
+              <span>{"By Team Bar and Bench"}</span>
               <span className="text-gray-300">•</span>
               <span>
                 {featured.published_on &&
@@ -65,7 +58,7 @@ export default async function Page() {
         </div>
 
         {/* Small Articles Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10">
           {others.slice(0, 4).map((post) => (
             <Link
               key={post.id}
@@ -84,11 +77,11 @@ export default async function Page() {
                 />
               </div>
               <div className="space-y-2">
-                <h3 className="text-base font-serif font-bold text-gray-900 leading-snug group-hover:text-primary transition-colors line-clamp-3">
+                <h3 className="text-lg font-serif font-bold text-gray-900 leading-snug group-hover:text-primary transition-colors line-clamp-3">
                   {post.title}
                 </h3>
                 <div className="text-[10px] font-black uppercase tracking-widest text-primary/50">
-                  {"Team Tripura 365"}
+                  {"Team Bar and Bench"}
                 </div>
               </div>
             </Link>

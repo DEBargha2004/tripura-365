@@ -16,7 +16,7 @@ export default function TopNews({
   if (!featured) return null;
 
   return (
-    <section className="py-12 bg-white">
+    <section className="py-8 bg-white">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Header */}
         <div className="flex items-center mb-10">
@@ -28,7 +28,10 @@ export default function TopNews({
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-10">
           {/* Left Column: Large Featured Item */}
           <div className="lg:col-span-5 flex flex-col">
-            <Link href={`/news/${featured.id}`} className="group block space-y-5">
+            <Link
+              href={`/news/${featured.id}`}
+              className="group block space-y-5"
+            >
               <div className="relative aspect-[16/10] overflow-hidden rounded-sm bg-gray-100">
                 <img
                   src={
@@ -40,11 +43,11 @@ export default function TopNews({
                   className="object-cover size-full group-hover:scale-105 transition-transform duration-700"
                 />
               </div>
-              <div className="space-y-3">
-                <h3 className="text-2xl font-serif font-bold text-gray-900 leading-tight group-hover:text-primary transition-colors">
+              <div className="space-y-4">
+                <h3 className="text-4xl md:text-5xl font-serif font-black text-gray-900 leading-[1.1] group-hover:text-primary transition-colors">
                   {featured.title}
                 </h3>
-                <p className="text-gray-500 text-sm leading-relaxed font-serif line-clamp-4">
+                <p className="text-gray-600 text-lg leading-relaxed font-serif line-clamp-4">
                   {featured.body}
                 </p>
               </div>
@@ -70,7 +73,7 @@ export default function TopNews({
 
         {/* Centered Load More Button */}
         {!hideViewAll && (
-          <div className="mt-16 flex justify-center">
+          <div className="mt-6 flex justify-center">
             <Link
               href="/top-news"
               className="border border-gray-900 px-10 py-2.5 text-xs font-serif text-gray-900 hover:bg-gray-900 hover:text-white transition-all duration-300"
@@ -86,11 +89,8 @@ export default function TopNews({
 
 function SmallNewsItem({ post }: { post: Data }) {
   return (
-    <Link
-      href={`/news/${post.id}`}
-      className="group flex gap-4 items-start"
-    >
-      <div className="relative w-28 aspect-[16/10] shrink-0 overflow-hidden rounded-md shadow-sm bg-gray-100">
+    <Link href={`/news/${post.id}`} className="group flex gap-4 items-start">
+      <div className="relative w-40 aspect-[16/10] shrink-0 overflow-hidden rounded-md shadow-sm bg-gray-100">
         <img
           src={
             post.photos?.[0]
@@ -102,7 +102,7 @@ function SmallNewsItem({ post }: { post: Data }) {
         />
       </div>
       <div className="flex-1">
-        <h4 className="text-[14px] font-serif font-bold text-gray-900 leading-snug group-hover:text-primary transition-colors line-clamp-3">
+        <h4 className="text-lg font-serif font-bold text-gray-900 leading-snug group-hover:text-primary transition-colors line-clamp-3">
           {post.title}
         </h4>
       </div>
