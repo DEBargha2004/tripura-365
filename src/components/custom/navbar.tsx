@@ -2,70 +2,124 @@ import Link from "next/link";
 import Logo from "./logo";
 import Timer from "./timer";
 import Weather from "./weather";
-import { Galada } from "next/font/google";
 import { cn } from "@/lib/utils";
+import { getAllCategories } from "@/actions/news";
+import {
+  FaApple,
+  FaPlay,
+  FaXTwitter,
+  FaYoutube,
+  FaFacebookF,
+  FaLinkedinIn,
+  FaInstagram,
+  FaPrint,
+  FaWhatsapp,
+} from "react-icons/fa6";
+import { Search } from "lucide-react";
 
-const galanda = Galada({ subsets: ["latin"], weight: ["400"] });
+export default async function Navbar() {
+  const categories = await getAllCategories();
 
-function EventBadge({ className, ...props }: React.ComponentProps<"div">) {
   return (
-    <div className={cn("size-16", className)} {...props}>
-      <img
-        src={"https://d2ros3ibvdm942.cloudfront.net/tripura365/event.jpeg"}
-        alt="Event"
-        className="size-full rounded-full border-4 border-white shadow-lg object-cover"
-      />
-    </div>
-  );
-}
-
-export default function Navbar() {
-  return (
-    <nav className="sticky top-0 z-50 bg-white/80 backdrop-blur-md border-b border-gray-200 transition-all duration-300">
+    <nav className="z-50 bg-white">
+      {/* Top Tier: Utilities, Logo, User Actions */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex items-center justify-between h-20">
-          {/* Left: Logo */}
-          <div className="shrink-0 flex items-center relative">
-            <Link href={"/"} className="group relative z-10">
-              <Logo className="transition-transform duration-300 group-hover:scale-105" />
-            </Link>
-            <div
-              className={cn(
-                "bg-red-600 text-white text-sm font-semibold h-fit my-auto px-2 py-0.5 rounded-full animate-pulse",
-                "absolute left-14 whitespace-nowrap",
-              )}
-            >
-              Test Run
+        <div className="flex items-center justify-between h-32 relative py-4">
+          {/* Left: Icons + Time/Weather */}
+          <div className="hidden lg:flex items-center gap-4 text-gray-500">
+            <div className="flex items-center gap-3 pr-4 border-r border-gray-200">
+              <FaPlay className="w-3 h-3 cursor-pointer hover:text-primary transition-colors" />
+              <FaApple className="w-4 h-4 cursor-pointer hover:text-primary transition-colors" />
             </div>
-          </div>
-
-          {/* Center: Title */}
-          <div className="flex-1 flex justify-center items-end md:gap-8 pointer-events-none relative">
-            <Link href={"/"} className="pointer-events-auto">
-              <h1
-                className={cn(
-                  "text-3xl md:text-5xl font-bold text-red-700 whitespace-nowrap tracking-tight hover:scale-105 transition-transform duration-300 cursor-pointer drop-shadow-sm",
-                  galanda.className,
-                )}
-              >
-                ত্রিপুরা ৩৬৫
-              </h1>
-            </Link>
-            <EventBadge className="hidden md:block" />
-          </div>
-
-          {/* Right: Utilities */}
-          <div className="hidden md:flex items-center gap-4 z-10">
-            <div className="bg-gray-100/80 px-4 py-2 rounded-full border border-gray-200 flex items-center gap-4 text-sm font-medium text-gray-600 shadow-sm hover:shadow-md transition-shadow duration-300">
+            <div className="flex items-center gap-4">
               <Timer />
-              <div className="h-4 w-px bg-gray-300" />
+              <div className="h-8 w-px bg-gray-200" />
               <Weather />
             </div>
           </div>
-          <EventBadge className="block md:hidden" />
 
-          {/* Mobile Spacer to keep title centered if utilities are hidden */}
-          {/* <div className="md:hidden w-16" /> */}
+          {/* Center: Logo */}
+          <div className="absolute left-1/2 -translate-x-1/2 flex flex-col items-center top-1/2 -translate-y-1/2">
+            <Link href="/" className="flex flex-col items-center group">
+              <h1 className="text-5xl md:text-6xl font-serif font-black tracking-tighter text-gray-900 leading-none">
+                Bar<span className="text-primary font-serif italic mx-1 opacity-80">and</span>Bench
+              </h1>
+            </Link>
+          </div>
+
+          {/* Right: Social + Actions */}
+          <div className="hidden lg:flex items-center gap-4">
+            <div className="flex items-center gap-4 border-r border-gray-200 pr-4 mr-2">
+              <Link
+                href="#"
+                className="text-[11px] font-bold uppercase tracking-wider text-gray-700 hover:text-primary transition-colors"
+              >
+                Sign in
+              </Link>
+              <Link
+                href="#"
+                className="text-[11px] font-bold uppercase tracking-wider text-gray-700 hover:text-primary transition-colors"
+              >
+                Subscribe
+              </Link>
+            </div>
+            <div className="flex items-center gap-2.5 text-gray-500">
+              <FaXTwitter className="w-3.5 h-3.5 cursor-pointer hover:text-primary transition-colors" />
+              <FaYoutube className="w-3.5 h-3.5 cursor-pointer hover:text-primary transition-colors" />
+              <FaFacebookF className="w-3.5 h-3.5 cursor-pointer hover:text-primary transition-colors" />
+              <FaLinkedinIn className="w-3.5 h-3.5 cursor-pointer hover:text-primary transition-colors" />
+              <FaInstagram className="w-3.5 h-3.5 cursor-pointer hover:text-primary transition-colors" />
+              <FaPrint className="w-3.5 h-3.5 cursor-pointer hover:text-primary transition-colors" />
+              <FaWhatsapp className="w-3.5 h-3.5 cursor-pointer hover:text-primary transition-colors" />
+            </div>
+          </div>
+
+          {/* Mobile Menu Toggle (Simplified for now) */}
+          <div className="lg:hidden flex items-center gap-4 ml-auto">
+            <Search className="w-5 h-5 text-gray-600" />
+            <button className="p-2 text-gray-600">
+              <div className="w-6 h-0.5 bg-current mb-1.5" />
+              <div className="w-6 h-0.5 bg-current mb-1.5" />
+              <div className="w-6 h-0.5 bg-current" />
+            </button>
+          </div>
+        </div>
+      </div>
+
+      {/* Bottom Tier: Maroon Nav Links */}
+      <div className="bg-primary text-white sticky top-0 z-40 shadow-md">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="flex items-center justify-between py-3">
+            <div className="flex items-center gap-6 overflow-x-auto no-scrollbar">
+              <Link
+                href="/"
+                className="text-[12px] font-bold uppercase tracking-[0.05em] whitespace-nowrap hover:opacity-75 transition-opacity"
+              >
+                Latest Legal News
+              </Link>
+              {categories.slice(0, 8).map((cat) => (
+                <Link
+                  key={cat.id}
+                  href={`/category/${cat.id}`}
+                  className="text-[12px] font-bold uppercase tracking-[0.05em] whitespace-nowrap hover:opacity-75 transition-opacity flex items-center gap-1"
+                >
+                  {cat.name}
+                  <span className="text-[8px] ml-0.5 opacity-70">▼</span>
+                </Link>
+              ))}
+              <Link
+                href="#"
+                className="text-[12px] font-bold uppercase tracking-[0.05em] whitespace-nowrap hover:opacity-75 transition-opacity"
+              >
+                Legal Jobs
+              </Link>
+            </div>
+            
+            {/* Right side Search icon in Maroon bar */}
+            <div className="shrink-0 pl-6 ml-auto flex items-center">
+              <Search className="w-4 h-4 cursor-pointer hover:opacity-75 transition-opacity" />
+            </div>
+          </div>
         </div>
       </div>
     </nav>

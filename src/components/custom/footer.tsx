@@ -1,226 +1,166 @@
 import { getCategoryWiseNews } from "@/actions/news";
-import { Facebook, Mail, MapPin } from "lucide-react";
+import {
+  FaFacebookF,
+  FaInstagram,
+  FaLinkedinIn,
+  FaWhatsapp,
+  FaXTwitter,
+  FaYoutube,
+  FaPrint,
+} from "react-icons/fa6";
 import Logo from "./logo";
 import Link from "next/link";
-import { FaInstagram, FaWhatsapp, FaYoutube } from "react-icons/fa";
 
 export default async function Footer() {
   const categoryResponse = await getCategoryWiseNews();
-  const importantLinks = [
+
+  const footerLinks = [
     {
-      imageUrl: "https://india.gov.in/image/static/npi_logo_Beta_White.svg",
-      webUrl: "https://www.india.gov.in",
-      bgColor: "black",
-      name: "National Portal of India",
+      title: "News",
+      links: [
+        { name: "Corporate & In-House News", href: "#" },
+        { name: "Litigation", href: "#" },
+        { name: "Law & Policy", href: "#" },
+        { name: "Law Schools", href: "#" },
+        { name: "Judges", href: "#" },
+      ],
     },
     {
-      imageUrl:
-        "https://www.tripura.gov.in/sites/default/files/2023-07/logo-ripura_0_0.png",
-      webUrl: "https://www.tripura.gov.in",
-      name: "Government of Tripura",
+      title: "Interviews",
+      links: [
+        { name: "Corporate & In-House", href: "#" },
+        { name: "Litigation", href: "#" },
+        { name: "Law Schools", href: "#" },
+        { name: "Law & Policy", href: "#" },
+      ],
     },
     {
-      imageUrl:
-        "https://www.mygov.in/sites/all/themes/mygov/front_assets/images/logo.svg",
-      webUrl: "https://www.mygov.in",
-      name: "MyGov",
+      title: "Columns",
+      links: [
+        { name: "Corporate & In-House", href: "#" },
+        { name: "Law & Policy", href: "#" },
+        { name: "Litigation", href: "#" },
+        { name: "The Recruiters", href: "#" },
+        { name: "Working Title", href: "#" },
+      ],
     },
     {
-      imageUrl:
-        "https://s7ap1.scene7.com/is/content/incredibleindia/incredible-india-logo?qlt=82&ts=1727762218512",
-      webUrl: "https://www.incredibleindia.gov.in/en",
-      bgColor: "black",
-      name: "Incredible India",
+      title: "Viewpoint",
+      links: [],
     },
     {
-      imageUrl:
-        "https://ica.tripura.gov.in/sites/default/files/2022-01/ica.png",
-      webUrl: "https://ica.tripura.gov.in",
-      name: "ICA Tripura",
+      title: "Dealstreet",
+      links: [],
     },
   ];
 
   return (
-    <footer className="bg-gray-950 text-gray-300 border-t border-gray-900 font-sans">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-12">
-          {/* Brand Section (4 cols) */}
-          <div className="lg:col-span-4 space-y-6">
-            <div className="inline-block">
-              <Logo />
-            </div>
-            <p className="text-gray-400 leading-relaxed text-sm">
-              Tripura 365 is a dynamic and trusted Indian news website that
-              brings you the latest and most relevant news from the vibrant
-              state of Tripura.
-            </p>
-            <div className="flex items-center gap-4 pt-2">
-              <Link
-                href={"https://www.facebook.com//profile.php?id=61581880808522"}
-                target="_blank"
-                className="h-10 w-10 rounded-full bg-gray-900 flex items-center justify-center hover:bg-blue-600 hover:text-white transition-all duration-300 group"
-              >
-                <Facebook className="h-5 w-5 group-hover:scale-110 transition-transform" />
-              </Link>
-              <Link
-                href={"https://www.instagram.com/tripura365webmedia/"}
-                target="_blank"
-                className="h-10 w-10 rounded-full bg-gray-900 flex items-center justify-center hover:bg-pink-600 hover:text-white transition-all duration-300 group"
-              >
-                <FaInstagram className="h-5 w-5 group-hover:scale-110 transition-transform" />
-              </Link>
-              <Link
-                href={"https://www.youtube.com/@PriyankuModak/"}
-                target="_blank"
-                className="h-10 w-10 rounded-full bg-gray-900 flex items-center justify-center hover:bg-red-600 hover:text-white transition-all duration-300 group"
-              >
-                <FaYoutube className="h-5 w-5 group-hover:scale-110 transition-transform" />
-              </Link>
-            </div>
-          </div>
+    <footer className="bg-primary text-white pt-20 pb-10">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        {/* Centered Logo */}
+        <div className="flex flex-col items-center mb-20">
+          <Logo className="h-12 w-auto grayscale brightness-0 invert opacity-80" />
+          <h1 className="text-4xl md:text-5xl font-serif font-black tracking-tighter text-white/90 leading-none mt-4">
+            Bar<span className="font-serif italic mx-0.5 text-white/60">and</span>
+            Bench
+          </h1>
+        </div>
 
-          {/* Quick Links (3 cols) */}
-          <div className="lg:col-span-3">
-            <h4 className="text-white font-bold text-lg mb-6 relative inline-block">
-              Quick Links
-              <span className="absolute -bottom-2 left-0 w-1/2 h-1 bg-red-600 rounded-full"></span>
-            </h4>
-            <div className="grid grid-cols-1 gap-3">
-              {importantLinks.map((impLink) => (
-                <a
-                  key={impLink.webUrl}
-                  href={impLink.webUrl}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="flex items-center gap-3 p-2 rounded-lg hover:bg-gray-900 transition-colors group"
-                >
-                  <div
-                    className="h-14 md:w-64 w-full flex items-center justify-center rounded p-1"
-                    style={{ backgroundColor: impLink.bgColor ?? "white" }}
-                  >
-                    <img
-                      src={impLink.imageUrl}
-                      alt={impLink.name}
-                      className="max-h-full max-w-full object-contain"
-                    />
-                  </div>
-                  {/* <span className="text-sm font-medium group-hover:text-white transition-colors">{impLink.name}</span> */}
-                </a>
-              ))}
-            </div>
-          </div>
-
-          {/* Categories (2 cols) */}
-          <div className="lg:col-span-2">
-            <h4 className="text-white font-bold text-lg mb-6 relative inline-block">
-              Categories
-              <span className="absolute -bottom-2 left-0 w-1/2 h-1 bg-red-600 rounded-full"></span>
-            </h4>
-            <ul className="space-y-3">
-              {categoryResponse?.map((category, idx) => (
-                <li key={category.articles?.[0]?.category?.id ?? idx}>
-                  <Link
-                    href={`/category/${category?.articles?.[0]?.category?.id}`}
-                    className="text-sm md:text-base hover:text-red-500 transition-colors flex items-center gap-2 group"
-                  >
-                    <span className="w-1.5 h-1.5 bg-gray-700 rounded-full group-hover:bg-red-500 transition-colors" />
-                    {category.name}
-                  </Link>
-                </li>
-              ))}
-            </ul>
-          </div>
-
-          {/* Contact Info (3 cols) */}
-          <div className="lg:col-span-3">
-            <h4 className="text-white font-bold text-lg mb-6 relative inline-block">
-              Contact Us
-              <span className="absolute -bottom-2 left-0 w-1/2 h-1 bg-red-600 rounded-full"></span>
-            </h4>
+        {/* Footer Grid */}
+        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-12 pb-16">
+          {/* Column 1: Follow Us */}
+          <div className="col-span-2 md:col-span-1 space-y-8">
             <div className="space-y-4">
-              <div className="flex items-start gap-3 group">
-                <div className="mt-1 p-2 bg-gray-900 rounded-lg group-hover:bg-red-600/20 group-hover:text-red-500 transition-colors">
-                  <Mail className="h-4 w-4" />
-                </div>
-                <div className="flex flex-col text-sm">
-                  <span className="text-gray-500 text-xs uppercase tracking-wider font-semibold mb-0.5">
-                    Email
-                  </span>
-                  <Link
-                    href={"mailto:tripura365.agt@gmail.com"}
-                    className="hover:text-white transition-colors"
-                  >
-                    tripura365.agt@gmail.com
-                  </Link>
-                  <Link
-                    href={"mailto:priyankumodak.agt25@gmail.com"}
-                    className="hover:text-white transition-colors"
-                  >
-                    priyankumodak.agt25@gmail.com
-                  </Link>
-                </div>
-              </div>
-
-              <div className="flex items-start gap-3 group">
-                <div className="mt-1 p-2 bg-gray-900 rounded-lg group-hover:bg-green-600/20 group-hover:text-green-500 transition-colors">
-                  <FaWhatsapp className="h-4 w-4" />
-                </div>
-                <div className="flex flex-col text-sm">
-                  <span className="text-gray-500 text-xs uppercase tracking-wider font-semibold mb-0.5">
-                    WhatsApp
-                  </span>
-                  <a href="https://wa.me/919233749847">
-                    <span className="hover:text-white transition-colors">
-                      +91 92337 49847
-                    </span>
-                  </a>
-                </div>
-              </div>
-
-              <div className="flex items-start gap-3 group">
-                <div className="mt-1 p-2 bg-gray-900 rounded-lg group-hover:bg-blue-600/20 group-hover:text-blue-500 transition-colors">
-                  <MapPin className="h-4 w-4" />
-                </div>
-                <div className="flex flex-col text-sm">
-                  <span className="text-gray-500 text-xs uppercase tracking-wider font-semibold mb-0.5">
-                    Address
-                  </span>
-                  <span className="hover:text-white transition-colors">
-                    AD Nagar, Agartala, 799003
-                  </span>
-                </div>
+              <h4 className="text-[11px] font-black uppercase tracking-[0.2em] text-white/50">
+                Follow Us
+              </h4>
+              <div className="flex flex-wrap gap-4">
+                <FaXTwitter className="w-4 h-4 cursor-pointer hover:text-white/70 transition-colors" />
+                <FaYoutube className="w-4 h-4 cursor-pointer hover:text-white/70 transition-colors" />
+                <FaFacebookF className="w-4 h-4 cursor-pointer hover:text-white/70 transition-colors" />
+                <FaLinkedinIn className="w-4 h-4 cursor-pointer hover:text-white/70 transition-colors" />
+                <FaInstagram className="w-4 h-4 cursor-pointer hover:text-white/70 transition-colors" />
+                <FaPrint className="w-4 h-4 cursor-pointer hover:text-white/70 transition-colors" />
+                <FaWhatsapp className="w-4 h-4 cursor-pointer hover:text-white/70 transition-colors" />
               </div>
             </div>
+
+            <div className="space-y-4">
+              <Link href="#" className="block">
+                <img
+                  src="https://developer.apple.com/assets/elements/badges/download-on-the-app-store.svg"
+                  alt="App Store"
+                  className="h-10 w-auto opacity-90 hover:opacity-100 transition-opacity"
+                />
+              </Link>
+              <Link href="#" className="block">
+                <img
+                  src="https://upload.wikimedia.org/wikipedia/commons/7/78/Google_Play_Store_badge_EN.svg"
+                  alt="Google Play"
+                  className="h-10 w-auto opacity-90 hover:opacity-100 transition-opacity"
+                />
+              </Link>
+            </div>
+
+            <Link
+              href="#"
+              className="inline-block border border-white/30 px-6 py-2 text-[10px] font-black uppercase tracking-widest hover:bg-white hover:text-primary transition-all"
+            >
+              Subscribe
+            </Link>
           </div>
+
+          {/* Dynamic Columns from Categories */}
+          {categoryResponse.slice(0, 5).map((category) => (
+            <div key={category.name} className="space-y-4">
+              <h4 className="text-[11px] font-black uppercase tracking-[0.2em] text-white/50">
+                {category.name}
+              </h4>
+              <ul className="space-y-2.5">
+                {category.articles.slice(0, 5).map((article) => (
+                  <li key={article.id}>
+                    <Link
+                      href={`/news/${article.id}`}
+                      className="text-xs font-bold leading-relaxed text-white/90 hover:text-white transition-colors block line-clamp-2"
+                    >
+                      {article.title}
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          ))}
         </div>
 
         {/* Bottom Bar */}
-        <div className="border-t border-gray-900 mt-16 pt-8 flex flex-col md:flex-row justify-between items-center gap-4">
-          <p className="text-gray-500 text-sm text-center md:text-left">
-            &copy; {new Date().getFullYear()}{" "}
-            <span className="text-white font-semibold">Tripura 365</span>. All
-            rights reserved.
-          </p>
-          <div className="flex flex-wrap justify-center gap-6 md:gap-8">
-            <a
-              href="#"
-              className="text-gray-500 hover:text-white text-sm transition-colors"
-            >
+        <div className="pt-8 border-t border-white/10 flex flex-col md:flex-row justify-center items-center gap-6 text-[10px] font-black uppercase tracking-[0.15em] text-white/40 text-center">
+          <div className="flex flex-wrap justify-center gap-x-6 gap-y-2">
+            <Link href="#" className="hover:text-white transition-colors">
+              Terms Of Use
+            </Link>
+            <Link href="#" className="hover:text-white transition-colors">
               Privacy Policy
-            </a>
-            <a
-              href="#"
-              className="text-gray-500 hover:text-white text-sm transition-colors"
-            >
-              Terms of Service
-            </a>
-            <a
-              href="#"
-              className="text-gray-500 hover:text-white text-sm transition-colors"
-            >
-              Advertise with Us
-            </a>
+            </Link>
+            <Link href="#" className="hover:text-white transition-colors">
+              Contact Us
+            </Link>
+            <Link href="#" className="hover:text-white transition-colors">
+              Careers
+            </Link>
+            <Link href="#" className="hover:text-white transition-colors">
+              Advertise with us
+            </Link>
+            <Link href="#" className="hover:text-white transition-colors">
+              About us
+            </Link>
           </div>
+          <div className="md:absolute md:right-8 opacity-60">
+            Powered by Tripura 365
+          </div>
+        </div>
+        <div className="mt-8 text-center text-[10px] font-black uppercase tracking-[0.2em] text-white/20">
+          Copyright © {new Date().getFullYear()} Bar and Bench. All Rights
+          Reserved
         </div>
       </div>
     </footer>

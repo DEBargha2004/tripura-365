@@ -12,79 +12,100 @@ export default function TopNews({
   data?: Data[];
   hideViewAll?: boolean;
 }) {
+  const [featured, ...others] = data ?? [];
+  if (!featured) return null;
+
   return (
-    <section className="py-12 md:py-20 bg-gray-50">
+    <section className="py-12 bg-white">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex items-center justify-between mb-12">
-          <h2 className="text-3xl md:text-4xl font-bold text-gray-900 tracking-tight">
-            শীর্ষ খবর
+        {/* Header */}
+        <div className="flex items-center mb-10">
+          <h2 className="text-3xl font-serif font-black text-gray-900 border-b-[4px] border-primary pb-1 tracking-tight">
+            Today&apos;s Top Stories
           </h2>
-          <div className="h-1 flex-1 mx-6 bg-gray-100 rounded-full hidden md:block" />
-          {!hideViewAll && (
+        </div>
+
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-10">
+          {/* Left Column: Large Featured Item */}
+          <div className="lg:col-span-5 flex flex-col">
+            <Link href={`/news/${featured.id}`} className="group block space-y-5">
+              <div className="relative aspect-[16/10] overflow-hidden rounded-sm bg-gray-100">
+                <img
+                  src={
+                    featured.photos?.[0]
+                      ? featured.photos[0].secure_urls
+                      : getYtThumbnail(featured.videos?.[0])
+                  }
+                  alt={featured.title}
+                  className="object-cover size-full group-hover:scale-105 transition-transform duration-700"
+                />
+              </div>
+              <div className="space-y-3">
+                <h3 className="text-2xl font-serif font-bold text-gray-900 leading-tight group-hover:text-primary transition-colors">
+                  {featured.title}
+                </h3>
+                <p className="text-gray-500 text-sm leading-relaxed font-serif line-clamp-4">
+                  {featured.body}
+                </p>
+              </div>
+            </Link>
+          </div>
+
+          {/* Right Column: Two columns of small items */}
+          <div className="lg:col-span-7 grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-6">
+            {/* First Column of Small Items */}
+            <div className="flex flex-col gap-6">
+              {others.slice(0, 3).map((post) => (
+                <SmallNewsItem key={post.id} post={post} />
+              ))}
+            </div>
+            {/* Second Column of Small Items */}
+            <div className="flex flex-col gap-6">
+              {others.slice(3, 6).map((post) => (
+                <SmallNewsItem key={post.id} post={post} />
+              ))}
+            </div>
+          </div>
+        </div>
+
+        {/* Centered Load More Button */}
+        {!hideViewAll && (
+          <div className="mt-16 flex justify-center">
             <Link
               href="/top-news"
-              className="group flex items-center gap-2 text-blue-600 font-semibold hover:text-blue-700 transition-colors"
+              className="border border-gray-900 px-10 py-2.5 text-xs font-serif text-gray-900 hover:bg-gray-900 hover:text-white transition-all duration-300"
             >
-              View All
-              <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+              Load more
             </Link>
-          )}
-        </div>
-
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {data?.map((news) => (
-            <Link
-              href={`/news/${news.id}`}
-              key={news.id}
-              className="group block h-full"
-            >
-              <article className="relative h-96 w-full rounded-3xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-1">
-                {(news.photos?.length > 0 || news.videos?.length > 0) && (
-                  <img
-                    src={
-                      news.photos?.length > 0
-                        ? news.photos[0]?.secure_urls
-                        : getYtThumbnail(news.videos[0])
-                    }
-                    alt={news.title}
-                    // fill
-                    className="object-cover transition-transform duration-700 group-hover:scale-110 size-full"
-                  />
-                )}
-
-                {/* Strong Gradient Overlay */}
-                <div className="absolute inset-0 bg-linear-to-t from-black/90 via-black/50 to-transparent opacity-90 transition-opacity duration-300" />
-
-                {/* Top Badges */}
-                <div className="absolute top-4 left-4 z-10">
-                  <span className="px-3 py-1 bg-blue-600/90 backdrop-blur-sm text-white text-xs font-bold rounded-full shadow-sm">
-                    {news.category?.name}
-                  </span>
-                </div>
-
-                {/* Bottom Content Overlay */}
-                <div className="absolute bottom-0 left-0 w-full p-6 z-10 flex flex-col gap-3">
-                  {/* Date */}
-                  <div className="flex items-center gap-2 text-gray-300 text-xs font-medium">
-                    <Calendar className="w-3.5 h-3.5" />
-                    <span>{format(new Date(news.created), "PPP")}</span>
-                  </div>
-
-                  {/* Title */}
-                  <h3 className="text-xl md:text-2xl font-bold text-white leading-snug line-clamp-2 group-hover:text-blue-400 transition-colors">
-                    {news.title}
-                  </h3>
-
-                  {/* Read More Link */}
-                  <div className="flex items-center text-white/90 text-sm font-semibold opacity-0 group-hover:opacity-100 transition-all duration-300 transform translate-y-4 group-hover:translate-y-0">
-                    Read Article <ArrowRight className="w-4 h-4 ml-2" />
-                  </div>
-                </div>
-              </article>
-            </Link>
-          ))}
-        </div>
+          </div>
+        )}
       </div>
     </section>
+  );
+}
+
+function SmallNewsItem({ post }: { post: Data }) {
+  return (
+    <Link
+      href={`/news/${post.id}`}
+      className="group flex gap-4 items-start"
+    >
+      <div className="relative w-28 aspect-[16/10] shrink-0 overflow-hidden rounded-md shadow-sm bg-gray-100">
+        <img
+          src={
+            post.photos?.[0]
+              ? post.photos[0].secure_urls
+              : getYtThumbnail(post.videos?.[0])
+          }
+          alt={post.title}
+          className="object-cover size-full group-hover:scale-110 transition-transform duration-500"
+        />
+      </div>
+      <div className="flex-1">
+        <h4 className="text-[14px] font-serif font-bold text-gray-900 leading-snug group-hover:text-primary transition-colors line-clamp-3">
+          {post.title}
+        </h4>
+      </div>
+    </Link>
   );
 }

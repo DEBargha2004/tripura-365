@@ -1,7 +1,10 @@
-import { getAllCategories, getCategoryWiseNews } from "@/actions/news";
+import {
+  getAllCategories,
+  getCategoryWiseNews,
+  getImageGallery,
+} from "@/actions/news";
+import HeroCarousel from "@/components/custom/hero-carousel";
 import { format } from "date-fns";
-import { ArrowRight, Calendar, Clock } from "lucide-react";
-import Image from "next/image";
 import Link from "next/link";
 import { getYtThumbnail } from "@/lib/utils";
 import { categoriesOrder } from "@/constants/categories-order";
@@ -11,6 +14,7 @@ type CategoryWiseNews = {
   name: string;
   articles: Data[];
 };
+
 const sortCategories = (cat: CategoryWiseNews[]) => {
   return categoriesOrder.reduce<CategoryWiseNews[]>((acc, name) => {
     const found = cat.find((c) => c.name === name);
@@ -23,130 +27,117 @@ const sortCategories = (cat: CategoryWiseNews[]) => {
 
 export default async function Page() {
   const res = await getCategoryWiseNews();
-  const category_res = await getAllCategories();
+  const sorted = sortCategories(res ?? []);
+  const imageGallery = await getImageGallery();
 
-  const getCategoryByName = (name: string) => {
-    return category_res.find((cat) => cat.name === name)!;
-  };
+  const firstHalf = sorted.slice(0, 1);
+  const secondHalf = sorted.slice(1, 3);
 
   return (
-    <section className="py-12 md:py-20 bg-white" id="category">
+    <section className="py-12 bg-white space-y-24">
+      {/* 3. Categories Section Start */}
+      {firstHalf.map((category) => (
+        <CategoryPattern key={category.name} category={category} />
+      ))}
+
+      {/* 4. Carousel Only */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex items-center justify-between mb-12">
-          <h2 className="text-3xl md:text-4xl font-bold text-gray-900 tracking-tight">
-            বিভাগভিত্তিক খবর
-          </h2>
-          <div className="h-1 flex-1 mx-6 bg-gray-100 rounded-full hidden md:block" />
+        <HeroCarousel data={imageGallery ?? []} />
+      </div>
+
+      {/* 5. Categories Section Continues */}
+      {secondHalf.map((category) => (
+        <CategoryPattern key={category.name} category={category} />
+      ))}
+    </section>
+  );
+}
+
+function SectionHeader({ title }: { title: string }) {
+  return (
+    <div className="flex items-center mb-10">
+      <h2 className="text-3xl font-serif font-black text-gray-900 border-b-[4px] border-primary pb-1 tracking-tight">
+        {title}
+      </h2>
+    </div>
+  );
+}
+
+function CategoryPattern({ category }: { category: CategoryWiseNews }) {
+  const [featured, ...others] = category.articles;
+  if (!featured) return null;
+
+  return (
+    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <SectionHeader title={category.name} />
+
+      <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-start">
+        {/* Left Column: Large Featured Article */}
+        <div className="lg:col-span-7">
+          <Link href={`/news/${featured.id}`} className="group block space-y-5">
+            <div className="relative aspect-[16/10] overflow-hidden rounded-sm bg-gray-100">
+              <img
+                src={
+                  featured.photos?.[0]
+                    ? featured.photos[0].secure_urls
+                    : getYtThumbnail(featured.videos?.[0])
+                }
+                alt={featured.title}
+                className="object-cover size-full group-hover:scale-105 transition-transform duration-700"
+              />
+            </div>
+            <div className="space-y-2 px-1">
+              <h2 className="text-2xl font-serif font-bold text-gray-900 leading-[1.2] group-hover:text-primary transition-colors">
+                {featured.title}
+              </h2>
+              <p className="text-primary text-xs font-serif font-medium italic opacity-80">
+                {"Team Tripura 365"}
+              </p>
+            </div>
+          </Link>
         </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-x-12 gap-y-16">
-          {sortCategories(res ?? [])?.map((category) => (
-            <div key={category.name} className="flex flex-col gap-6">
-              {/* Category Header */}
-              <div className="flex items-center justify-between border-b border-gray-100 pb-4">
-                <div className="flex items-center gap-3">
-                  <span className="w-1.5 h-6 bg-red-600 rounded-full" />
-                  <h3 className="text-2xl font-bold text-gray-900">
-                    {category.name}
-                  </h3>
-                </div>
-                <Link
-                  href={`/category/${getCategoryByName(category.name).id}`}
-                  className="group flex items-center gap-1 text-sm font-semibold text-blue-600 hover:text-blue-700 transition-colors"
-                >
-                  View All
-                  <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
-                </Link>
+        {/* Right Column: List of 3 Articles */}
+        <div className="lg:col-span-5 flex flex-col gap-8">
+          {others.slice(0, 3).map((post) => (
+            <Link
+              key={post.id}
+              href={`/news/${post.id}`}
+              className="group flex gap-5 items-start"
+            >
+              <div className="relative w-40 aspect-[16/10] shrink-0 overflow-hidden rounded-md shadow-sm bg-gray-100">
+                <img
+                  src={
+                    post.photos?.[0]
+                      ? post.photos[0].secure_urls
+                      : getYtThumbnail(post.videos?.[0])
+                  }
+                  alt={post.title}
+                  className="object-cover size-full group-hover:scale-110 transition-transform duration-500"
+                />
               </div>
-
-              {/* Articles */}
-              <div className="space-y-6">
-                {/* Featured Article (First one) */}
-                {category.articles?.[0] && (
-                  <Link
-                    href={`/news/${category.articles[0].id}`}
-                    className="group block"
-                  >
-                    <article className="relative h-72 w-full rounded-2xl overflow-hidden shadow-md hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1">
-                      {(category.articles[0]?.photos?.length > 0 ||
-                        category.articles[0]?.videos?.length > 0) && (
-                        <img
-                          src={
-                            category.articles[0]?.photos?.length > 0
-                              ? category.articles[0].photos[0]?.secure_urls
-                              : getYtThumbnail(category.articles[0].videos[0])
-                          }
-                          alt={category.articles[0].title}
-                          // fill
-                          className="object-cover transition-transform duration-700 group-hover:scale-105 size-full"
-                        />
-                      )}
-                      <div className="absolute inset-0 bg-linear-to-t from-black/90 via-black/40 to-transparent opacity-90" />
-                      <div className="absolute bottom-0 left-0 p-6 w-full">
-                        <h4 className="text-xl font-bold text-white line-clamp-2 mb-3 group-hover:text-red-400 transition-colors leading-snug">
-                          {category.articles[0].title}
-                        </h4>
-                        <div className="flex items-center gap-2 text-gray-300 text-xs font-medium">
-                          <Calendar className="w-3.5 h-3.5" />
-                          <span>
-                            {format(
-                              new Date(category.articles[0].published_on),
-                              "PPP",
-                            )}
-                          </span>
-                        </div>
-                      </div>
-                    </article>
-                  </Link>
-                )}
-
-                {/* List of other articles */}
-                <div className="space-y-5">
-                  {category.articles?.slice(1, 4).map((article) => (
-                    <Link
-                      href={`/news/${article.id}`}
-                      key={article.id}
-                      className="group block"
-                    >
-                      <article className="flex gap-5 items-start p-3 -mx-3 rounded-xl hover:bg-gray-50 transition-colors">
-                        <div className="relative w-28 h-20 shrink-0 rounded-lg overflow-hidden shadow-sm">
-                          {(article.photos?.length > 0 ||
-                            article.videos?.length > 0) && (
-                            <img
-                              src={
-                                article.photos?.length > 0
-                                  ? article.photos[0]?.secure_urls
-                                  : getYtThumbnail(article.videos[0])
-                              }
-                              alt={article.title}
-                              // fill
-                              className="object-cover group-hover:scale-110 transition-transform duration-300 size-full"
-                            />
-                          )}
-                        </div>
-                        <div className="flex-1 min-w-0 py-1">
-                          <h4 className="text-base font-bold text-gray-900 line-clamp-2 group-hover:text-blue-600 transition-colors mb-2 leading-snug">
-                            {article.title}
-                          </h4>
-                          <div className="flex items-center gap-2 text-gray-500 text-xs font-medium">
-                            <Clock className="w-3.5 h-3.5" />
-                            <span>
-                              {format(
-                                new Date(article.published_on),
-                                "MMM d, yyyy",
-                              )}
-                            </span>
-                          </div>
-                        </div>
-                      </article>
-                    </Link>
-                  ))}
-                </div>
+              <div className="space-y-1.5 flex-1">
+                <h3 className="text-[15px] font-serif font-bold text-gray-900 leading-snug group-hover:text-primary transition-colors line-clamp-3">
+                  {post.title}
+                </h3>
+                <p className="text-gray-500 text-[11px] font-serif font-medium italic">
+                  {"Team Tripura 365"}
+                </p>
               </div>
-            </div>
+            </Link>
           ))}
         </div>
       </div>
-    </section>
+
+      {/* Centered Load More Button */}
+      <div className="mt-16 flex justify-center">
+        <Link
+          href={`/category/${category.name}`}
+          className="border border-gray-900 px-10 py-2.5 text-xs font-serif text-gray-900 hover:bg-gray-900 hover:text-white transition-all duration-300"
+        >
+          Load more
+        </Link>
+      </div>
+    </div>
   );
 }
