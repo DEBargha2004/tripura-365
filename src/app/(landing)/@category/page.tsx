@@ -56,7 +56,7 @@ export default async function Page() {
 function SectionHeader({ title }: { title: string }) {
   return (
     <div className="flex items-center mb-10">
-      <h2 className="text-5xl font-serif font-black text-gray-900 border-b-[4px] border-primary pb-1 tracking-tight">
+      <h2 className="text-5xl font-serif font-black text-gray-900 border-b-[4px] border-accent pb-1 tracking-tight">
         {title}
       </h2>
     </div>
@@ -97,7 +97,7 @@ function CategoryPattern({ category }: { category: CategoryWiseNews }) {
                 />
               </div>
               <div className="space-y-2">
-                <h3 className="text-xl font-serif font-black text-gray-900 leading-[1.1] group-hover:text-primary transition-colors">
+                <h3 className="text-xl font-serif font-black text-gray-900 leading-[1.1] group-hover:text-accent transition-colors">
                   {post.title}
                 </h3>
                 <p className="text-gray-600 text-base font-serif line-clamp-3 leading-relaxed italic">
@@ -128,7 +128,7 @@ function CategoryPattern({ category }: { category: CategoryWiseNews }) {
                 />
               </div>
 
-              <h3 className="text-lg font-serif font-bold text-gray-900 leading-tight group-hover:text-primary transition-colors line-clamp-3">
+              <h3 className="text-lg font-serif font-bold text-gray-900 leading-tight group-hover:text-accent transition-colors line-clamp-3">
                 {post.title}
               </h3>
             </Link>
@@ -155,7 +155,7 @@ function CategoryPattern({ category }: { category: CategoryWiseNews }) {
                 />
               </div>
 
-              <h3 className="text-lg font-serif font-bold text-gray-900 leading-tight group-hover:text-primary transition-colors line-clamp-3">
+              <h3 className="text-lg font-serif font-bold text-gray-900 leading-tight group-hover:text-accent transition-colors line-clamp-3">
                 {post.title}
               </h3>
             </Link>
@@ -167,7 +167,7 @@ function CategoryPattern({ category }: { category: CategoryWiseNews }) {
       <div className="mt-12 flex justify-center">
         <Link
           href={`/category/${category.articles[0].category_id}`}
-          className="border border-gray-900 px-12 py-3 text-[11px] font-black uppercase tracking-[0.2em] text-gray-900 hover:bg-gray-900 hover:text-white transition-all duration-300"
+          className="border border-accent px-12 py-3 text-[11px] font-black uppercase tracking-[0.2em] text-accent hover:bg-accent hover:text-white transition-all duration-300"
         >
           View More {category.name}
         </Link>

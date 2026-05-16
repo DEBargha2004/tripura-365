@@ -27,7 +27,7 @@ export default async function NewsPage() {
             <h1 className="text-6xl md:text-7xl font-serif font-black text-gray-900 tracking-tighter uppercase mb-4">
               All News
             </h1>
-            <div className="w-24 h-1 bg-primary" />
+            <div className="w-24 h-1 bg-accent" />
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-x-8 gap-y-12">
@@ -51,7 +51,7 @@ export default async function NewsPage() {
                       />
                     </div>
                     <div className="space-y-2">
-                      <h3 className="text-xl h-12 font-serif font-bold text-gray-900 leading-tight group-hover:text-primary transition-colors">
+                      <h3 className="text-xl h-12 font-serif font-bold text-gray-900 leading-tight group-hover:text-accent transition-colors">
                         {post.title}
                       </h3>
                     </div>

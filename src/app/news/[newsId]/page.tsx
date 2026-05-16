@@ -168,7 +168,7 @@ export default async function Page({
               <div className="space-y-6 mb-8">
                 <Link
                   href={`/category/${article.category?.id}`}
-                  className="text-primary font-serif font-bold text-sm uppercase tracking-wider hover:underline"
+                  className="text-accent font-serif font-bold text-sm uppercase tracking-wider hover:underline"
                 >
                   {article.category?.name || "News"}
                 </Link>
@@ -178,7 +178,7 @@ export default async function Page({
                 </h1>
 
                 {/* Optional Subtitle (using first part of body if no excerpt) */}
-                <p className="text-xl text-gray-600 font-serif italic leading-relaxed border-l-4 border-primary/20 pl-6 py-1">
+                <p className="text-xl text-gray-600 font-serif italic leading-relaxed border-l-4 border-accent/40 pl-6 py-1">
                   {article.body.slice(0, 150)}...
                 </p>
               </div>
@@ -198,7 +198,7 @@ export default async function Page({
               <div className="flex flex-col gap-4 mb-8">
                 <div className="flex flex-wrap items-center gap-2 text-gray-900 font-serif font-bold text-sm uppercase tracking-tight">
                   <span className="text-gray-500">By</span>
-                  <span className="hover:text-primary transition-colors cursor-pointer border-b-2 border-primary/10">
+                  <span className="hover:text-accent transition-colors cursor-pointer border-b-2 border-accent/20">
                     {"Team Bar and Bench"}
                   </span>
                 </div>
@@ -215,7 +215,7 @@ export default async function Page({
 
                 <div className="flex items-center gap-6 pt-2">
                   <div className="flex items-center gap-3 group cursor-pointer">
-                    <span className="text-[11px] font-black uppercase tracking-widest text-gray-400 group-hover:text-primary transition-colors">
+                    <span className="text-[11px] font-black uppercase tracking-widest text-gray-400 group-hover:text-accent transition-colors">
                       Follow Us
                     </span>
                     <div className="flex items-center gap-1 px-3 py-1 bg-white border border-gray-200 rounded shadow-sm hover:shadow-md transition-all">
@@ -244,7 +244,7 @@ export default async function Page({
                   </div>
 
                   <button className="flex items-center gap-2 px-4 py-2 bg-gray-50 border border-gray-100 rounded-full hover:bg-gray-100 transition-all text-xs font-serif font-bold text-gray-700">
-                    <Volume2 className="w-4 h-4 text-primary" />
+                    <Volume2 className="w-4 h-4 text-accent" />
                     Listen to this article
                   </button>
                 </div>
@@ -312,7 +312,7 @@ export default async function Page({
               </div>
 
               {/* Trending Section could go here */}
-              <div className="border-t-2 border-primary pt-6">
+              <div className="border-t-2 border-accent pt-6">
                 <h3 className="text-lg font-serif font-black uppercase tracking-tight mb-6">
                   Recommended for you
                 </h3>

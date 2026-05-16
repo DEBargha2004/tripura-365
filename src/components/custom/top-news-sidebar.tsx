@@ -20,7 +20,7 @@ export default function TopNewsSidebar({
         <h3 className="font-bold text-xl text-gray-800">শীর্ষ খবর</h3>
         <Link
           href="/top-news"
-          className="text-xs font-semibold text-red-600 hover:text-red-700 transition-colors uppercase tracking-wider"
+          className="text-xs font-semibold text-accent hover:opacity-80 transition-all uppercase tracking-wider"
         >
           View All
         </Link>
@@ -59,7 +59,7 @@ export default function TopNewsSidebar({
                 {news.category?.name}
               </span> */}
 
-              <h4 className="lg:text-sm font-bold text-white line-clamp-1 @sm:line-clamp-2 leading-tight group-hover:text-red-400 transition-colors">
+              <h4 className="lg:text-sm font-bold text-white line-clamp-1 @sm:line-clamp-2 leading-tight group-hover:text-accent transition-colors">
                 {news.title}
               </h4>
 

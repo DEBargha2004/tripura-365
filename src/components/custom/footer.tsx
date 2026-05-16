@@ -80,7 +80,7 @@ export default async function Footer() {
                 <Link
                   key={idx}
                   href={account.href}
-                  className="w-6 h-6 rounded-full bg-black text-white flex items-center justify-center hover:opacity-80 transition-opacity cursor-pointer"
+                  className="w-6 h-6 rounded-full bg-black/20 text-white flex items-center justify-center hover:opacity-80 transition-opacity cursor-pointer"
                 >
                   {account.icon}
                 </Link>

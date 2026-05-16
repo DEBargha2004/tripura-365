@@ -15,7 +15,7 @@ export default function TrendingNews({
     <section className="py-12 md:py-20 bg-white">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center mb-12">
-          <TrendingUp className="h-8 w-8 text-red-600 mr-3" />
+          <TrendingUp className="h-8 w-8 text-accent mr-3" />
           <h2 className="text-3xl md:text-4xl font-bold text-gray-900 tracking-tight">
             বর্তমানে জনপ্রিয়
           </h2>
@@ -23,7 +23,7 @@ export default function TrendingNews({
           {!hideViewAll && (
             <div>
               <Link href={"/trending-news"}>
-                <p className="text-red-500 font-semibold">View All</p>
+                <p className="text-accent font-semibold">View All</p>
               </Link>
             </div>
           )}
@@ -81,14 +81,14 @@ export default function TrendingNews({
                       views
                     </span>
                     <span className="w-1 h-1 bg-gray-400 rounded-full" />
-                    <span className="flex items-center gap-1 text-orange-400">
+                    <span className="flex items-center gap-1 text-accent">
                       <TrendingUp className="h-3 w-3" />
                       Trending
                     </span>
                   </div>
 
                   {/* Title */}
-                  <h3 className="text-xl md:text-2xl font-bold text-white leading-snug line-clamp-2 group-hover:text-red-400 transition-colors">
+                  <h3 className="text-xl md:text-2xl font-bold text-white leading-snug line-clamp-2 group-hover:text-accent transition-colors">
                     {post.title}
                   </h3>
 

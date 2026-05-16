@@ -69,10 +69,10 @@ export default async function Home() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center gap-6">
           <div className="flex items-center gap-2 shrink-0">
             <span className="relative flex h-2 w-2">
-              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-primary opacity-75"></span>
-              <span className="relative inline-flex rounded-full h-2 w-2 bg-primary"></span>
+              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-accent opacity-75"></span>
+              <span className="relative inline-flex rounded-full h-2 w-2 bg-accent"></span>
             </span>
-            <span className="text-[10px] font-black uppercase tracking-[0.2em] text-primary whitespace-nowrap">
+            <span className="text-[10px] font-black uppercase tracking-[0.2em] text-accent whitespace-nowrap">
               Breaking News
             </span>
           </div>
@@ -84,7 +84,7 @@ export default async function Home() {
                   <Link
                     key={hl.id}
                     href="#"
-                    className="hover:text-primary transition-colors flex items-center gap-4"
+                    className="hover:text-accent transition-colors flex items-center gap-4"
                   >
                     <span>{hl.content}</span>
                     <span className="text-gray-300">|</span>

@@ -99,7 +99,7 @@ export default async function Page({
             <h1 className="text-6xl md:text-7xl font-serif font-black text-gray-900 tracking-tighter uppercase mb-4">
               {categoryName}
             </h1>
-            <div className="w-24 h-1 bg-primary" />
+            <div className="w-24 h-1 bg-accent" />
             <p className="mt-4 text-gray-500 font-serif italic">
               Showing {newsList.length} articles
             </p>
@@ -128,7 +128,7 @@ export default async function Page({
                       />
                     </div>
                     <div className="space-y-2">
-                      <h3 className="text-xl h-12 font-serif font-bold text-gray-900 leading-tight group-hover:text-primary transition-colors line-clamp-2 px-1">
+                      <h3 className="text-xl h-12 font-serif font-bold text-gray-900 leading-tight group-hover:text-accent transition-colors line-clamp-2 px-1">
                         {post.title}
                       </h3>
                     </div>

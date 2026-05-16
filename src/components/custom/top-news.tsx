@@ -20,7 +20,7 @@ export default function TopNews({
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Header */}
         <div className="flex items-center mb-10">
-          <h2 className="text-3xl font-serif font-black text-gray-900 border-b-[4px] border-primary pb-1 tracking-tight">
+          <h2 className="text-3xl font-serif font-black text-gray-900 border-b-[4px] border-accent pb-1 tracking-tight">
             Today&apos;s Top Stories
           </h2>
         </div>
@@ -44,7 +44,7 @@ export default function TopNews({
                 />
               </div>
               <div className="space-y-4">
-                <h3 className="text-4xl md:text-5xl font-serif font-black text-gray-900 leading-[1.1] group-hover:text-primary transition-colors">
+                <h3 className="text-4xl md:text-5xl font-serif font-black text-gray-900 leading-[1.1] group-hover:text-accent transition-colors">
                   {featured.title}
                 </h3>
                 <p className="text-gray-600 text-lg leading-relaxed font-serif line-clamp-4">
@@ -76,7 +76,7 @@ export default function TopNews({
           <div className="mt-6 flex justify-center">
             <Link
               href="/top-news"
-              className="border border-gray-900 px-10 py-2.5 text-xs font-serif text-gray-900 hover:bg-gray-900 hover:text-white transition-all duration-300"
+              className="border border-accent px-10 py-2.5 text-xs font-serif text-accent hover:bg-accent hover:text-white transition-all duration-300"
             >
               Load more
             </Link>
@@ -102,7 +102,7 @@ function SmallNewsItem({ post }: { post: Data }) {
         />
       </div>
       <div className="flex-1">
-        <h4 className="text-lg font-serif font-bold text-gray-900 leading-snug group-hover:text-primary transition-colors line-clamp-3">
+        <h4 className="text-lg font-serif font-bold text-gray-900 leading-snug group-hover:text-accent transition-colors line-clamp-3">
           {post.title}
         </h4>
       </div>

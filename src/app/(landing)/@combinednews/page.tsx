@@ -24,7 +24,7 @@ export default async function Page() {
     <section className="py-12 pb-0 bg-white">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center mb-10">
-          <h2 className="text-4xl font-serif font-black text-gray-900 border-b-[4px] border-primary pb-1 tracking-tight">
+          <h2 className="text-4xl font-serif font-black text-gray-900 border-b-[4px] border-accent pb-1 tracking-tight">
             News
           </h2>
         </div>
@@ -49,7 +49,7 @@ export default async function Page() {
                       className="object-cover size-full group-hover:scale-105 transition-transform duration-700"
                     />
                   </div>
-                  <h3 className="text-xl h-12 font-serif font-bold text-gray-900 leading-tight group-hover:text-primary transition-colors line-clamp-3 px-1">
+                  <h3 className="text-xl h-12 font-serif font-bold text-gray-900 leading-tight group-hover:text-accent transition-colors line-clamp-3 px-1">
                     {post.title}
                   </h3>
                 </Link>
@@ -62,7 +62,7 @@ export default async function Page() {
         <div className="mt-16 flex justify-center">
           <Link
             href="/news"
-            className="border border-gray-900 px-12 py-3 text-[11px] font-black uppercase tracking-[0.2em] text-gray-900 hover:bg-gray-900 hover:text-white transition-all duration-300"
+            className="border border-accent px-12 py-3 text-[11px] font-black uppercase tracking-[0.2em] text-accent hover:bg-accent hover:text-white transition-all duration-300"
           >
             View All News
           </Link>
