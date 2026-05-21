@@ -239,7 +239,9 @@ export default async function Home() {
                     ))}
                   </span>
                 ) : (
-                  "Loading headlines..."
+                  <span className="hover:text-red-600 transition-colors cursor-pointer">
+                    ত্রিপুরা ৩৬৫ - রাজ্য ও দেশের প্রতি মুহূর্তের খবরের জন্য আমাদের সাথেই থাকুন।।
+                  </span>
                 )}
               </div>
               {/**@ts-ignore */}

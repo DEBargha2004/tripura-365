@@ -526,13 +526,47 @@ export async function getImageGallery(): Promise<ImageItem[]> {
 }
 
 export async function getHeadline(): Promise<Headline[]> {
-  const latestNews = await getLatestNews();
-  if (!latestNews || !latestNews.data) return [];
-  return latestNews.data.slice(0, 5).map((news) => ({
-    id: news.id,
-    content: news.title,
-    created_on: news.created_on,
-  }));
+  const fetchOpts = await getFetchOptions({
+    next: { revalidate: 60 * 5 }, // 5 minutes
+  });
+  const [err, res] = await catchError<ApiEnvelope<Headline[]>>(
+    retry(() =>
+      fetch(`${origin}/admin/headlines`, fetchOpts).then((res) => res.json()),
+    ),
+  );
+
+  if (err || !res || !res.data) return [] as Headline[];
+
+  const getISTDateString = (date: Date) => {
+    return date.toLocaleDateString("en-US", { timeZone: "Asia/Kolkata" });
+  };
+
+  const todayStr = getISTDateString(new Date());
+
+  const todayHeadlines = res.data.filter((hl) => {
+    if (!hl.created_on) return false;
+    const hlDate = new Date(hl.created_on);
+    if (isNaN(hlDate.getTime())) return false;
+    return getISTDateString(hlDate) === todayStr;
+  });
+
+  const result: Headline[] = [];
+  todayHeadlines.forEach((hl) => {
+    if (hl.content.includes("*")) {
+      const parts = hl.content.split("*").map((p) => p.trim()).filter(Boolean);
+      parts.forEach((part, index) => {
+        result.push({
+          id: Number(`${hl.id}00${index}`),
+          content: part,
+          created_on: hl.created_on,
+        });
+      });
+    } else {
+      result.push(hl);
+    }
+  });
+
+  return result;
 }
 
 export async function getSlok() {
