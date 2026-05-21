@@ -26,7 +26,7 @@ export async function generateMetadata(): Promise<Metadata> {
   const headerList = await headers();
   const origin = headerList.get("host");
   const protocol = headerList.get("x-forwarded-proto") ?? "http";
-  const res = await getTopNews();
+  const { data: res } = await getTopNews();
 
   return {
     title: "Tripura 365",
@@ -41,7 +41,7 @@ export async function generateMetadata(): Promise<Metadata> {
       images: [
         {
           url:
-            res?.[0]?.photos?.[0]?.secure_urls ||
+            res?.[0]?.images?.[0] ||
             (res?.[0]?.videos?.[0]
               ? getYtThumbnail(res[0].videos[0])
               : siteLogo.src),
@@ -57,7 +57,7 @@ export async function generateMetadata(): Promise<Metadata> {
       description: `Tripura 365 is a dynamic and trusted Indian news website that brings you 
     the latest and most relevant news from the vibrant state of Tripura.`,
       images: [
-        res?.[0]?.photos?.[0]?.secure_urls ||
+        res?.[0]?.images?.[0] ||
           (res?.[0]?.videos?.[0]
             ? getYtThumbnail(res?.[0].videos[0])
             : siteLogo.src),
@@ -102,7 +102,7 @@ export default async function Home() {
   const categories = await getAllCategories();
   const slok = await getSlok();
   const latestNews = await getLatestNews();
-  const topNews = await getTopNews();
+  const { data: topNews } = await getTopNews();
   const headlines = await getHeadline();
 
   return (

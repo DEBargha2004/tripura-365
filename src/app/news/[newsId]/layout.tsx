@@ -7,7 +7,7 @@ export default async function Layout({
 }: {
   children: React.ReactNode;
 }) {
-  const topNews = await getTopNews();
+  const { data: topNews } = await getTopNews();
   const imageGallery = await getImageGallery();
 
   return (

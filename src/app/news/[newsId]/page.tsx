@@ -21,7 +21,7 @@ import { headers } from "next/headers";
 import Image from "next/image";
 import FbShare from "./_components/fb-share";
 import WaShare from "./_components/wa-share";
-import { getViews, getYtThumbnail } from "@/lib/utils";
+import { getViews, getYtThumbnail, sanitizeHtml } from "@/lib/utils";
 import { cn } from "@/lib/utils";
 import { FaWhatsapp } from "react-icons/fa";
 
@@ -71,10 +71,10 @@ export async function generateMetadata({
 export async function generateStaticParams() {
   const newsSet = new Set<number>();
 
-  (await getTopNews())?.forEach((news) => newsSet.add(news.id));
-  (await getLatestNews())?.forEach((news) => newsSet.add(news.id));
-  (await getTrendingNews())?.forEach((news) => newsSet.add(news.id));
-  (await getCategoryWiseNews())?.forEach((cat) =>
+  (await getTopNews())?.data?.forEach((news) => newsSet.add(news.id));
+  (await getLatestNews())?.data?.forEach((news) => newsSet.add(news.id));
+  (await getTrendingNews())?.data?.forEach((news) => newsSet.add(news.id));
+  (await getCategoryWiseNews())?.data?.forEach((cat) =>
     cat.articles.forEach((news) => newsSet.add(news.id)),
   );
 
@@ -153,7 +153,7 @@ export default async function Page({
               <div className="flex items-center gap-2 text-gray-300 text-sm bg-black/30 backdrop-blur-sm px-3 py-1.5 rounded-full">
                 <Clock className="h-4 w-4" />
                 <span>
-                  {article.published_on && format(article.published_on, "PPP")}
+                  {article.published_on && format(new Date(article.published_on), "PPP")}
                 </span>
               </div>
             </div>
@@ -167,7 +167,7 @@ export default async function Page({
                 <Eye className="h-5 w-5" />
                 <span className="font-medium">
                   {getViews({
-                    published_on: article.published_on,
+                    published_on: article.published_on || "",
                     seed: article.body,
                   })}{" "}
                   views
@@ -232,11 +232,10 @@ export default async function Page({
           )}
 
           {/* Article Body */}
-          <div className="prose prose-lg md:prose-xl max-w-none text-gray-700 leading-relaxed">
-            <p className="first-letter:text-5xl first-letter:font-bold first-letter:text-gray-900 first-letter:mr-3 first-letter:float-left">
-              {article.body}
-            </p>
-          </div>
+          <div
+            className="prose prose-lg md:prose-xl max-w-none text-gray-700 leading-relaxed dark:prose-invert prose-p:my-4 prose-headings:font-bold prose-headings:text-gray-900 dark:prose-headings:text-white"
+            dangerouslySetInnerHTML={{ __html: sanitizeHtml(article.body) }}
+          />
 
           {/* Tags Section */}
           <div className="mt-12 pt-8 border-t border-gray-100">

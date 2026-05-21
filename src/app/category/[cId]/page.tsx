@@ -5,13 +5,13 @@ import { ArrowLeft, ArrowRight, Calendar } from "lucide-react";
 import { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
-import { cn, getYtThumbnail } from "@/lib/utils";
+import { cn, getYtThumbnail, stripHtml } from "@/lib/utils";
 
 export async function generateStaticParams() {
   const res = await getCategoryWiseNews();
 
   return (
-    res?.map((category) => ({
+    res?.data?.map((category) => ({
       cId: (category?.articles[0]?.category?.id ?? "").toString(),
     })) ?? []
   );
@@ -25,7 +25,7 @@ export async function generateMetadata({
   const { cId } = await params;
   const res = await getCategoryWiseNews();
 
-  const category = res?.find(
+  const category = res?.data?.find(
     (cat) => cat?.articles?.[0]?.category?.id === Number(cId),
   );
 
@@ -36,7 +36,7 @@ export async function generateMetadata({
       images: [
         {
           url:
-            category?.articles?.[0]?.photos?.[0]?.secure_urls ||
+            category?.articles?.[0]?.images?.[0] ||
             (category?.articles?.[0]?.videos?.[0]
               ? getYtThumbnail(category.articles[0].videos[0])
               : ""),
@@ -47,7 +47,7 @@ export async function generateMetadata({
       card: "summary_large_image",
       title: category?.name,
       images: [
-        category?.articles?.[0]?.photos?.[0]?.secure_urls ||
+        category?.articles?.[0]?.images?.[0] ||
           (category?.articles?.[0]?.videos?.[0]
             ? getYtThumbnail(category.articles[0].videos[0])
             : ""),
@@ -172,7 +172,7 @@ export default async function Page({
 
                     {/* Description */}
                     <p className="text-gray-300 text-lg line-clamp-2 md:line-clamp-3 max-w-2xl leading-relaxed">
-                      {featuredNews.body}
+                      {stripHtml(featuredNews.body)}
                     </p>
                   </div>
 

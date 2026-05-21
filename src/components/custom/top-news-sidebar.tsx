@@ -34,11 +34,11 @@ export default function TopNewsSidebar({
             className="@container group relative w-full lg:h-full aspect-video rounded-2xl overflow-hidden shadow-sm hover:shadow-md transition-all duration-300"
           >
             {/* Background Image */}
-            {news.photos?.length > 0 || news.videos?.length > 0 ? (
+            {news.images?.length > 0 || news.videos?.length > 0 ? (
               <img
                 src={
-                  news.photos?.length > 0
-                    ? news.photos[0]?.secure_urls
+                  news.images?.length > 0
+                    ? news.images[0]
                     : getYtThumbnail(news.videos[0])
                 }
                 alt={news.title}
@@ -66,7 +66,7 @@ export default function TopNewsSidebar({
               <div className="flex items-center gap-1.5 text-[10px] text-gray-300 font-medium mt-1">
                 <Calendar className="w-3 h-3" />
                 <span>
-                  {format(new Date(news.created ?? ""), "MMM d, yyyy")}
+                  {format(new Date(news.created_on ?? ""), "MMM d, yyyy")}
                 </span>
               </div>
             </div>

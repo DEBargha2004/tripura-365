@@ -1,8 +1,27 @@
 import { clsx, type ClassValue } from "clsx";
 import { twMerge } from "tailwind-merge";
+import DOMPurify from "isomorphic-dompurify";
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
+}
+
+export function sanitizeHtml(html: string): string {
+  if (!html) return "";
+  return DOMPurify.sanitize(html);
+}
+
+export function stripHtml(html: string): string {
+  if (!html) return "";
+  const clean = DOMPurify.sanitize(html, { ALLOWED_TAGS: [] });
+  return clean
+    .replace(/&amp;/g, "&")
+    .replace(/&lt;/g, "<")
+    .replace(/&gt;/g, ">")
+    .replace(/&quot;/g, '"')
+    .replace(/&#039;/g, "'")
+    .replace(/&nbsp;/g, " ")
+    .trim();
 }
 
 export function getViews({

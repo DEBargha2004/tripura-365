@@ -5,7 +5,7 @@ import Link from "next/link";
 import { FaInstagram, FaWhatsapp, FaYoutube } from "react-icons/fa";
 
 export default async function Footer() {
-  const categoryResponse = await getCategoryWiseNews();
+  const { data: categoryResponse } = await getCategoryWiseNews();
   const importantLinks = [
     {
       imageUrl: "https://india.gov.in/image/static/npi_logo_Beta_White.svg",

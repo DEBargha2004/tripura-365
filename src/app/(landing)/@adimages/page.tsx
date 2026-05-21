@@ -5,8 +5,8 @@ import {
 import AdImages from "@/components/custom/ad-images";
 
 export default async function Page() {
-  const data = await getLandscapeAdBannerImages();
-  const longAdData = await getPortraitAdBannerImages();
+  const { data: wideData } = await getLandscapeAdBannerImages();
+  const { data: tallData } = await getPortraitAdBannerImages();
 
-  return <AdImages wideData={data} tallData={longAdData} />;
+  return <AdImages wideData={wideData} tallData={tallData} />;
 }

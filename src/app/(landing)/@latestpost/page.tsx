@@ -1,5 +1,5 @@
 import { getLatestNews } from "@/actions/news";
-import { getYtThumbnail } from "@/lib/utils";
+import { getYtThumbnail, stripHtml } from "@/lib/utils";
 import { format } from "date-fns";
 import { ArrowRight, Calendar } from "lucide-react";
 import Image from "next/image";
@@ -8,7 +8,7 @@ import Link from "next/link";
 export const revalidate = 600;
 
 export default async function Page() {
-  const data = await getLatestNews();
+  const { data } = await getLatestNews();
   const [post] = data ?? [];
 
   if (!post) return null;
@@ -29,8 +29,8 @@ export default async function Page() {
 
             <img
               src={
-                post.photos?.[0]
-                  ? post.photos[0].secure_urls
+                post.images?.[0]
+                  ? post.images[0]
                   : getYtThumbnail(post.videos[0])
               }
               alt={post.title}
@@ -65,14 +65,14 @@ export default async function Page() {
                   <div className="flex items-center gap-2">
                     <Calendar className="w-4 h-4" />
                     <span>
-                      {post.created && format(new Date(post.created), "PPP")}
+                      {post.created_on && format(new Date(post.created_on), "PPP")}
                     </span>
                   </div>
                 </div>
 
                 {/* Description */}
                 <p className="text-gray-300 text-lg line-clamp-2 md:line-clamp-3 max-w-2xl leading-relaxed">
-                  {post.body}
+                  {stripHtml(post.body)}
                 </p>
               </div>
 

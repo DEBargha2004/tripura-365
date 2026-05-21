@@ -2,7 +2,7 @@ import { getTrendingNews } from "@/actions/news";
 import TrendingNews from "@/components/custom/trending-news";
 
 export default async function Page() {
-  const res = await getTrendingNews();
+  const { data } = await getTrendingNews();
 
-  return <TrendingNews data={res} hideViewAll />;
+  return <TrendingNews data={data} hideViewAll />;
 }

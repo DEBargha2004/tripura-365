@@ -22,7 +22,7 @@ const sortCategories = (cat: CategoryWiseNews[]) => {
 };
 
 export default async function Page() {
-  const res = await getCategoryWiseNews();
+  const { data: res } = await getCategoryWiseNews();
   const category_res = await getAllCategories();
 
   const getCategoryByName = (name: string) => {
@@ -68,12 +68,12 @@ export default async function Page() {
                     className="group block"
                   >
                     <article className="relative h-72 w-full rounded-2xl overflow-hidden shadow-md hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1">
-                      {(category.articles[0]?.photos?.length > 0 ||
+                      {(category.articles[0]?.images?.length > 0 ||
                         category.articles[0]?.videos?.length > 0) && (
                         <img
                           src={
-                            category.articles[0]?.photos?.length > 0
-                              ? category.articles[0].photos[0]?.secure_urls
+                            category.articles[0]?.images?.length > 0
+                              ? category.articles[0].images[0]
                               : getYtThumbnail(category.articles[0].videos[0])
                           }
                           alt={category.articles[0].title}
@@ -110,12 +110,12 @@ export default async function Page() {
                     >
                       <article className="flex gap-5 items-start p-3 -mx-3 rounded-xl hover:bg-gray-50 transition-colors">
                         <div className="relative w-28 h-20 shrink-0 rounded-lg overflow-hidden shadow-sm">
-                          {(article.photos?.length > 0 ||
+                          {(article.images?.length > 0 ||
                             article.videos?.length > 0) && (
                             <img
                               src={
-                                article.photos?.length > 0
-                                  ? article.photos[0]?.secure_urls
+                                article.images?.length > 0
+                                  ? article.images[0]
                                   : getYtThumbnail(article.videos[0])
                               }
                               alt={article.title}
