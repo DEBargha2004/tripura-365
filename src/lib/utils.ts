@@ -1,6 +1,6 @@
 import { clsx, type ClassValue } from "clsx";
 import { twMerge } from "tailwind-merge";
-import DOMPurify from "isomorphic-dompurify";
+import xss from "xss";
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
@@ -8,12 +8,12 @@ export function cn(...inputs: ClassValue[]) {
 
 export function sanitizeHtml(html: string): string {
   if (!html) return "";
-  return DOMPurify.sanitize(html);
+  return xss(html);
 }
 
 export function stripHtml(html: string): string {
   if (!html) return "";
-  const clean = DOMPurify.sanitize(html, { ALLOWED_TAGS: [] });
+  const clean = html.replace(/<[^>]*>/g, "");
   return clean
     .replace(/&amp;/g, "&")
     .replace(/&lt;/g, "<")
