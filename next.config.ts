@@ -13,6 +13,7 @@ const nextConfig: NextConfig = {
     workerThreads: false,
     cpus: 8,
   },
+  serverExternalPackages: ["isomorphic-dompurify", "jsdom"],
 };
 
 export default nextConfig;
