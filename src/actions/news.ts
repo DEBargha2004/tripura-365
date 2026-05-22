@@ -173,7 +173,7 @@ export async function getVideoNews(page: number = 1) {
   const [err, res] = await catchError<ApiEnvelopeWithPagination<ArticleFull>>(
     retry(() =>
       fetch(
-        `${origin}/admin/article?published=true&page=${page}`,
+        `${origin}/admin/article?published=true&has_video=true&page=${page}`,
         fetchOpts,
       ).then((res) => res.json()),
     ),
@@ -553,7 +553,10 @@ export async function getHeadline(): Promise<Headline[]> {
   const result: Headline[] = [];
   todayHeadlines.forEach((hl) => {
     if (hl.content.includes("*")) {
-      const parts = hl.content.split("*").map((p) => p.trim()).filter(Boolean);
+      const parts = hl.content
+        .split("*")
+        .map((p) => p.trim())
+        .filter(Boolean);
       parts.forEach((part, index) => {
         result.push({
           id: Number(`${hl.id}00${index}`),
