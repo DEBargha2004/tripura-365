@@ -99,7 +99,7 @@ export async function getTopNews(page: number = 1) {
   const [err, res] = await catchError<ApiEnvelopeWithPagination<ArticleFull>>(
     retry(() =>
       fetch(
-        `${origin}/admin/article?published=true&page=${page}`,
+        `${origin}/public/article?published=true&page=${page}`,
         fetchOpts,
       ).then((res) => res.json()),
     ),
@@ -123,7 +123,7 @@ export async function getLatestNews(page: number = 1) {
   const [err, res] = await catchError<ApiEnvelopeWithPagination<ArticleFull>>(
     retry(() =>
       fetch(
-        `${origin}/admin/article?published=true&page=${page}`,
+        `${origin}/public/article?published=true&page=${page}`,
         fetchOpts,
       ).then((res) => res.json()),
     ),
@@ -148,7 +148,7 @@ export async function getTrendingNews(page: number = 1) {
   const [err, res] = await catchError<ApiEnvelopeWithPagination<ArticleFull>>(
     retry(() =>
       fetch(
-        `${origin}/admin/article?published=true&page=${page}`,
+        `${origin}/public/article?published=true&page=${page}`,
         fetchOpts,
       ).then((res) => res.json()),
     ),
@@ -173,7 +173,7 @@ export async function getVideoNews(page: number = 1) {
   const [err, res] = await catchError<ApiEnvelopeWithPagination<ArticleFull>>(
     retry(() =>
       fetch(
-        `${origin}/admin/article?published=true&has_video=true&page=${page}`,
+        `${origin}/public/article?published=true&has_video=true&page=${page}`,
         fetchOpts,
       ).then((res) => res.json()),
     ),
@@ -197,7 +197,7 @@ export async function getAdVideos() {
   });
   const [err, res] = await catchError<ApiEnvelope<AdVideo[]>>(
     retry(() =>
-      fetch(`${origin}/admin/ad-videos`, fetchOpts).then((res) => res.json()),
+      fetch(`${origin}/public/ad_video`, fetchOpts).then((res) => res.json()),
     ),
   );
   if (err || !res || !res.data)
@@ -232,7 +232,7 @@ export async function getLandscapeAdBannerImages() {
   });
   const [err, res] = await catchError<ApiEnvelope<AdImage[]>>(
     retry(() =>
-      fetch(`${origin}/admin/ad-images`, fetchOpts).then((res) => res.json()),
+      fetch(`${origin}/public/ad_image`, fetchOpts).then((res) => res.json()),
     ),
   );
   if (err || !res || !res.data)
@@ -270,7 +270,7 @@ export async function getPortraitAdBannerImages() {
   });
   const [err, res] = await catchError<ApiEnvelope<AdImage[]>>(
     retry(() =>
-      fetch(`${origin}/admin/ad-images`, fetchOpts).then((res) => res.json()),
+      fetch(`${origin}/public/ad_image`, fetchOpts).then((res) => res.json()),
     ),
   );
   if (err || !res || !res.data)
@@ -309,16 +309,16 @@ export async function getNewsInfo(id: string) {
   const [err, res] = await catchError<ApiEnvelope<ArticleFull[]>>(
     retry(
       () =>
-        fetch(`${origin}/admin/article?article_id=${id}`, fetchOpts).then(
+        fetch(`${origin}/public/article?article_id=${id}`, fetchOpts).then(
           (res) => res.json(),
         ),
       { helperText: `news ${id}`, retriesCount: 3 },
     ),
   );
 
-  if (err || !res || !res.data || !res.data[0]) return null;
+  if (err || !res?.data?.[0]) return null;
 
-  return res.data[0] as ArticleFull;
+  return res.data[0];
 }
 
 export async function getCategoryWiseNews() {
@@ -330,7 +330,7 @@ export async function getCategoryWiseNews() {
     ApiEnvelope<ArticleCategoryBrief[]>
   >(
     retry(() =>
-      fetch(`${origin}/admin/articleCategory`, fetchOpts).then((res) =>
+      fetch(`${origin}/public/articleCategory`, fetchOpts).then((res) =>
         res.json(),
       ),
     ),
@@ -354,7 +354,7 @@ export async function getCategoryWiseNews() {
       >(
         retry(() =>
           fetch(
-            `${origin}/admin/article?published=true&categoryId=${cat.id}`,
+            `${origin}/public/article?published=true&categoryId=${cat.id}`,
             fetchOpts,
           ).then((res) => res.json()),
         ),
@@ -422,7 +422,7 @@ export async function getCategoryNewsInfo(id: string, page: number = 1) {
     retry(
       () =>
         fetch(
-          `${origin}/admin/article?published=true&categoryId=${id}&page=${page}`,
+          `${origin}/public/article?published=true&categoryId=${id}&page=${page}`,
           fetchOpts,
         ).then((res) => res.json()),
       { helperText: `category ${id}`, retriesCount: 3 },
@@ -464,7 +464,7 @@ export async function getAllCategories(): Promise<Category[]> {
     ApiEnvelope<ArticleCategoryBrief[]>
   >(
     retry(() =>
-      fetch(`${origin}/admin/articleCategory`, fetchOpts).then((res) =>
+      fetch(`${origin}/public/articleCategory`, fetchOpts).then((res) =>
         res.json(),
       ),
     ),
@@ -531,7 +531,7 @@ export async function getHeadline(): Promise<Headline[]> {
   });
   const [err, res] = await catchError<ApiEnvelope<Headline[]>>(
     retry(() =>
-      fetch(`${origin}/admin/headlines`, fetchOpts).then((res) => res.json()),
+      fetch(`${origin}/public/headlines`, fetchOpts).then((res) => res.json()),
     ),
   );
 
