@@ -19,12 +19,12 @@ export default async function Layout({
         <div className="grid grid-cols-1 lg:grid-cols-4 gap-6">
           {/* Main Carousel */}
           <div className="lg:col-span-3">
-            <HeroCarousel data={imageGallery ?? []} />
+            <HeroCarousel data={topNews?.data ?? []} />
           </div>
 
           {/* Side News */}
           <div className="lg:col-span-1 h-full min-h-[400px]">
-            <TopNewsSidebar data={topNews?.slice(0, 3) ?? []} />
+            <TopNewsSidebar data={topNews?.data?.slice(0, 3) ?? []} />
           </div>
         </div>
       </section>

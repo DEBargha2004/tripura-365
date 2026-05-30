@@ -2,11 +2,12 @@ import {
   getAllCategories,
   getCategoryWiseNews,
   getImageGallery,
+  getTopNews,
 } from "@/actions/news";
 import HeroCarousel from "@/components/custom/hero-carousel";
 import { format } from "date-fns";
 import Link from "next/link";
-import { getYtThumbnail } from "@/lib/utils";
+import { getYtThumbnail, stripHtml } from "@/lib/utils";
 import { categoriesOrder } from "@/constants/categories-order";
 import { Data } from "@/types/response";
 
@@ -27,8 +28,8 @@ const sortCategories = (cat: CategoryWiseNews[]) => {
 
 export default async function Page() {
   const res = await getCategoryWiseNews();
-  const sorted = sortCategories(res ?? []);
-  const imageGallery = await getImageGallery();
+  const sorted = sortCategories(res?.data ?? []);
+  const topNews = await getTopNews();
 
   const firstCategory = sorted.slice(0, 1);
   const remainingCategories = sorted.slice(1);
@@ -42,7 +43,7 @@ export default async function Page() {
 
       {/* 4. Carousel Only */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <HeroCarousel data={imageGallery ?? []} />
+        <HeroCarousel data={topNews?.data ?? []} />
       </div>
 
       {/* 5. Categories Section Continues (All remaining) */}
@@ -88,9 +89,9 @@ function CategoryPattern({ category }: { category: CategoryWiseNews }) {
               <div className="relative aspect-[16/10] overflow-hidden rounded-sm bg-gray-100">
                 <img
                   src={
-                    post.photos?.[0]
-                      ? post.photos[0].secure_urls
-                      : getYtThumbnail(post.videos?.[0])
+                    post.images?.[0] ||
+                    post.thumbnail ||
+                    getYtThumbnail(post.videos?.[0])
                   }
                   alt={post.title}
                   className="object-cover size-full group-hover:scale-105 transition-transform duration-700"
@@ -101,7 +102,7 @@ function CategoryPattern({ category }: { category: CategoryWiseNews }) {
                   {post.title}
                 </h3>
                 <p className="text-gray-600 text-base font-serif line-clamp-3 leading-relaxed italic">
-                  {post.body}
+                  {stripHtml(post.body)}
                 </p>
               </div>
             </Link>
@@ -119,9 +120,9 @@ function CategoryPattern({ category }: { category: CategoryWiseNews }) {
               <div className="relative w-36 aspect-[16/10] shrink-0 overflow-hidden rounded-sm bg-gray-100 shadow-sm">
                 <img
                   src={
-                    post.photos?.[0]
-                      ? post.photos[0].secure_urls
-                      : getYtThumbnail(post.videos?.[0])
+                    post.images?.[0] ||
+                    post.thumbnail ||
+                    getYtThumbnail(post.videos?.[0])
                   }
                   alt={post.title}
                   className="object-cover size-full group-hover:scale-110 transition-transform duration-500"
@@ -146,9 +147,9 @@ function CategoryPattern({ category }: { category: CategoryWiseNews }) {
               <div className="relative w-36 aspect-[16/10] shrink-0 overflow-hidden rounded-sm bg-gray-100 shadow-sm">
                 <img
                   src={
-                    post.photos?.[0]
-                      ? post.photos[0].secure_urls
-                      : getYtThumbnail(post.videos?.[0])
+                    post.images?.[0] ||
+                    post.thumbnail ||
+                    getYtThumbnail(post.videos?.[0])
                   }
                   alt={post.title}
                   className="object-cover size-full group-hover:scale-110 transition-transform duration-500"
@@ -166,7 +167,7 @@ function CategoryPattern({ category }: { category: CategoryWiseNews }) {
       {/* Centered Load More Button */}
       <div className="mt-12 flex justify-center">
         <Link
-          href={`/category/${category.articles[0].category_id}`}
+          href={`/category/${category.articles[0].category?.id}`}
           className="border border-accent px-12 py-3 text-[11px] font-black uppercase tracking-[0.2em] text-accent hover:bg-accent hover:text-white transition-all duration-300"
         >
           View More {category.name}

@@ -3,7 +3,7 @@ import { format } from "date-fns";
 import { ArrowRight, Calendar } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
-import { getYtThumbnail } from "@/lib/utils";
+import { getYtThumbnail, stripHtml } from "@/lib/utils";
 
 export default function TopNews({
   data,
@@ -35,9 +35,9 @@ export default function TopNews({
               <div className="relative aspect-[16/10] overflow-hidden rounded-sm bg-gray-100">
                 <img
                   src={
-                    featured.photos?.[0]
-                      ? featured.photos[0].secure_urls
-                      : getYtThumbnail(featured.videos?.[0])
+                    featured.images?.[0] ||
+                    featured.thumbnail ||
+                    getYtThumbnail(featured.videos?.[0])
                   }
                   alt={featured.title}
                   className="object-cover size-full group-hover:scale-105 transition-transform duration-700"
@@ -48,7 +48,7 @@ export default function TopNews({
                   {featured.title}
                 </h3>
                 <p className="text-gray-600 text-lg leading-relaxed font-serif line-clamp-4">
-                  {featured.body}
+                  {stripHtml(featured.body)}
                 </p>
               </div>
             </Link>
@@ -93,9 +93,9 @@ function SmallNewsItem({ post }: { post: Data }) {
       <div className="relative w-40 aspect-[16/10] shrink-0 overflow-hidden rounded-md shadow-sm bg-gray-100">
         <img
           src={
-            post.photos?.[0]
-              ? post.photos[0].secure_urls
-              : getYtThumbnail(post.videos?.[0])
+            post.images?.[0] ||
+            post.thumbnail ||
+            getYtThumbnail(post.videos?.[0])
           }
           alt={post.title}
           className="object-cover size-full group-hover:scale-110 transition-transform duration-500"

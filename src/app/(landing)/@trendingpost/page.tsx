@@ -8,7 +8,7 @@ export default async function Page() {
 
   return (
     <div id="trending">
-      <TrendingNews data={data?.slice(0, 6)} />
+      <TrendingNews data={data?.data?.slice(0, 6)} />
     </div>
   );
 }

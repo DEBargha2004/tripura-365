@@ -20,6 +20,7 @@ export async function generateMetadata(): Promise<Metadata> {
   const origin = headerList.get("host");
   const protocol = headerList.get("x-forwarded-proto") ?? "http";
   const res = await getTopNews();
+  const topStories = res?.data ?? [];
 
   return {
     title: "Bar and Bench",
@@ -34,9 +35,10 @@ export async function generateMetadata(): Promise<Metadata> {
       images: [
         {
           url:
-            res?.[0]?.photos?.[0]?.secure_urls ||
-            (res?.[0]?.videos?.[0]
-              ? getYtThumbnail(res[0].videos[0])
+            topStories[0]?.images?.[0] ||
+            topStories[0]?.thumbnail ||
+            (topStories[0]?.videos?.[0]
+              ? getYtThumbnail(topStories[0].videos[0])
               : siteLogo.src),
           width: 210,
           height: 70,
@@ -50,9 +52,10 @@ export async function generateMetadata(): Promise<Metadata> {
       description: `Bar and Bench is a dynamic and trusted Indian news website that brings you 
     the latest and most relevant legal news and updates.`,
       images: [
-        res?.[0]?.photos?.[0]?.secure_urls ||
-          (res?.[0]?.videos?.[0]
-            ? getYtThumbnail(res?.[0].videos[0])
+        topStories[0]?.images?.[0] ||
+          topStories[0]?.thumbnail ||
+          (topStories[0]?.videos?.[0]
+            ? getYtThumbnail(topStories[0].videos[0])
             : siteLogo.src),
       ],
     },

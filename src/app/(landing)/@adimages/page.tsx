@@ -8,5 +8,5 @@ export default async function Page() {
   const data = await getLandscapeAdBannerImages();
   const longAdData = await getPortraitAdBannerImages();
 
-  return <AdImages wideData={data} tallData={longAdData} />;
+  return <AdImages wideData={data?.data} tallData={longAdData?.data} />;
 }

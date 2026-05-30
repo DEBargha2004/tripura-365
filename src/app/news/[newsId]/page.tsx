@@ -23,7 +23,7 @@ import { Metadata } from "next";
 import { headers } from "next/headers";
 import FbShare from "./_components/fb-share";
 import WaShare from "./_components/wa-share";
-import { getViews, getYtThumbnail } from "@/lib/utils";
+import { getViews, getYtThumbnail, stripHtml } from "@/lib/utils";
 import {
   FaWhatsapp,
   FaXTwitter,
@@ -78,10 +78,10 @@ export async function generateMetadata({
 export async function generateStaticParams() {
   const newsSet = new Set<number>();
 
-  (await getTopNews())?.forEach((news) => newsSet.add(news.id));
-  (await getLatestNews())?.forEach((news) => newsSet.add(news.id));
-  (await getTrendingNews())?.forEach((news) => newsSet.add(news.id));
-  (await getCategoryWiseNews())?.forEach((cat) =>
+  (await getTopNews())?.data?.forEach((news) => newsSet.add(news.id));
+  (await getLatestNews())?.data?.forEach((news) => newsSet.add(news.id));
+  (await getTrendingNews())?.data?.forEach((news) => newsSet.add(news.id));
+  (await getCategoryWiseNews())?.data?.forEach((cat) =>
     cat.articles.forEach((news) => newsSet.add(news.id)),
   );
 
@@ -179,7 +179,7 @@ export default async function Page({
 
                 {/* Optional Subtitle (using first part of body if no excerpt) */}
                 <p className="text-xl text-gray-600 font-serif italic leading-relaxed border-l-4 border-accent/40 pl-6 py-1">
-                  {article.body.slice(0, 150)}...
+                  {stripHtml(article.body).slice(0, 150)}...
                 </p>
               </div>
 
@@ -262,11 +262,10 @@ export default async function Page({
               )}
 
               {/* Main Body */}
-              <div className="prose prose-lg max-w-none prose-serif prose-headings:font-black prose-p:text-gray-800 prose-p:leading-[1.8] prose-p:mb-8">
-                {article.body.split("\n").map((para, i) => (
-                  <p key={i}>{para}</p>
-                ))}
-              </div>
+              <div
+                className="prose prose-lg max-w-none prose-serif prose-headings:font-black prose-p:text-gray-800 prose-p:leading-[1.8] prose-p:mb-8"
+                dangerouslySetInnerHTML={{ __html: article.body }}
+              />
 
               {/* Related Tags */}
               <div className="mt-16 pt-10 border-t border-gray-100">

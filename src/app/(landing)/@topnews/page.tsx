@@ -6,5 +6,5 @@ export const revalidate = 60 * 10;
 export default async function Page() {
   const data = await getTopNews();
 
-  return <TopNews data={data?.slice(0, 7)} />;
+  return <TopNews data={data?.data?.slice(0, 7)} />;
 }

@@ -6,5 +6,5 @@ export const revalidate = 60 * 10;
 export default async function Page() {
   const data = await getAdVideos();
 
-  return <AdVideos data={data} />;
+  return <AdVideos data={data?.data} />;
 }

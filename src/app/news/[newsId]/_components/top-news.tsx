@@ -4,5 +4,5 @@ import TopNews from "@/components/custom/top-news";
 export default async function TopNewsSC() {
   const data = await getTopNews();
 
-  return <TopNews data={data?.slice(0, 6)} />;
+  return <TopNews data={data?.data?.slice(0, 6)} />;
 }

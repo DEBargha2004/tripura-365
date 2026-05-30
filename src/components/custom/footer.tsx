@@ -8,6 +8,7 @@ import {
 } from "react-icons/fa6";
 import Link from "next/link";
 import { getCategoryWiseNews } from "@/actions/news";
+import { Data } from "@/types/response";
 
 const legalInfos = [
   { name: "Terms of Use", href: "#" },
@@ -20,8 +21,8 @@ const legalInfos = [
 
 export default async function Footer() {
   const categoryResponse = await getCategoryWiseNews();
-  const categories = categoryResponse.sort(
-    (a, b) => b.articles?.length - a.articles?.length,
+  const categories = (categoryResponse?.data ?? []).sort(
+    (a: { articles: Data[] }, b: { articles: Data[] }) => (b.articles?.length ?? 0) - (a.articles?.length ?? 0),
   );
 
   const socialAccounts = [
@@ -89,7 +90,7 @@ export default async function Footer() {
           </div>
 
           {/* Dynamic Category Columns */}
-          {categories.slice(0, 5).map((category) => (
+          {categories.slice(0, 5).map((category: { name: string; articles: Data[] }) => (
             <div key={category.name} className="flex flex-col gap-5">
               <h4 className="text-xl font-serif font-bold text-white tracking-wide">
                 {category.name}
@@ -97,7 +98,7 @@ export default async function Footer() {
 
               {category.articles.length > 0 && (
                 <ul className="space-y-3">
-                  {category.articles.slice(0, 5).map((article) => (
+                  {category.articles.slice(0, 5).map((article: Data) => (
                     <li key={article.id}>
                       <Link
                         href={`/news/${article.id}`}

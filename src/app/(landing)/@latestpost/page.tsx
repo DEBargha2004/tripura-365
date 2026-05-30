@@ -1,5 +1,5 @@
 import { getLatestNews } from "@/actions/news";
-import { getYtThumbnail } from "@/lib/utils";
+import { getYtThumbnail, stripHtml } from "@/lib/utils";
 import { format } from "date-fns";
 import Link from "next/link";
 
@@ -7,7 +7,7 @@ export const revalidate = 600;
 
 export default async function Page() {
   const data = await getLatestNews();
-  const [featured, ...others] = data ?? [];
+  const [featured, ...others] = data?.data ?? [];
 
   if (!featured) return null;
 
@@ -27,9 +27,9 @@ export default async function Page() {
               <div className="relative aspect-video rounded-xl overflow-hidden shadow-lg">
                 <img
                   src={
-                    featured.photos?.[0]
-                      ? featured.photos[0].secure_urls
-                      : getYtThumbnail(featured.videos[0])
+                    featured.images?.[0] ||
+                    featured.thumbnail ||
+                    getYtThumbnail(featured.videos[0])
                   }
                   alt={featured.title}
                   className="object-cover size-full group-hover:scale-105 transition-transform duration-500"
@@ -44,7 +44,7 @@ export default async function Page() {
               </h1>
             </Link>
             <p className="text-gray-600 text-xl font-serif line-clamp-4 leading-relaxed italic border-l-4 border-primary/10 pl-6 py-2">
-              {featured.body}
+              {stripHtml(featured.body)}
             </p>
             <div className="flex items-center gap-2 text-xs font-black uppercase tracking-widest text-primary/60">
               <span>{"By Team Bar and Bench"}</span>
@@ -68,9 +68,9 @@ export default async function Page() {
               <div className="relative aspect-video rounded-lg overflow-hidden shadow-sm">
                 <img
                   src={
-                    post.photos?.[0]
-                      ? post.photos[0].secure_urls
-                      : getYtThumbnail(post.videos[0])
+                    post.images?.[0] ||
+                    post.thumbnail ||
+                    getYtThumbnail(post.videos[0])
                   }
                   alt={post.title}
                   className="object-cover size-full group-hover:scale-110 transition-transform duration-500"

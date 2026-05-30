@@ -6,7 +6,7 @@ export default async function Page() {
 
   return (
     <div id="video-news">
-      <VideoNews data={data?.slice(0, 6)} />
+      <VideoNews data={data?.data?.slice(0, 6)} />
     </div>
   );
 }

@@ -8,6 +8,7 @@ import {
 import { Data } from "@/types/response";
 import { headers } from "next/headers";
 import RSS from "rss";
+import { stripHtml } from "@/lib/utils";
 
 export async function GET() {
   const headerList = await headers();
@@ -24,30 +25,30 @@ export async function GET() {
     language: "bn",
   });
 
-  const topNews = await getTopNews();
-  const latestPost = (await getLatestNews())?.[0];
-  const trendingNews = await getTrendingNews();
-  const videoNews = await getVideoNews();
-  const categoryWiseNews = (await getCategoryWiseNews())?.reduce<Data[]>(
+  const topNews = (await getTopNews())?.data ?? [];
+  const latestPost = (await getLatestNews())?.data?.[0];
+  const trendingNews = (await getTrendingNews())?.data ?? [];
+  const videoNews = (await getVideoNews())?.data ?? [];
+  const categoryWiseNews = (await getCategoryWiseNews())?.data?.reduce<Data[]>(
     (acc, cat) => {
       return acc.concat(cat.articles);
     },
     [],
-  );
+  ) ?? [];
 
   const data_acc = [
-    ...(topNews ?? []),
-    latestPost,
-    ...(trendingNews ?? []),
-    videoNews,
-    ...(categoryWiseNews ?? []),
-  ] as Data[];
+    ...topNews,
+    ...(latestPost ? [latestPost] : []),
+    ...trendingNews,
+    ...videoNews,
+    ...categoryWiseNews,
+  ];
 
   data_acc.forEach((data) => {
     if (data)
       feed.item({
         title: data.title,
-        description: data.body?.slice(0, 200),
+        description: stripHtml(data.body || "").slice(0, 200),
         date: new Date(data.published_on),
         url: `${site_url}/news/${data.id}`,
       });

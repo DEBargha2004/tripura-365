@@ -38,12 +38,14 @@ export default function TrendingNews({
             >
               <article className="relative h-96 w-full rounded-3xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-1">
                 {/* Full Background Image */}
-                {(post.photos?.length > 0 || post.videos?.length > 0) && (
+                {(post.images?.length > 0 || !!post.thumbnail || post.videos?.length > 0) && (
                   <img
                     src={
-                      post.photos?.length > 0
-                        ? post.photos[0].secure_urls
-                        : getYtThumbnail(post.videos[0])
+                      post.images?.length > 0
+                        ? post.images[0]
+                        : post.thumbnail
+                          ? post.thumbnail
+                          : getYtThumbnail(post.videos[0])
                     }
                     alt={post.title}
                     // fill

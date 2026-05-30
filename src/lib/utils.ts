@@ -76,3 +76,8 @@ export function getValue(obj: any, path: string) {
     return acc[curr];
   }, obj);
 }
+
+export function stripHtml(html: string): string {
+  if (!html) return "";
+  return html.replace(/<[^>]*>/g, "").replace(/&nbsp;/g, " ");
+}

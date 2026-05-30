@@ -11,8 +11,8 @@ export async function generateStaticParams() {
   const res = await getCategoryWiseNews();
 
   return (
-    res?.map((category) => ({
-      cId: (category?.articles[0]?.category_id ?? "").toString(),
+    res?.data?.map((category) => ({
+      cId: category.id.toString(),
     })) ?? []
   );
 }
@@ -25,8 +25,8 @@ export async function generateMetadata({
   const { cId } = await params;
   const res = await getCategoryWiseNews();
 
-  const category = res?.find(
-    (cat) => cat?.articles?.[0]?.category_id === Number(cId),
+  const category = res?.data?.find(
+    (cat) => cat?.id === Number(cId),
   );
 
   return {
@@ -36,7 +36,8 @@ export async function generateMetadata({
       images: [
         {
           url:
-            category?.articles?.[0]?.photos?.[0]?.secure_urls ||
+            category?.articles?.[0]?.images?.[0] ||
+            category?.articles?.[0]?.thumbnail ||
             (category?.articles?.[0]?.videos?.[0]
               ? getYtThumbnail(category.articles[0].videos[0])
               : ""),
@@ -47,7 +48,8 @@ export async function generateMetadata({
       card: "summary_large_image",
       title: category?.name,
       images: [
-        category?.articles?.[0]?.photos?.[0]?.secure_urls ||
+        category?.articles?.[0]?.images?.[0] ||
+          category?.articles?.[0]?.thumbnail ||
           (category?.articles?.[0]?.videos?.[0]
             ? getYtThumbnail(category.articles[0].videos[0])
             : ""),

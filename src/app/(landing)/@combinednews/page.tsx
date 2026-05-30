@@ -8,7 +8,7 @@ export default async function Page() {
   // Flatten all articles and remove duplicates by ID
   const allArticles = Array.from(
     new Map(
-      categories.flatMap((cat) => cat.articles).map((art) => [art.id, art]),
+      (categories?.data ?? []).flatMap((cat) => cat.articles).map((art) => [art.id, art]),
     ).values(),
   );
 
@@ -41,9 +41,9 @@ export default async function Page() {
                   <div className="relative aspect-video overflow-hidden rounded-lg bg-gray-100 shadow-sm">
                     <img
                       src={
-                        post.photos?.[0]
-                          ? post.photos[0].secure_urls
-                          : getYtThumbnail(post.videos?.[0])
+                        post.images?.[0] ||
+                        post.thumbnail ||
+                        getYtThumbnail(post.videos?.[0])
                       }
                       alt={post.title}
                       className="object-cover size-full group-hover:scale-105 transition-transform duration-700"
