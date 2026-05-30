@@ -16,7 +16,7 @@ const playfair = Playfair_Display({
 });
 
 export const metadata: Metadata = {
-  title: { template: "%s | Bar and Bench", default: "Bar and Bench" },
+  title: { template: "%s | Tripura News Time", default: "Tripura News Time" },
 };
 
 export default function RootLayout({

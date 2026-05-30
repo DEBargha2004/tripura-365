@@ -47,7 +47,7 @@ export default async function Page() {
               {stripHtml(featured.body)}
             </p>
             <div className="flex items-center gap-2 text-xs font-black uppercase tracking-widest text-primary/60">
-              <span>{"By Team Bar and Bench"}</span>
+              <span>{"By Tripura News Time Desk"}</span>
               <span className="text-gray-300">•</span>
               <span>
                 {featured.published_on &&
@@ -81,7 +81,7 @@ export default async function Page() {
                   {post.title}
                 </h3>
                 <div className="text-[10px] font-black uppercase tracking-widest text-primary/50">
-                  {"Team Bar and Bench"}
+                  {"Tripura News Time Desk"}
                 </div>
               </div>
             </Link>

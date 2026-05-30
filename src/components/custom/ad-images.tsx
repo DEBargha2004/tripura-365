@@ -33,7 +33,7 @@ export default function AdImages({
               <h3 className="font-bold">Disclaimer</h3>
               <p className="text-muted-foreground text-sm">
                 Integrity of any product/service/scheme is intellectual
-                responsibility of the Advertiser itself. Bar and Bench takes
+                responsibility of the Advertiser itself. Tripura News Time takes
                 no responsibility related to commitments made by an advertiser
                 to our readers.
               </p>

@@ -60,11 +60,14 @@ export default async function Footer() {
     <footer className="bg-primary text-white pt-20 pb-10">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-6">
         {/* Centered Logo */}
-        <div className="flex flex-col items-center mb-20">
-          <h1 className="text-4xl md:text-5xl font-serif font-black tracking-tighter text-white/90 leading-none mt-4">
-            Bar
-            <span className="font-serif italic mx-0.5 text-white/60">and</span>
-            Bench
+        <div className="flex flex-col items-center select-none mb-20">
+          <span className="text-[9px] font-sans font-bold tracking-[0.35em] text-white/60 uppercase mb-1">
+            Tripura's Leading Voice
+          </span>
+          <h1 className="text-3xl md:text-4xl font-serif font-black tracking-tight text-white leading-none">
+            <span>Tripura</span>
+            <span className="text-white/80 font-serif italic font-medium mx-1.5">News</span>
+            <span className="text-accent font-serif font-black drop-shadow">Time</span>
           </h1>
         </div>
 
@@ -137,7 +140,7 @@ export default async function Footer() {
 
           <div className="flex flex-wrap items-center justify-center gap-6 text-white/70">
             <span>
-              Copyright © {new Date().getFullYear()} Bar and Bench. All Rights
+              Copyright © {new Date().getFullYear()} Tripura News Time. All Rights
               Reserved
             </span>
             <span>Powered by Patrakar</span>

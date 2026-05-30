@@ -36,13 +36,14 @@ export default async function Navbar() {
 
           {/* Center: Logo */}
           <div className="absolute left-1/2 -translate-x-1/2 flex flex-col items-center top-1/2 -translate-y-1/2">
-            <Link href="/" className="flex flex-col items-center group">
-              <h1 className="text-5xl md:text-6xl font-serif font-black tracking-tighter text-gray-900 leading-none">
-                Bar
-                <span className="text-primary font-serif italic mx-1 opacity-80">
-                  and
-                </span>
-                Bench
+            <Link href="/" className="flex flex-col items-center select-none group">
+              <span className="text-[10px] font-sans font-black tracking-[0.4em] text-primary/95 uppercase mb-1 drop-shadow-sm">
+                Tripura's Leading Voice
+              </span>
+              <h1 className="text-4xl md:text-5xl font-serif font-black tracking-tight text-gray-900 leading-none flex items-center gap-2">
+                <span className="text-gray-900 group-hover:text-primary transition-colors duration-300">Tripura</span>
+                <span className="text-primary font-serif italic font-medium group-hover:text-accent transition-colors duration-300">News</span>
+                <span className="text-accent font-serif font-black drop-shadow-sm">Time</span>
               </h1>
             </Link>
           </div>
@@ -95,7 +96,7 @@ export default async function Navbar() {
                 href="/"
                 className="text-base font-bold uppercase tracking-[0.05em] whitespace-nowrap hover:opacity-75 transition-opacity"
               >
-                Latest Legal News
+                Latest News
               </Link>
               {categories.slice(0, 8).map((cat) => (
                 <Link

@@ -23,14 +23,14 @@ export async function generateMetadata(): Promise<Metadata> {
   const topStories = res?.data ?? [];
 
   return {
-    title: "Bar and Bench",
-    description: `Bar and Bench is a dynamic and trusted Indian news website that brings you 
-    the latest and most relevant legal news and updates.`,
+    title: "Tripura News Time",
+    description: `Tripura News Time is a dynamic and trusted news website that brings you 
+    the latest and most relevant regional, national, and global news and updates.`,
     metadataBase: new URL(`${protocol}://${origin}`),
     openGraph: {
-      title: "Bar and Bench",
-      description: `Bar and Bench is a dynamic and trusted Indian news website that brings you 
-    the latest and most relevant legal news and updates.`,
+      title: "Tripura News Time",
+      description: `Tripura News Time is a dynamic and trusted news website that brings you 
+    the latest and most relevant regional, national, and global news and updates.`,
       url: `${protocol}://${origin}`,
       images: [
         {
@@ -42,15 +42,15 @@ export async function generateMetadata(): Promise<Metadata> {
               : siteLogo.src),
           width: 210,
           height: 70,
-          alt: "Bar and Bench",
+          alt: "Tripura News Time",
         },
       ],
     },
     twitter: {
       card: "summary_large_image",
-      title: "Bar and Bench",
-      description: `Bar and Bench is a dynamic and trusted Indian news website that brings you 
-    the latest and most relevant legal news and updates.`,
+      title: "Tripura News Time",
+      description: `Tripura News Time is a dynamic and trusted news website that brings you 
+    the latest and most relevant regional, national, and global news and updates.`,
       images: [
         topStories[0]?.images?.[0] ||
           topStories[0]?.thumbnail ||

@@ -199,7 +199,7 @@ export default async function Page({
                 <div className="flex flex-wrap items-center gap-2 text-gray-900 font-serif font-bold text-sm uppercase tracking-tight">
                   <span className="text-gray-500">By</span>
                   <span className="hover:text-accent transition-colors cursor-pointer border-b-2 border-accent/20">
-                    {"Team Bar and Bench"}
+                    {"Tripura News Time Desk"}
                   </span>
                 </div>
 
@@ -274,7 +274,7 @@ export default async function Page({
                     #{article.category?.name || "News"}
                   </span>
                   <span className="px-4 py-1.5 bg-gray-50 text-gray-600 font-serif text-sm rounded hover:bg-gray-100 transition-colors cursor-pointer">
-                    #BarAndBench
+                    #TripuraNewsTime
                   </span>
                   <span className="px-4 py-1.5 bg-gray-50 text-gray-600 font-serif text-sm rounded hover:bg-gray-100 transition-colors cursor-pointer">
                     #LatestUpdates
