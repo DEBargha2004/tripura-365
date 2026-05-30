@@ -22,37 +22,18 @@ import { headers as nextHeaders } from "next/headers";
 
 // New Swagger API configurations
 const origin = process.env.API_BASE_URL || "https://api.patrakar.app";
-const apiToken = process.env.API_BEARER_TOKEN;
 const hostId = process.env.HOST_ID;
 
 // ── Helpers ──
 
 async function getFetchOptions(
-  options: RequestInit & { token?: string } = {},
+  options: RequestInit = {},
 ): Promise<RequestInit> {
-  const { token, ...rest } = options;
-  let incomingAuth = "";
-  try {
-    const reqHeaders = await nextHeaders();
-    const auth = reqHeaders.get("authorization");
-    if (auth) incomingAuth = auth;
-  } catch (e) {
-    // Silent catch if called during static generation build
-  }
-
-  const headers = new Headers(rest.headers);
+  const headers = new Headers(options.headers);
 
   headers.set("Host-Id", hostId || "");
 
-  if (apiToken) {
-    headers.set("Authorization", `Bearer ${apiToken}`);
-  } else if (token) {
-    headers.set("Authorization", `Bearer ${token}`);
-  } else if (incomingAuth) {
-    headers.set("Authorization", incomingAuth);
-  }
-
-  return { ...rest, headers };
+  return { ...options, headers };
 }
 
 function mapArticleFullToData(art: ArticleFull): Data {
@@ -104,6 +85,7 @@ export async function getTopNews(page: number = 1) {
       ).then((res) => res.json()),
     ),
   );
+
   if (err || !res || !res.data) return createEmptyDataInstance<Data[]>([]);
 
   const data = res.data.map(mapArticleFullToData);
@@ -516,7 +498,7 @@ export async function getImageGallery(): Promise<ImageItem[]> {
   });
   const [err, res] = await catchError<ApiEnvelope<ImageItem[]>>(
     retry(() =>
-      fetch(`${origin}/admin/imageLibrary?page=1&limit=10`, fetchOpts).then(
+      fetch(`${origin}/public/imageLibrary?page=1&limit=10`, fetchOpts).then(
         (res) => res.json(),
       ),
     ),
