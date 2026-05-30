@@ -309,8 +309,8 @@ export async function getNewsInfo(id: string) {
   const [err, res] = await catchError<ApiEnvelope<ArticleFull[]>>(
     retry(
       () =>
-        fetch(`${origin}/admin/article/${id}`, fetchOpts).then((res) =>
-          res.json(),
+        fetch(`${origin}/admin/article?article_id=${id}`, fetchOpts).then(
+          (res) => res.json(),
         ),
       { helperText: `news ${id}`, retriesCount: 3 },
     ),
