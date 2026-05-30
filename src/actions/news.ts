@@ -1,376 +1,575 @@
 "use server";
 
-import { INTENT } from "@/constants/intent";
 import { sloks } from "@/constants/sloks";
+import { catchError, createEmptyDataInstance, retry } from "@/lib/utils";
 import {
-  catchError,
-  createEmptyDataInstance,
-  getValue,
-  retry,
-} from "@/lib/utils";
-import {
-  ApiResponseAdImageWithPagination,
-  ApiResponseAdVideoWithPagination,
-  ApiResponseCategoryWiseNewsWithPagination,
-  ApiResponseWithoutPagination,
-  ApiResponseWithPagination,
-  ApiResponseQuotation,
   Data,
   AdVideoData,
   AdBannerImageData,
   WeatherApiResponse,
-  ApiResponseImageGallery,
   ImageItem,
-  ApiResponseCategories,
   Category,
-  ApiResponseHeadlinesWithPagination,
   Headline,
-  RawAdBannerImageData,
-  OriginalData,
-  OriginalApiResponseWithPagination,
+  ArticleFull,
+  AdImage,
+  AdVideo,
+  ArticleCategoryBrief,
+  ApiEnvelope,
+  ApiEnvelopeWithPagination,
 } from "@/types/response";
-import { format } from "date-fns";
 
-// THis is the origin host URL
-const origin = process.env.ORIGIN ?? "https://master-news-service.onrender.com";
-const hostId = process.env.HOST_ID!;
-const adminUrl = "https://patrakar.app";
-const adminJwt = process.env.ADMIN_JWT;
-const lambdaUrl = `https://75kowpjykl.execute-api.ap-south-1.amazonaws.com/api/updatenewstocache?website_id=${process.env.HOST_ID}`;
+import { headers as nextHeaders } from "next/headers";
 
-async function getFullInfo(
-  locator: (typeof INTENT)[keyof typeof INTENT]["locator"],
-) {
-  const [err, res] = await catchError<any>(
+// New Swagger API configurations
+const origin = process.env.API_BASE_URL || "https://api.patrakar.app";
+const apiToken = process.env.API_BEARER_TOKEN;
+const hostId = process.env.HOST_ID;
+
+// ── Helpers ──
+
+async function getFetchOptions(
+  options: RequestInit & { token?: string } = {},
+): Promise<RequestInit> {
+  const { token, ...rest } = options;
+  let incomingAuth = "";
+  try {
+    const reqHeaders = await nextHeaders();
+    const auth = reqHeaders.get("authorization");
+    if (auth) incomingAuth = auth;
+  } catch (e) {
+    // Silent catch if called during static generation build
+  }
+
+  const headers = new Headers(rest.headers);
+
+  headers.set("Host-Id", hostId || "");
+
+  if (apiToken) {
+    headers.set("Authorization", `Bearer ${apiToken}`);
+  } else if (token) {
+    headers.set("Authorization", `Bearer ${token}`);
+  } else if (incomingAuth) {
+    headers.set("Authorization", incomingAuth);
+  }
+
+  return { ...rest, headers };
+}
+
+function mapArticleFullToData(art: ArticleFull): Data {
+  const categoryMapped = art.category
+    ? {
+        id: art.category.id,
+        name: art.category.name,
+        parent: art.category.parent,
+        sequence: art.category.sequence,
+        sub_category: art.category.sub_category || [],
+      }
+    : {
+        id: 0,
+        name: "General",
+        parent: true,
+        sequence: 0,
+        sub_category: [],
+      };
+
+  return {
+    id: art.id,
+    user_id: art.user_id || 0,
+    user_full_name: art.user_full_name || "",
+    title: art.title,
+    body: art.body,
+    published_on: art.published_on || art.created_on,
+    comments: [],
+    last_drafted: art.last_drafted,
+    created_on: art.created_on,
+    total_views: art.total_views,
+    category: categoryMapped,
+    published: art.published,
+    images: art.images || [],
+    thumbnail: art.thumbnail || "",
+    videos: art.videos || [],
+  };
+}
+// ── New Swagger Actions ──
+
+export async function getTopNews(page: number = 1) {
+  const fetchOpts = await getFetchOptions({
+    next: { revalidate: 60 * 10 },
+  });
+  const [err, res] = await catchError<ApiEnvelopeWithPagination<ArticleFull>>(
     retry(() =>
-      fetch(lambdaUrl, {
-        next: { revalidate: 60 * 10 },
-      }).then((res) => res.json()),
+      fetch(
+        `${origin}/admin/article?published=true&page=${page}`,
+        fetchOpts,
+      ).then((res) => res.json()),
     ),
   );
-  if (err) throw new Error("Failed to fetch data from lambda");
-  const extractedRes = getValue(res.results, locator);
+  if (err || !res || !res.data) return createEmptyDataInstance<Data[]>([]);
 
-  return extractedRes;
+  const data = res.data.map(mapArticleFullToData);
+
+  return {
+    status: true,
+    code: 200,
+    message: "Success",
+    data,
+  };
 }
 
-export async function getTopNews() {
-  // pulling from lambda instead of origin because it is faster and more reliable as it is hosted on AWS.
-  const [err, res] = await catchError<Data[]>(
-    getFullInfo(INTENT.LATEST.locator),
+export async function getLatestNews(page: number = 1) {
+  const fetchOpts = await getFetchOptions({
+    next: { revalidate: 60 * 10 },
+  });
+  const [err, res] = await catchError<ApiEnvelopeWithPagination<ArticleFull>>(
+    retry(() =>
+      fetch(
+        `${origin}/admin/article?published=true&page=${page}`,
+        fetchOpts,
+      ).then((res) => res.json()),
+    ),
   );
-  if (!res) return [] as Data[];
-  return res;
+  if (err || !res || !res.data) return createEmptyDataInstance<Data[]>([]);
 
-  // const [err, res] = await catchError<ApiResponseWithoutPagination>(
-  //   retry(() =>
-  //     fetch(`${origin}/api/index_delivery?intent=latest`, {
-  //       headers: { "Host-Id": hostId },
-  //       next: { revalidate: 60 * 10 },
-  //     }).then((res) => res.json()),
-  //   ),
-  // );
-  // if (err) return createEmptyDataInstance<Data[]>([]);
-  // return res;
+  const data = res.data.map(mapArticleFullToData);
+
+  return {
+    status: true,
+    code: 200,
+    message: "Success",
+    pagination_info: res.pagination_info,
+    data,
+  };
 }
 
-export async function getLatestNews() {
-  // pulling from lambda instead of origin because it is faster and more reliable as it is hosted on AWS.
-  const [err, res] = await catchError<Data[]>(
-    getFullInfo(INTENT.RECENT.locator),
+export async function getTrendingNews(page: number = 1) {
+  const fetchOpts = await getFetchOptions({
+    next: { revalidate: 60 * 10 },
+  });
+  const [err, res] = await catchError<ApiEnvelopeWithPagination<ArticleFull>>(
+    retry(() =>
+      fetch(
+        `${origin}/admin/article?published=true&page=${page}`,
+        fetchOpts,
+      ).then((res) => res.json()),
+    ),
   );
-  if (!res) return [] as Data[];
-  return res;
+  if (err || !res || !res.data) return createEmptyDataInstance<Data[]>([]);
 
-  // const [err, res] = await catchError<ApiResponseWithPagination>(
-  //   retry(() =>
-  //     fetch(`${origin}/api/index_delivery?intent=recent`, {
-  //       headers: { "Host-Id": hostId },
-  //       next: { revalidate: 60 * 10 },
-  //     }).then((res) => res.json()),
-  //   ),
-  // );
-  // if (err) return createEmptyDataInstance<Data[]>([]);
-  // return res;
+  const data = res.data.map(mapArticleFullToData);
+
+  return {
+    status: true,
+    code: 200,
+    message: "Success",
+    pagination_info: res.pagination_info,
+    data,
+  };
 }
 
-export async function getTrendingNews() {
-  // pulling from lambda instead of origin because it is faster and more reliable as it is hosted on AWS.
-  const [err, res] = await catchError<Data[]>(
-    getFullInfo(INTENT.MOST_READ.locator),
+export async function getVideoNews(page: number = 1) {
+  const fetchOpts = await getFetchOptions({
+    next: { revalidate: 60 * 10 },
+  });
+  const [err, res] = await catchError<ApiEnvelopeWithPagination<ArticleFull>>(
+    retry(() =>
+      fetch(
+        `${origin}/admin/article?published=true&has_video=true&page=${page}`,
+        fetchOpts,
+      ).then((res) => res.json()),
+    ),
   );
-  if (!res) return [] as Data[];
-  return res;
+  if (err || !res || !res.data) return createEmptyDataInstance<Data[]>([]);
 
-  // const [err, res] = await catchError<ApiResponseWithPagination>(
-  //   retry(() =>
-  //     fetch(`${origin}/api/index_delivery?intent=most_read`, {
-  //       headers: { "Host-Id": hostId },
-  //       next: { revalidate: 60 * 10 },
-  //     }).then((res) => res.json()),
-  //   ),
-  // );
-  // if (err) return createEmptyDataInstance<Data[]>([]);
-  // return res;
-}
+  const data = res.data.map(mapArticleFullToData);
 
-export async function getAllCategories() {
-  // pulling from lambda instead of origin because it is faster and more reliable as it is hosted on AWS.
-  const [err, res] = await catchError<Category[]>(
-    getFullInfo(INTENT.ALL_CATEGORIES.locator),
-  );
-  if (!res) return [] as Category[];
-  return res;
-
-  // const [err, res] = await catchError<ApiResponseCategories>(
-  //   retry(() =>
-  //     fetch(`${origin}/api/index_delivery?intent=all_categories`, {
-  //       headers: { "Host-Id": hostId },
-  //       next: { revalidate: 60 * 10 },
-  //     }).then((res) => res.json()),
-  //   ),
-  // );
-  // if (err) return createEmptyDataInstance<Category[]>([]);
-  // return res;
-}
-
-export async function getVideoNews() {
-  // pulling from lambda instead of origin because it is faster and more reliable as it is hosted on AWS.
-  const [err, res] = await catchError<Data[]>(
-    getFullInfo(INTENT.RECENT_ARTICLES_WITH_VIDEOS.locator),
-  );
-  if (!res) return [] as Data[];
-  return res;
-
-  // const [err, res] = await catchError<ApiResponseWithPagination>(
-  //   retry(() =>
-  //     fetch(`${origin}/api/index_delivery?intent=recent_articles_with_videos`, {
-  //       headers: { "Host-Id": hostId },
-  //       next: { revalidate: 60 * 10 },
-  //     }).then((res) => res.json()),
-  //   ),
-  // );
-  // if (err) return createEmptyDataInstance<Data[]>([]);
-  // return res;
+  return {
+    status: true,
+    code: 200,
+    message: "Success",
+    pagination_info: res.pagination_info,
+    data,
+  };
 }
 
 export async function getAdVideos() {
-  // pulling from lambda instead of origin because it is faster and more reliable as it is hosted on AWS.
-  const [err, res] = await catchError<AdVideoData[]>(
-    getFullInfo(INTENT.AD_VIDEOS.locator),
+  const fetchOpts = await getFetchOptions({
+    next: { revalidate: 60 * 10 },
+  });
+  const [err, res] = await catchError<ApiEnvelope<AdVideo[]>>(
+    retry(() =>
+      fetch(`${origin}/admin/ad-videos`, fetchOpts).then((res) => res.json()),
+    ),
   );
-  if (!res) return [] as AdVideoData[];
-  return res;
+  if (err || !res || !res.data)
+    return createEmptyDataInstance<AdVideoData[]>([]);
 
-  // const [err, res] = await catchError<ApiResponseAdVideoWithPagination>(
-  //   retry(() =>
-  //     fetch(`${origin}/api/index_delivery?intent=ad_videos`, {
-  //       headers: { "Host-Id": hostId },
-  //       next: { revalidate: 60 * 10 },
-  //     }).then((res) => res.json()),
-  //   ),
-  // );
-  // if (err) return createEmptyDataInstance<AdVideoData[]>([]);
-  // return res;
+  return {
+    status: true,
+    code: 200,
+    message: "Success",
+    pagination_info: {
+      starting_index: 1,
+      ending_index: res.data.length,
+      current_page: 1,
+      previous_page: null,
+      next_page: null,
+      total_pages: 1,
+      has_previous_page: false,
+      has_next_page: false,
+      items_per_page: res.data.length,
+    },
+    data: res.data.map((video) => ({
+      id: video.id,
+      link: video.link,
+      published_on: video.published_on,
+    })),
+  };
 }
 
 export async function getLandscapeAdBannerImages() {
-  // pulling from lambda instead of origin because it is faster and more reliable as it is hosted on AWS.
-  const [err, res] = await catchError<RawAdBannerImageData[]>(
-    getFullInfo(INTENT.WIDE_AD_IMAGES.locator),
+  const fetchOpts = await getFetchOptions({
+    next: { revalidate: 60 * 10 },
+  });
+  const [err, res] = await catchError<ApiEnvelope<AdImage[]>>(
+    retry(() =>
+      fetch(`${origin}/admin/ad-images`, fetchOpts).then((res) => res.json()),
+    ),
   );
-  if (!res) return [] as AdBannerImageData[];
-  return res.map((it) => ({
-    id: it.id,
-    image_url: it.wide_image_secure_url,
-    image_id: it.wide_image_id,
-    last_updated: it.last_updated,
-  })) as AdBannerImageData[];
+  if (err || !res || !res.data)
+    return createEmptyDataInstance<AdBannerImageData[]>([]);
 
-  // const [err, res] = await catchError<ApiResponseAdImageWithPagination>(
-  //   retry(() =>
-  //     fetch(`${origin}/api/index_delivery?intent=wide_ad_images`, {
-  //       headers: { "Host-Id": hostId },
-  //       next: { revalidate: 60 * 10 },
-  //     }).then((res) => res.json()),
-  //   ),
-  // );
-  // if (err) return createEmptyDataInstance<AdBannerImageData[]>([]);
-  // return res;
+  return {
+    status: true,
+    code: 200,
+    message: "Success",
+    pagination_info: {
+      starting_index: 1,
+      ending_index: res.data.length,
+      current_page: 1,
+      previous_page: null,
+      next_page: null,
+      total_pages: 1,
+      has_previous_page: false,
+      has_next_page: false,
+      items_per_page: res.data.length,
+    },
+    data: res.data
+      .filter((img) => img.wide_image_secure_url)
+      .map((img) => ({
+        id: img.id,
+        last_updated: img.last_updated,
+        image_url: img.wide_image_secure_url,
+        image_id: img.wide_image_id,
+      })),
+  };
 }
 
 export async function getPortraitAdBannerImages() {
-  // pulling from lambda instead of origin because it is faster and more reliable as it is hosted on AWS.
-  const [err, res] = await catchError<RawAdBannerImageData[]>(
-    getFullInfo(INTENT.TALL_AD_IMAGES.locator),
+  const fetchOpts = await getFetchOptions({
+    next: { revalidate: 60 * 10 },
+  });
+  const [err, res] = await catchError<ApiEnvelope<AdImage[]>>(
+    retry(() =>
+      fetch(`${origin}/admin/ad-images`, fetchOpts).then((res) => res.json()),
+    ),
   );
-  if (!res) return [] as AdBannerImageData[];
-  return res.map((it) => ({
-    id: it.id,
-    image_url: it.tall_image_secure_url,
-    image_id: it.tall_image_id,
-    last_updated: it.last_updated,
-  })) as AdBannerImageData[];
-  // const [err, res] = await catchError<ApiResponseAdImageWithPagination>(
-  //   retry(() =>
-  //     fetch(`${origin}/api/index_delivery?intent=tall_ad_images`, {
-  //       headers: { "Host-Id": hostId },
-  //       next: { revalidate: 60 * 10 },
-  //     }).then((res) => res.json()),
-  //   ),
-  // );
-  // if (err) return createEmptyDataInstance<AdBannerImageData[]>([]);
-  // return res;
+  if (err || !res || !res.data)
+    return createEmptyDataInstance<AdBannerImageData[]>([]);
+
+  return {
+    status: true,
+    code: 200,
+    message: "Success",
+    pagination_info: {
+      starting_index: 1,
+      ending_index: res.data.length,
+      current_page: 1,
+      previous_page: null,
+      next_page: null,
+      total_pages: 1,
+      has_previous_page: false,
+      has_next_page: false,
+      items_per_page: res.data.length,
+    },
+    data: res.data
+      .filter((img) => img.tall_image_secure_url)
+      .map((img) => ({
+        id: img.id,
+        last_updated: img.last_updated,
+        image_url: img.tall_image_secure_url,
+        image_id: img.tall_image_id,
+      })),
+  };
 }
 
 export async function getNewsInfo(id: string) {
-  const [err, res] = await catchError<OriginalData>(
+  const fetchOpts = await getFetchOptions({
+    next: { revalidate: 60 * 10 },
+  });
+  const [err, res] = await catchError<ApiEnvelope<ArticleFull[]>>(
     retry(
       () =>
-        fetch(`${origin}/api/article/${id}`, {
-          headers: { "Host-Id": hostId },
-          next: { revalidate: 60 * 10 },
-        }).then((res) => res.json()),
+        fetch(`${origin}/admin/article/${id}`, fetchOpts).then((res) =>
+          res.json(),
+        ),
       { helperText: `news ${id}`, retriesCount: 3 },
     ),
   );
-  if (err) return null;
-  return res;
+
+  if (err || !res || !res.data || !res.data[0]) return null;
+
+  return res.data[0] as ArticleFull;
 }
 
-type CategoryWiseNews = Record<string, Data[]>;
 export async function getCategoryWiseNews() {
-  // pulling from lambda instead of origin because it is faster and more reliable as it is hosted on AWS.
-  const [err, res] = await catchError<CategoryWiseNews>(
-    getFullInfo(INTENT.CATEGORY_WISE_NEWS.locator),
+  const fetchOpts = await getFetchOptions({
+    next: { revalidate: 60 * 10 },
+  });
+
+  const [errCats, categoriesEnvelope] = await catchError<
+    ApiEnvelope<ArticleCategoryBrief[]>
+  >(
+    retry(() =>
+      fetch(`${origin}/admin/articleCategory`, fetchOpts).then((res) =>
+        res.json(),
+      ),
+    ),
   );
-  if (!res)
-    return [] as {
-      name: string;
-      articles: Data[];
-    }[];
 
-  const formattedRes = Object.entries(res).map(([name, articles]) => ({
-    name,
-    articles,
-  }));
+  if (errCats || !categoriesEnvelope || !categoriesEnvelope.data) {
+    return createEmptyDataInstance<
+      {
+        id: number;
+        name: string;
+        articles: Data[];
+      }[]
+    >([]);
+  }
+  const categories = categoriesEnvelope.data;
 
-  return formattedRes;
+  let categoryWiseData = await Promise.all(
+    categories.map(async (cat) => {
+      const [errArticles, articlesRes] = await catchError<
+        ApiEnvelopeWithPagination<ArticleFull>
+      >(
+        retry(() =>
+          fetch(
+            `${origin}/admin/article?published=true&categoryId=${cat.id}`,
+            fetchOpts,
+          ).then((res) => res.json()),
+        ),
+      );
 
-  // const [err, res] =
-  //   await catchError<ApiResponseCategoryWiseNewsWithPagination>(
-  //     retry(() =>
-  //       fetch(`${origin}/api/index_delivery?intent=category_wise_news`, {
-  //         headers: { "Host-Id": hostId },
-  //         next: { revalidate: 60 * 10 },
-  //       }).then((res) => res.json()),
-  //     ),
-  //   );
-  // if (err)
-  //   return createEmptyDataInstance<
-  //     {
-  //       name: string;
-  //       articles: Data[];
-  //     }[]
-  //   >([]);
-  // return res;
+      const fullArticles = articlesRes?.data || [];
+      const articles = fullArticles.map(mapArticleFullToData);
+
+      const mappedArticles = articles.map((art) => ({
+        ...art,
+        category: {
+          id: cat.id,
+          name: cat.name,
+          parent: cat.parent,
+          sequence: cat.sequence,
+          sub_category: cat.sub_category || [],
+        },
+      }));
+
+      return {
+        id: cat.id,
+        name: cat.name,
+        articles: mappedArticles,
+      };
+    }),
+  );
+
+  categoryWiseData = categoryWiseData.filter((cat) => cat.articles.length > 0);
+
+  return {
+    status: true,
+    code: 200,
+    message: "Success",
+    pagination_info: {
+      starting_index: 1,
+      ending_index: categoryWiseData.length,
+      current_page: 1,
+      previous_page: null,
+      next_page: null,
+      total_pages: 1,
+      has_previous_page: false,
+      has_next_page: false,
+      items_per_page: categoryWiseData.length,
+    },
+    data: categoryWiseData,
+  };
 }
 
 export async function getQuotation() {
-  const [err, res] = await catchError<ApiResponseQuotation>(
-    retry(() =>
-      fetch(`${origin}/api/cosmetic_data?intent=quote`, {
-        headers: { "Host-Id": hostId },
-        next: { revalidate: 60 * 10 },
-      }).then((res) => res.json()),
-    ),
-  );
-  if (err)
-    return createEmptyDataInstance<{
-      q: string;
-      a: string;
-      h: string;
-    } | null>(null);
-  return res;
+  return {
+    status: true,
+    data: {
+      q: "The only limit to our realization of tomorrow will be our doubts of today.",
+      a: "Franklin D. Roosevelt",
+      h: "",
+    },
+  };
 }
 
-export async function getCategoryNewsInfo(id: string) {
-  const [err, res] = await catchError<OriginalApiResponseWithPagination>(
+export async function getCategoryNewsInfo(id: string, page: number = 1) {
+  const fetchOpts = await getFetchOptions({
+    next: { revalidate: 60 * 10 },
+  });
+  const [err, res] = await catchError<ApiEnvelopeWithPagination<ArticleFull>>(
     retry(
       () =>
-        fetch(`${origin}/api/category/${id}`, {
-          headers: { "Host-Id": hostId },
-          next: { revalidate: 60 * 10 },
-        }).then((res) => res.json()),
+        fetch(
+          `${origin}/admin/article?published=true&categoryId=${id}&page=${page}`,
+          fetchOpts,
+        ).then((res) => res.json()),
       { helperText: `category ${id}`, retriesCount: 3 },
     ),
   );
-  if (err) return createEmptyDataInstance<OriginalData[]>([]);
-  return res;
+  if (err || !res || !res.data) return createEmptyDataInstance<Data[]>([]);
+
+  const articles = res.data.map(mapArticleFullToData);
+  const data = articles.map((art) => ({
+    ...art,
+    category:
+      art.category.id === 0
+        ? {
+            id: parseInt(id),
+            name: "",
+            parent: true,
+            sequence: 0,
+            sub_category: [],
+          }
+        : art.category,
+  }));
+
+  return {
+    status: true,
+    code: 200,
+    message: "Success",
+    pagination_info: res.pagination_info,
+    data,
+  };
 }
 
-export async function getWeatherInfo() {
-  const [err, res] = await catchError<WeatherApiResponse>(
-    retry(
-      () =>
-        fetch(`${origin}/api/cosmetic_data?intent=weather`, {
-          headers: { "Host-Id": hostId },
-          next: { revalidate: 60 * 10 },
-        }).then((res) => res.json()),
-      { helperText: `headline`, retriesCount: 3 },
+// ── Preserved Original Actions ──
+
+export async function getAllCategories(): Promise<Category[]> {
+  const fetchOpts = await getFetchOptions({
+    next: { revalidate: 60 * 10 },
+  });
+  const [errCats, categoriesEnvelope] = await catchError<
+    ApiEnvelope<ArticleCategoryBrief[]>
+  >(
+    retry(() =>
+      fetch(`${origin}/admin/articleCategory`, fetchOpts).then((res) =>
+        res.json(),
+      ),
+    ),
+  );
+  if (errCats || !categoriesEnvelope || !categoriesEnvelope.data) {
+    return [] as Category[];
+  }
+  return categoriesEnvelope.data.map((cat) => ({
+    id: cat.id,
+    name: cat.name,
+    parent: cat.parent,
+    sequence: cat.sequence,
+    sub_category: cat.sub_category || [],
+  }));
+}
+
+export async function getWeatherInfo(): Promise<WeatherApiResponse | null> {
+  const [err, res] = await catchError<any>(
+    retry(() =>
+      fetch(
+        `https://api.open-meteo.com/v1/forecast?latitude=23.8315&longitude=91.2868&current_weather=true`,
+        { next: { revalidate: 60 * 10 } },
+      ).then((res) => res.json()),
     ),
   );
 
-  if (err) return null;
-  return res;
+  if (err || !res || !res.current_weather) {
+    return {
+      status: true,
+      data: {
+        main: { temp: 28 },
+      } as any,
+    };
+  }
+
+  return {
+    status: true,
+    data: {
+      main: {
+        temp: res.current_weather.temperature,
+      },
+    } as any,
+  };
 }
 
-export async function getImageGallery() {
-  // pulling from lambda instead of origin because it is faster and more reliable as it is hosted on AWS.
-  const [err, res] = await catchError<ImageItem[]>(
-    getFullInfo(INTENT.IMAGE_GALLERY.locator),
+export async function getImageGallery(): Promise<ImageItem[]> {
+  const fetchOpts = await getFetchOptions({
+    next: { revalidate: 60 * 10 },
+  });
+  const [err, res] = await catchError<ApiEnvelope<ImageItem[]>>(
+    retry(() =>
+      fetch(`${origin}/admin/imageLibrary?page=1&limit=10`, fetchOpts).then(
+        (res) => res.json(),
+      ),
+    ),
   );
-  // console.log("Image Gallery Response:", { err, res });
-  if (!res) return [] as ImageItem[];
-  return res;
-  // const [err, res] = await catchError<ApiResponseImageGallery>(
-  //   retry(() =>
-  //     fetch(`${origin}/api/index_delivery?intent=image_gallary`, {
-  //       headers: { "Host-Id": hostId },
-  //       next: { revalidate: 60 * 10 },
-  //     }).then((res) => res.json()),
-  //   ),
-  // );
-  // if (err) return createEmptyDataInstance<ImageItem[]>([]);
-  // return res;
+  if (err || !res || !res.data) return [] as ImageItem[];
+  return res.data;
 }
 
-export async function getHeadline() {
-  // const [err, res] = await catchError<ApiResponseHeadlinesWithPagination>(
-  //   retry(() =>
-  //     fetch(`${origin}/api/index_delivery?intent=headlines`, {
-  //       headers: { "Host-Id": hostId },
-  //       next: { revalidate: 60 },
-  //     }).then((res) => res.json()),
-  //   ),
-  // );
-
-  // console.log(res?.data);
-  const [err, res] = await catchError<Headline[]>(
-    getFullInfo(INTENT.HEADLINES.locator),
+export async function getHeadline(): Promise<Headline[]> {
+  const fetchOpts = await getFetchOptions({
+    next: { revalidate: 60 * 5 }, // 5 minutes
+  });
+  const [err, res] = await catchError<ApiEnvelope<Headline[]>>(
+    retry(() =>
+      fetch(`${origin}/admin/headlines`, fetchOpts).then((res) => res.json()),
+    ),
   );
 
-  // console.log("Headlines Response:", { err, res });
+  if (err || !res || !res.data) return [] as Headline[];
 
-  if (err) return [] as Headline[];
+  const getISTDateString = (date: Date) => {
+    return date.toLocaleDateString("en-US", { timeZone: "Asia/Kolkata" });
+  };
 
-  const data = res?.filter(
-    (h) => format(h.created_on, "PP") === format(new Date(), "PP"),
-  );
+  const todayStr = getISTDateString(new Date());
 
-  // console.log(data);
+  const todayHeadlines = res.data.filter((hl) => {
+    if (!hl.created_on) return false;
+    const hlDate = new Date(hl.created_on);
+    if (isNaN(hlDate.getTime())) return false;
+    return getISTDateString(hlDate) === todayStr;
+  });
 
-  return data;
+  const result: Headline[] = [];
+  todayHeadlines.forEach((hl) => {
+    if (hl.content.includes("*")) {
+      const parts = hl.content
+        .split("*")
+        .map((p) => p.trim())
+        .filter(Boolean);
+      parts.forEach((part, index) => {
+        result.push({
+          id: Number(`${hl.id}00${index}`),
+          content: part,
+          created_on: hl.created_on,
+        });
+      });
+    } else {
+      result.push(hl);
+    }
+  });
+
+  return result;
 }
 
 export async function getSlok() {
