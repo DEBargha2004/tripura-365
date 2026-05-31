@@ -8,7 +8,7 @@ export default function Logo({ className, ...props }: Partial<ImageProps>) {
       <img
         {...props}
         src={logo.src}
-        alt="tripura-news-time-logo"
+        alt="tripura-law-times-logo"
         height={50}
         width={100}
         className={cn(

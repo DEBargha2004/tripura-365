@@ -66,8 +66,8 @@ export default async function Footer() {
           </span>
           <h1 className="text-3xl md:text-4xl font-serif font-black tracking-tight text-white leading-none">
             <span>Tripura</span>
-            <span className="text-white/80 font-serif italic font-medium mx-1.5">News</span>
-            <span className="text-accent font-serif font-black drop-shadow">Time</span>
+            <span className="text-white/80 font-serif italic font-medium mx-1.5">Law</span>
+            <span className="text-accent font-serif font-black drop-shadow">Times</span>
           </h1>
         </div>
 
@@ -140,7 +140,7 @@ export default async function Footer() {
 
           <div className="flex flex-wrap items-center justify-center gap-6 text-white/70">
             <span>
-              Copyright © {new Date().getFullYear()} Tripura News Time. All Rights
+              Copyright © {new Date().getFullYear()} Tripura Law Times. All Rights
               Reserved
             </span>
             <span>Powered by Patrakar</span>

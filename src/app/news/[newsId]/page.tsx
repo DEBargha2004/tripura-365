@@ -136,7 +136,7 @@ export default async function Page({
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 relative">
         <div className="flex gap-12">
           {/* Left Sticky Social Bar (Desktop) */}
-          <aside className="hidden lg:flex flex-col gap-2 sticky top-32 h-fit shrink-0">
+          {/* <aside className="hidden lg:flex flex-col gap-2 sticky top-32 h-fit shrink-0">
             <WaShare url={`${basePath}/news/${newsId}`} title={article.title}>
               <button className="w-10 h-10 flex items-center justify-center bg-[#25D366] text-white rounded-sm hover:opacity-90 transition-opacity">
                 <FaWhatsapp className="w-5 h-5" />
@@ -159,7 +159,7 @@ export default async function Page({
             <button className="w-10 h-10 flex items-center justify-center bg-gray-600 text-white rounded-sm hover:opacity-90 transition-opacity">
               <Link2 className="w-5 h-5" />
             </button>
-          </aside>
+          </aside> */}
 
           {/* Main Content Area */}
           <div className="flex-1 grid grid-cols-1 lg:grid-cols-12 gap-12">
@@ -199,7 +199,7 @@ export default async function Page({
                 <div className="flex flex-wrap items-center gap-2 text-gray-900 font-serif font-bold text-sm uppercase tracking-tight">
                   <span className="text-gray-500">By</span>
                   <span className="hover:text-accent transition-colors cursor-pointer border-b-2 border-accent/20">
-                    {"Tripura News Time Desk"}
+                    {"Tripura Law Times Desk"}
                   </span>
                 </div>
 
@@ -274,7 +274,7 @@ export default async function Page({
                     #{article.category?.name || "News"}
                   </span>
                   <span className="px-4 py-1.5 bg-gray-50 text-gray-600 font-serif text-sm rounded hover:bg-gray-100 transition-colors cursor-pointer">
-                    #TripuraNewsTime
+                    #TripuraLawTimes
                   </span>
                   <span className="px-4 py-1.5 bg-gray-50 text-gray-600 font-serif text-sm rounded hover:bg-gray-100 transition-colors cursor-pointer">
                     #LatestUpdates

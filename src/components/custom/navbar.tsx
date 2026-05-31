@@ -42,8 +42,8 @@ export default async function Navbar() {
               </span>
               <h1 className="text-4xl md:text-5xl font-serif font-black tracking-tight text-gray-900 leading-none flex items-center gap-2">
                 <span className="text-gray-900 group-hover:text-primary transition-colors duration-300">Tripura</span>
-                <span className="text-primary font-serif italic font-medium group-hover:text-accent transition-colors duration-300">News</span>
-                <span className="text-accent font-serif font-black drop-shadow-sm">Time</span>
+                <span className="text-primary font-serif italic font-medium group-hover:text-accent transition-colors duration-300">Law</span>
+                <span className="text-accent font-serif font-black drop-shadow-sm">Times</span>
               </h1>
             </Link>
           </div>

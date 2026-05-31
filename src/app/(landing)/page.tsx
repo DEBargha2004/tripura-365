@@ -23,13 +23,13 @@ export async function generateMetadata(): Promise<Metadata> {
   const topStories = res?.data ?? [];
 
   return {
-    title: "Tripura News Time",
-    description: `Tripura News Time is a dynamic and trusted news website that brings you 
+    title: "Tripura Law Times",
+    description: `Tripura Law Times is a dynamic and trusted website that brings you 
     the latest and most relevant regional, national, and global news and updates.`,
     metadataBase: new URL(`${protocol}://${origin}`),
     openGraph: {
-      title: "Tripura News Time",
-      description: `Tripura News Time is a dynamic and trusted news website that brings you 
+      title: "Tripura Law Times",
+      description: `Tripura Law Times is a dynamic and trusted website that brings you 
     the latest and most relevant regional, national, and global news and updates.`,
       url: `${protocol}://${origin}`,
       images: [
@@ -42,14 +42,14 @@ export async function generateMetadata(): Promise<Metadata> {
               : siteLogo.src),
           width: 210,
           height: 70,
-          alt: "Tripura News Time",
+          alt: "Tripura Law Times",
         },
       ],
     },
     twitter: {
       card: "summary_large_image",
-      title: "Tripura News Time",
-      description: `Tripura News Time is a dynamic and trusted news website that brings you 
+      title: "Tripura Law Times",
+      description: `Tripura Law Times is a dynamic and trusted website that brings you 
     the latest and most relevant regional, national, and global news and updates.`,
       images: [
         topStories[0]?.images?.[0] ||
