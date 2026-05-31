@@ -6,15 +6,11 @@ import {
   getVideoNews,
 } from "@/actions/news";
 import { Data } from "@/types/response";
-import { headers } from "next/headers";
 import RSS from "rss";
 import { stripHtml } from "@/lib/utils";
 
 export async function GET() {
-  const headerList = await headers();
-  const origin = headerList.get("host");
-  const protocol = headerList.get("x-forwarded-proto") || "http";
-  const site_url = `${protocol}://${origin}`;
+  const site_url = process.env.NEXT_PUBLIC_SITE_URL!;
   const feed_url = `${site_url}/rss`;
 
   const feed = new RSS({

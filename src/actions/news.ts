@@ -18,8 +18,6 @@ import {
   ApiEnvelopeWithPagination,
 } from "@/types/response";
 
-import { headers as nextHeaders } from "next/headers";
-
 // New Swagger API configurations
 const origin = process.env.API_BASE_URL || "https://api.patrakar.app";
 const hostId = process.env.HOST_ID;

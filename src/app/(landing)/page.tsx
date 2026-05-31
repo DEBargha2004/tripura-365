@@ -11,14 +11,11 @@ import HeroCarousel from "@/components/custom/hero-carousel";
 import TopNewsSidebar from "@/components/custom/top-news-sidebar";
 import { Metadata } from "next";
 import Link from "next/link";
-import { headers } from "next/headers";
 import { getYtThumbnail } from "@/lib/utils";
 import siteLogo from "@/../public/logo.png";
 
 export async function generateMetadata(): Promise<Metadata> {
-  const headerList = await headers();
-  const origin = headerList.get("host");
-  const protocol = headerList.get("x-forwarded-proto") ?? "http";
+  const baseUrl = process.env.NEXT_PUBLIC_SITE_URL!;
   const res = await getTopNews();
   const topStories = res?.data ?? [];
 
@@ -26,12 +23,12 @@ export async function generateMetadata(): Promise<Metadata> {
     title: "Tripura Law Times",
     description: `Tripura Law Times is a dynamic and trusted website that brings you 
     the latest and most relevant regional, national, and global news and updates.`,
-    metadataBase: new URL(`${protocol}://${origin}`),
+    metadataBase: new URL(baseUrl),
     openGraph: {
       title: "Tripura Law Times",
       description: `Tripura Law Times is a dynamic and trusted website that brings you 
     the latest and most relevant regional, national, and global news and updates.`,
-      url: `${protocol}://${origin}`,
+      url: baseUrl,
       images: [
         {
           url:

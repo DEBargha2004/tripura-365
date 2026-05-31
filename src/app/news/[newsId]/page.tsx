@@ -18,7 +18,6 @@ import {
   Volume2,
 } from "lucide-react";
 import { Metadata } from "next";
-import { headers } from "next/headers";
 import FbShare from "./_components/fb-share";
 import WaShare from "./_components/wa-share";
 import { getViews, getYtThumbnail, stripHtml } from "@/lib/utils";
@@ -32,9 +31,7 @@ export async function generateMetadata({
 }): Promise<Metadata> {
   const { newsId } = await params;
   const article = await getNewsInfo(newsId);
-  const headerInfo = await headers();
-  const protocol = headerInfo.get("x-forwarded-proto") ?? "http";
-  const host = headerInfo.get("host");
+  const baseUrl = process.env.NEXT_PUBLIC_SITE_URL!;
 
   if (!article || (article as any).error) return {};
 
@@ -44,7 +41,7 @@ export async function generateMetadata({
     openGraph: {
       title: article?.title,
       description: article?.body.slice(0, 200),
-      url: `${protocol}://${host}/news/${newsId}`,
+      url: `${baseUrl}/news/${newsId}`,
       images: [
         {
           url:
@@ -87,11 +84,7 @@ export default async function Page({
   params: Promise<{ newsId: string }>;
 }) {
   const { newsId } = await params;
-  const headerList = await headers();
-
-  const protocol = headerList.get("x-forwarded-proto");
-  const origin = headerList.get("host");
-  const basePath = `${protocol}://${origin}`;
+  const basePath = process.env.NEXT_PUBLIC_SITE_URL!;
 
   const article = await getNewsInfo(newsId);
 
