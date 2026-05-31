@@ -25,9 +25,7 @@ export async function generateMetadata({
   const { cId } = await params;
   const res = await getCategoryWiseNews();
 
-  const category = res?.data?.find(
-    (cat) => cat?.id === Number(cId),
-  );
+  const category = res?.data?.find((cat) => cat?.id === Number(cId));
 
   return {
     title: category?.name,
@@ -70,19 +68,21 @@ export default async function Page({
 
   if (!res.data || res.data?.length === 0) {
     return (
-      <div className="min-h-[60vh] flex flex-col items-center justify-center bg-white">
-        <div className="text-center space-y-4">
-          <h2 className="text-3xl font-bold text-gray-900">
+      <div className="min-h-[60vh] flex items-center justify-center bg-gray-50">
+        <div className="text-center flex flex-col items-center space-y-4">
+          <h2 className="text-3xl font-serif font-bold text-gray-900">
             No Articles Found
           </h2>
-          <p className="text-gray-500">
+          <p className="text-gray-500 font-serif">
             We couldn't find any articles in this category.
           </p>
-          <GotoPrev>
-            <button className="px-6 py-2 bg-primary text-white rounded-full hover:opacity-90 transition-colors">
-              Go Back Home
-            </button>
-          </GotoPrev>
+          <div className="flex justify-center">
+            <GotoPrev>
+              <button className="px-8 py-2.5 bg-primary text-white font-serif rounded-sm hover:opacity-90 transition-all">
+                Go Back Home
+              </button>
+            </GotoPrev>
+          </div>
         </div>
       </div>
     );

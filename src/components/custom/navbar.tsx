@@ -26,14 +26,23 @@ export default async function Navbar() {
 
           {/* Center: Logo */}
           <div className="absolute left-1/2 -translate-x-1/2 flex flex-col items-center top-1/2 -translate-y-1/2">
-            <Link href="/" className="flex flex-col items-center select-none group">
+            <Link
+              href="/"
+              className="flex flex-col items-center select-none group"
+            >
               <span className="text-[10px] font-sans font-black tracking-[0.4em] text-primary/95 uppercase mb-1 drop-shadow-sm">
                 Tripura's Leading Voice
               </span>
               <h1 className="text-4xl md:text-5xl font-serif font-black tracking-tight text-gray-900 leading-none flex items-center gap-2">
-                <span className="text-gray-900 group-hover:text-primary transition-colors duration-300">Tripura</span>
-                <span className="text-primary font-serif italic font-medium group-hover:text-accent transition-colors duration-300">Law</span>
-                <span className="text-accent font-serif font-black drop-shadow-sm">Times</span>
+                <span className="text-gray-900 group-hover:text-primary transition-colors duration-300">
+                  Tripura
+                </span>
+                <span className="text-primary font-serif italic font-medium group-hover:text-accent transition-colors duration-300">
+                  Law
+                </span>
+                <span className="text-accent font-serif font-black drop-shadow-sm">
+                  Times
+                </span>
               </h1>
             </Link>
           </div>
@@ -57,12 +66,24 @@ export default async function Navbar() {
             <div className="flex items-center gap-2.5 text-gray-500 [&>svg]:size-5">
               {socialLinks
                 .filter((link) =>
-                  ["twitter", "youtube", "facebook", "linkedin", "instagram", "print", "whatsapp"].includes(link.id)
+                  [
+                    "twitter",
+                    "youtube",
+                    "facebook",
+                    "linkedin",
+                    "instagram",
+                    "print",
+                    "whatsapp",
+                  ].includes(link.id),
                 )
                 .map((link) => {
                   const Icon = link.icon;
                   return (
-                    <Link key={link.id} href={link.href} className="cursor-pointer hover:text-primary transition-colors">
+                    <Link
+                      key={link.id}
+                      href={link.href}
+                      className="cursor-pointer hover:text-primary transition-colors"
+                    >
                       <Icon />
                     </Link>
                   );
@@ -71,7 +92,7 @@ export default async function Navbar() {
           </div>
 
           {/* Mobile Menu Toggle (Simplified for now) */}
-          <div className="lg:hidden flex items-center gap-4 ml-auto">
+          <div className=" hidden items-center gap-4 ml-auto">
             <Search className="w-5 h-5 text-gray-600" />
             <button className="p-2 text-gray-600">
               <div className="w-6 h-0.5 bg-current mb-1.5" />
@@ -105,7 +126,7 @@ export default async function Navbar() {
             </div>
 
             {/* Right side Search icon in Maroon bar */}
-            <div className="shrink-0 pl-6 ml-auto flex items-center">
+            <div className="shrink-0 pl-6 ml-auto hidden items-center">
               <Search className="w-4 h-4 cursor-pointer hover:opacity-75 transition-opacity" />
             </div>
           </div>
