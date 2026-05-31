@@ -4,18 +4,8 @@ import Timer from "./timer";
 import Weather from "./weather";
 import { cn } from "@/lib/utils";
 import { getAllCategories } from "@/actions/news";
-import {
-  FaApple,
-  FaPlay,
-  FaXTwitter,
-  FaYoutube,
-  FaFacebookF,
-  FaLinkedinIn,
-  FaInstagram,
-  FaPrint,
-  FaWhatsapp,
-} from "react-icons/fa6";
 import { Search } from "lucide-react";
+import { socialLinks } from "@/constants/socials";
 
 export default async function Navbar() {
   const categories = await getAllCategories();
@@ -65,13 +55,18 @@ export default async function Navbar() {
               </Link>
             </div>
             <div className="flex items-center gap-2.5 text-gray-500 [&>svg]:size-5">
-              <FaXTwitter className="cursor-pointer hover:text-primary transition-colors" />
-              <FaYoutube className="cursor-pointer hover:text-primary transition-colors" />
-              <FaFacebookF className="cursor-pointer hover:text-primary transition-colors" />
-              <FaLinkedinIn className="cursor-pointer hover:text-primary transition-colors" />
-              <FaInstagram className="cursor-pointer hover:text-primary transition-colors" />
-              <FaPrint className="cursor-pointer hover:text-primary transition-colors" />
-              <FaWhatsapp className="cursor-pointer hover:text-primary transition-colors" />
+              {socialLinks
+                .filter((link) =>
+                  ["twitter", "youtube", "facebook", "linkedin", "instagram", "print", "whatsapp"].includes(link.id)
+                )
+                .map((link) => {
+                  const Icon = link.icon;
+                  return (
+                    <Link key={link.id} href={link.href} className="cursor-pointer hover:text-primary transition-colors">
+                      <Icon />
+                    </Link>
+                  );
+                })}
             </div>
           </div>
 

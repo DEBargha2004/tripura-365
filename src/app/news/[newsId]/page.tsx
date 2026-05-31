@@ -15,8 +15,6 @@ import {
   Facebook,
   Share2,
   Tag,
-  Mail,
-  Link2,
   Volume2,
 } from "lucide-react";
 import { Metadata } from "next";
@@ -24,13 +22,8 @@ import { headers } from "next/headers";
 import FbShare from "./_components/fb-share";
 import WaShare from "./_components/wa-share";
 import { getViews, getYtThumbnail, stripHtml } from "@/lib/utils";
-import {
-  FaWhatsapp,
-  FaXTwitter,
-  FaFacebookF,
-  FaLinkedinIn,
-} from "react-icons/fa6";
 import Link from "next/link";
+import { socialLinks } from "@/constants/socials";
 
 export async function generateMetadata({
   params,
@@ -136,30 +129,47 @@ export default async function Page({
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 relative">
         <div className="flex gap-12">
           {/* Left Sticky Social Bar (Desktop) */}
-          {/* <aside className="hidden lg:flex flex-col gap-2 sticky top-32 h-fit shrink-0">
-            <WaShare url={`${basePath}/news/${newsId}`} title={article.title}>
-              <button className="w-10 h-10 flex items-center justify-center bg-[#25D366] text-white rounded-sm hover:opacity-90 transition-opacity">
-                <FaWhatsapp className="w-5 h-5" />
-              </button>
-            </WaShare>
-            <button className="w-10 h-10 flex items-center justify-center bg-black text-white rounded-sm hover:opacity-90 transition-opacity">
-              <FaXTwitter className="w-4 h-4" />
-            </button>
-            <FbShare url={`${basePath}/news/${newsId}`}>
-              <button className="w-10 h-10 flex items-center justify-center bg-[#1877F2] text-white rounded-sm hover:opacity-90 transition-opacity">
-                <FaFacebookF className="w-5 h-5" />
-              </button>
-            </FbShare>
-            <button className="w-10 h-10 flex items-center justify-center bg-[#0077B5] text-white rounded-sm hover:opacity-90 transition-opacity">
-              <FaLinkedinIn className="w-5 h-5" />
-            </button>
-            <button className="w-10 h-10 flex items-center justify-center bg-[#EA4335] text-white rounded-sm hover:opacity-90 transition-opacity">
-              <Mail className="w-5 h-5" />
-            </button>
-            <button className="w-10 h-10 flex items-center justify-center bg-gray-600 text-white rounded-sm hover:opacity-90 transition-opacity">
-              <Link2 className="w-5 h-5" />
-            </button>
-          </aside> */}
+          <aside className="hidden lg:flex flex-col gap-2 sticky top-32 h-fit shrink-0">
+            {socialLinks
+              .filter((link) =>
+                ["whatsapp", "twitter", "facebook", "linkedin", "mail", "link"].includes(link.id)
+              )
+              .map((link) => {
+                const Icon = link.icon;
+                const buttonContent = (
+                  <button
+                    className="w-10 h-10 flex items-center justify-center text-white rounded-sm hover:opacity-90 transition-opacity"
+                    style={{ backgroundColor: link.brandColor }}
+                  >
+                    <Icon className={link.id === "twitter" ? "w-4 h-4" : "w-5 h-5"} />
+                  </button>
+                );
+
+                if (link.id === "whatsapp") {
+                  return (
+                    <WaShare key={link.id} url={`${basePath}/news/${newsId}`} title={article.title}>
+                      {buttonContent}
+                    </WaShare>
+                  );
+                }
+
+                if (link.id === "facebook") {
+                  return (
+                    <FbShare key={link.id} url={`${basePath}/news/${newsId}`}>
+                      {buttonContent}
+                    </FbShare>
+                  );
+                }
+
+                const href = link.id === "mail" ? link.href : (link.id === "link" ? "#" : link.href);
+
+                return (
+                  <Link key={link.id} href={href} className="block">
+                    {buttonContent}
+                  </Link>
+                );
+              })}
+          </aside>
 
           {/* Main Content Area */}
           <div className="flex-1 grid grid-cols-1 lg:grid-cols-12 gap-12">
