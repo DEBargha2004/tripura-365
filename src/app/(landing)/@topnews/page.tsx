@@ -1,7 +1,7 @@
 import { getTopNews } from "@/actions/news";
 import TopNews from "@/components/custom/top-news";
 
-export const revalidate = 60 * 10;
+export const revalidate = 600;
 
 export default async function Page() {
   const data = await getTopNews();

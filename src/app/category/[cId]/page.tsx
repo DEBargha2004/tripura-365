@@ -5,7 +5,7 @@ import { ArrowLeft, ArrowRight, Calendar } from "lucide-react";
 import { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
-import { cn, getYtThumbnail } from "@/lib/utils";
+import { cn, generateThumbnail } from "@/lib/utils";
 
 export async function generateStaticParams() {
   const res = await getCategoryWiseNews();
@@ -33,12 +33,13 @@ export async function generateMetadata({
       title: category?.name,
       images: [
         {
-          url:
-            category?.articles?.[0]?.images?.[0] ||
-            category?.articles?.[0]?.thumbnail ||
-            (category?.articles?.[0]?.videos?.[0]
-              ? getYtThumbnail(category.articles[0].videos[0])
-              : ""),
+          url: category?.articles?.[0]
+            ? generateThumbnail({
+                thumbnail: category.articles[0].thumbnail,
+                images: category.articles[0].images,
+                videos: category.articles[0].videos,
+              })
+            : "",
         },
       ],
     },
@@ -46,11 +47,13 @@ export async function generateMetadata({
       card: "summary_large_image",
       title: category?.name,
       images: [
-        category?.articles?.[0]?.images?.[0] ||
-          category?.articles?.[0]?.thumbnail ||
-          (category?.articles?.[0]?.videos?.[0]
-            ? getYtThumbnail(category.articles[0].videos[0])
-            : ""),
+        category?.articles?.[0]
+          ? generateThumbnail({
+              thumbnail: category.articles[0].thumbnail,
+              images: category.articles[0].images,
+              videos: category.articles[0].videos,
+            })
+          : "",
       ],
     },
   };
@@ -118,19 +121,20 @@ export default async function Page({
                   >
                     <div className="relative aspect-video overflow-hidden rounded-lg bg-gray-100 shadow-sm">
                       <img
-                        src={
-                          post.images?.length > 0
-                            ? post.images[0]
-                            : post.videos?.[0]
-                              ? getYtThumbnail(post.videos[0])
-                              : undefined
-                        }
+                        src={generateThumbnail({
+                          thumbnail: post.thumbnail,
+                          images: post.images,
+                          videos: post.videos,
+                        })}
                         alt={post.title}
                         className="object-cover size-full group-hover:scale-105 transition-transform duration-700"
                       />
                     </div>
                     <div className="space-y-2">
-                      <h3 className="text-xl h-12 font-serif font-bold text-gray-900 leading-tight group-hover:text-accent transition-colors line-clamp-2 px-1">
+                      <h3
+                        title={post.title}
+                        className="text-xl h-12 font-serif font-bold text-gray-900 leading-tight group-hover:text-accent transition-colors line-clamp-2 px-1"
+                      >
                         {post.title}
                       </h3>
                     </div>

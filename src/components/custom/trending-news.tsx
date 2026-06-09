@@ -1,4 +1,4 @@
-import { getViews, getYtThumbnail } from "@/lib/utils";
+import { getViews, generateThumbnail } from "@/lib/utils";
 import { Data } from "@/types/response";
 import { Eye, TrendingUp, ArrowRight } from "lucide-react";
 import Image from "next/image";
@@ -38,20 +38,16 @@ export default function TrendingNews({
             >
               <article className="relative h-96 w-full rounded-3xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-1">
                 {/* Full Background Image */}
-                {(post.images?.length > 0 || !!post.thumbnail || post.videos?.length > 0) && (
-                  <img
-                    src={
-                      post.images?.length > 0
-                        ? post.images[0]
-                        : post.thumbnail
-                          ? post.thumbnail
-                          : getYtThumbnail(post.videos[0])
-                    }
-                    alt={post.title}
-                    // fill
-                    className="object-cover transition-transform duration-700 group-hover:scale-110 size-full"
-                  />
-                )}
+                <img
+                  src={generateThumbnail({
+                    thumbnail: post.thumbnail,
+                    images: post.images,
+                    videos: post.videos,
+                  })}
+                  alt={post.title}
+                  // fill
+                  className="object-cover transition-transform duration-700 group-hover:scale-110 size-full"
+                />
 
                 {/* Strong Gradient Overlay */}
                 <div className="absolute inset-0 bg-linear-to-t from-black/90 via-black/50 to-transparent opacity-90 transition-opacity duration-300" />
@@ -90,7 +86,10 @@ export default function TrendingNews({
                   </div>
 
                   {/* Title */}
-                  <h3 className="text-xl md:text-2xl font-bold text-white leading-snug line-clamp-2 group-hover:text-accent transition-colors">
+                  <h3
+                    title={post.title}
+                    className="text-xl md:text-2xl font-bold text-white leading-snug line-clamp-2 group-hover:text-accent transition-colors"
+                  >
                     {post.title}
                   </h3>
 

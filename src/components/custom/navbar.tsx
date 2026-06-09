@@ -49,7 +49,7 @@ export default async function Navbar() {
 
           {/* Right: Social + Actions */}
           <div className="hidden lg:flex items-center gap-4">
-            <div className="flex items-center gap-4 border-r border-gray-200 pr-4 mr-2">
+            {/* <div className="flex items-center gap-4 border-r border-gray-200 pr-4 mr-2">
               <Link
                 href="#"
                 className="text-[11px] font-bold uppercase tracking-wider text-gray-700 hover:text-primary transition-colors"
@@ -62,7 +62,7 @@ export default async function Navbar() {
               >
                 Subscribe
               </Link>
-            </div>
+            </div> */}
             <div className="flex items-center gap-2.5 text-gray-500 [&>svg]:size-5">
               {socialLinks
                 .filter((link) =>

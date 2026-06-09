@@ -11,8 +11,10 @@ import HeroCarousel from "@/components/custom/hero-carousel";
 import TopNewsSidebar from "@/components/custom/top-news-sidebar";
 import { Metadata } from "next";
 import Link from "next/link";
-import { getYtThumbnail } from "@/lib/utils";
+import { generateThumbnail } from "@/lib/utils";
 import siteLogo from "@/../public/logo.png";
+
+export const dynamic = "force-dynamic";
 
 export async function generateMetadata(): Promise<Metadata> {
   const baseUrl = process.env.NEXT_PUBLIC_SITE_URL!;
@@ -31,12 +33,11 @@ export async function generateMetadata(): Promise<Metadata> {
       url: baseUrl,
       images: [
         {
-          url:
-            topStories[0]?.images?.[0] ||
-            topStories[0]?.thumbnail ||
-            (topStories[0]?.videos?.[0]
-              ? getYtThumbnail(topStories[0].videos[0])
-              : siteLogo.src),
+          url: generateThumbnail({
+            thumbnail: topStories[0]?.thumbnail,
+            images: topStories[0]?.images,
+            videos: topStories[0]?.videos,
+          }),
           width: 210,
           height: 70,
           alt: "Tripura Law Times",
@@ -49,11 +50,11 @@ export async function generateMetadata(): Promise<Metadata> {
       description: `Tripura Law Times is a dynamic and trusted website that brings you 
     the latest and most relevant regional, national, and global news and updates.`,
       images: [
-        topStories[0]?.images?.[0] ||
-          topStories[0]?.thumbnail ||
-          (topStories[0]?.videos?.[0]
-            ? getYtThumbnail(topStories[0].videos[0])
-            : siteLogo.src),
+        generateThumbnail({
+          thumbnail: topStories[0]?.thumbnail,
+          images: topStories[0]?.images,
+          videos: topStories[0]?.videos,
+        }),
       ],
     },
   };

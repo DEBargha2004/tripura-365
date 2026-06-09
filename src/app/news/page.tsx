@@ -1,5 +1,5 @@
 import { getCategoryWiseNews } from "@/actions/news";
-import { getYtThumbnail } from "@/lib/utils";
+import { generateThumbnail } from "@/lib/utils";
 import Link from "next/link";
 
 export const revalidate = 600;
@@ -41,17 +41,20 @@ export default async function NewsPage() {
                   >
                     <div className="relative aspect-video overflow-hidden rounded-lg bg-gray-100 shadow-sm">
                       <img
-                        src={
-                          post.images?.[0] ||
-                          post.thumbnail ||
-                          getYtThumbnail(post.videos?.[0])
-                        }
+                        src={generateThumbnail({
+                          thumbnail: post.thumbnail,
+                          images: post.images,
+                          videos: post.videos,
+                        })}
                         alt={post.title}
                         className="object-cover size-full group-hover:scale-105 transition-transform duration-700"
                       />
                     </div>
                     <div className="space-y-2">
-                      <h3 className="text-xl h-12 font-serif font-bold text-gray-900 leading-tight group-hover:text-accent transition-colors">
+                      <h3
+                        title={post.title}
+                        className="text-xl h-12 font-serif font-bold text-gray-900 leading-tight group-hover:text-accent transition-colors"
+                      >
                         {post.title}
                       </h3>
                     </div>

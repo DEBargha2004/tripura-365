@@ -20,7 +20,7 @@ import {
 import { Metadata } from "next";
 import FbShare from "./_components/fb-share";
 import WaShare from "./_components/wa-share";
-import { getViews, getYtThumbnail, stripHtml } from "@/lib/utils";
+import { generateThumbnail, getViews, stripHtml } from "@/lib/utils";
 import Link from "next/link";
 import { socialLinks } from "@/constants/socials";
 
@@ -44,9 +44,11 @@ export async function generateMetadata({
       url: `${baseUrl}/news/${newsId}`,
       images: [
         {
-          url:
-            article?.images?.[0] ||
-            (article?.videos?.[0] ? getYtThumbnail(article.videos[0]) : ""),
+          url: generateThumbnail({
+            thumbnail: article?.thumbnail,
+            images: article?.images,
+            videos: article?.videos,
+          }),
           width: 1200,
           height: 630,
           alt: article?.title,
@@ -58,8 +60,11 @@ export async function generateMetadata({
       title: article?.title,
       description: article?.body.slice(0, 200),
       images: [
-        article?.images?.[0] ||
-          (article?.videos?.[0] ? getYtThumbnail(article.videos[0]) : ""),
+        generateThumbnail({
+          thumbnail: article?.thumbnail,
+          images: article?.images,
+          videos: article?.videos,
+        }),
       ],
     },
   };
@@ -109,11 +114,11 @@ export default async function Page({
       </div>
     );
 
-  const image = article.images?.[0]
-    ? article.images[0]
-    : article.videos?.[0]
-      ? getYtThumbnail(article.videos[0])
-      : null;
+  const image = generateThumbnail({
+    thumbnail: article.thumbnail,
+    images: article.images,
+    videos: article.videos,
+  });
 
   const readingTime = Math.ceil(article.body.split(/\s+/).length / 200);
 
@@ -125,7 +130,14 @@ export default async function Page({
           <aside className="hidden lg:flex flex-col gap-2 sticky top-32 h-fit shrink-0">
             {socialLinks
               .filter((link) =>
-                ["whatsapp", "twitter", "facebook", "linkedin", "mail", "link"].includes(link.id)
+                [
+                  "whatsapp",
+                  "twitter",
+                  "facebook",
+                  "linkedin",
+                  "mail",
+                  "link",
+                ].includes(link.id),
               )
               .map((link) => {
                 const Icon = link.icon;
@@ -134,13 +146,19 @@ export default async function Page({
                     className="w-10 h-10 flex items-center justify-center text-white rounded-sm hover:opacity-90 transition-opacity"
                     style={{ backgroundColor: link.brandColor }}
                   >
-                    <Icon className={link.id === "twitter" ? "w-4 h-4" : "w-5 h-5"} />
+                    <Icon
+                      className={link.id === "twitter" ? "w-4 h-4" : "w-5 h-5"}
+                    />
                   </button>
                 );
 
                 if (link.id === "whatsapp") {
                   return (
-                    <WaShare key={link.id} url={`${basePath}/news/${newsId}`} title={article.title}>
+                    <WaShare
+                      key={link.id}
+                      url={`${basePath}/news/${newsId}`}
+                      title={article.title}
+                    >
                       {buttonContent}
                     </WaShare>
                   );
@@ -154,7 +172,12 @@ export default async function Page({
                   );
                 }
 
-                const href = link.id === "mail" ? link.href : (link.id === "link" ? "#" : link.href);
+                const href =
+                  link.id === "mail"
+                    ? link.href
+                    : link.id === "link"
+                      ? "#"
+                      : link.href;
 
                 return (
                   <Link key={link.id} href={href} className="block">
@@ -216,41 +239,12 @@ export default async function Page({
                   <span className="text-gray-900">{readingTime} min read</span>
                 </div>
 
-                <div className="flex items-center gap-6 pt-2">
-                  <div className="flex items-center gap-3 group cursor-pointer">
-                    <span className="text-[11px] font-black uppercase tracking-widest text-gray-400 group-hover:text-accent transition-colors">
-                      Follow Us
-                    </span>
-                    <div className="flex items-center gap-1 px-3 py-1 bg-white border border-gray-200 rounded shadow-sm hover:shadow-md transition-all">
-                      <span className="text-[14px] font-black tracking-tighter text-[#4285F4]">
-                        G
-                      </span>
-                      <span className="text-[14px] font-black tracking-tighter text-[#EA4335]">
-                        o
-                      </span>
-                      <span className="text-[14px] font-black tracking-tighter text-[#FBBC05]">
-                        o
-                      </span>
-                      <span className="text-[14px] font-black tracking-tighter text-[#4285F4]">
-                        g
-                      </span>
-                      <span className="text-[14px] font-black tracking-tighter text-[#34A853]">
-                        l
-                      </span>
-                      <span className="text-[14px] font-black tracking-tighter text-[#EA4335]">
-                        e
-                      </span>
-                      <span className="text-[8px] font-black tracking-widest text-gray-400 ml-1">
-                        NEWS
-                      </span>
-                    </div>
-                  </div>
-
+                {/* <div className="flex items-center gap-6 pt-2">
                   <button className="flex items-center gap-2 px-4 py-2 bg-gray-50 border border-gray-100 rounded-full hover:bg-gray-100 transition-all text-xs font-serif font-bold text-gray-700">
                     <Volume2 className="w-4 h-4 text-accent" />
                     Listen to this article
                   </button>
-                </div>
+                </div> */}
               </div>
 
               {/* Video Section (if any) */}

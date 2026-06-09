@@ -4,7 +4,7 @@ import { Data, ImageItem } from "@/types/response";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import Link from "next/link";
 import { useEffect, useState } from "react";
-import { getYtThumbnail, stripHtml } from "@/lib/utils";
+import { generateThumbnail, stripHtml } from "@/lib/utils";
 
 type SlideItem = ImageItem | Data;
 
@@ -42,7 +42,11 @@ export default function HeroCarousel({ data: slides }: { data: SlideItem[] }) {
     } else {
       return {
         id: slide.id,
-        imageUrl: slide.images?.[0] || slide.thumbnail || (slide.videos?.[0] ? getYtThumbnail(slide.videos[0]) : ""),
+        imageUrl: generateThumbnail({
+          thumbnail: slide.thumbnail,
+          images: slide.images,
+          videos: slide.videos,
+        }),
         title: slide.title,
         body: slide.body,
         linkUrl: `/news/${slide.id}`,
@@ -67,11 +71,17 @@ export default function HeroCarousel({ data: slides }: { data: SlideItem[] }) {
             />
             <div className="absolute inset-0 bg-linear-to-t from-black/85 via-black/30 to-transparent" />
             <div className="absolute bottom-0 left-0 right-0 p-6 md:p-8">
-              <h2 className="text-base md:text-3xl font-bold text-white mb-2 leading-tight font-serif hover:text-accent transition-colors">
+              <h2
+                title={title}
+                className="text-base md:text-3xl font-bold text-white mb-2 leading-tight font-serif hover:text-accent transition-colors"
+              >
                 {title}
               </h2>
               {body && (
-                <p className="text-gray-200 text-sm md:text-base font-serif max-w-3xl line-clamp-2 md:line-clamp-3 leading-relaxed opacity-90 mt-2">
+                <p
+                  title={stripHtml(body)}
+                  className="text-gray-200 text-sm md:text-base font-serif max-w-3xl line-clamp-2 md:line-clamp-3 leading-relaxed opacity-90 mt-2"
+                >
                   {stripHtml(body)}
                 </p>
               )}

@@ -1,5 +1,6 @@
 import { clsx, type ClassValue } from "clsx";
 import { twMerge } from "tailwind-merge";
+import ImageNotFound from "@/../public/Image-not-found.png";
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
@@ -80,4 +81,21 @@ export function getValue(obj: any, path: string) {
 export function stripHtml(html: string): string {
   if (!html) return "";
   return html.replace(/<[^>]*>/g, "").replace(/&nbsp;/g, " ");
+}
+
+export function generateThumbnail({
+  thumbnail,
+  images,
+  videos,
+  fallback,
+}: {
+  thumbnail?: string | null;
+  images?: string[] | null;
+  videos?: string[] | null;
+  fallback?: string;
+}) {
+  if (thumbnail) return thumbnail;
+  if (images && images.length > 0) return images[0];
+  if (videos && videos.length > 0) return getYtThumbnail(videos[0]);
+  return fallback !== undefined ? fallback : ImageNotFound.src;
 }

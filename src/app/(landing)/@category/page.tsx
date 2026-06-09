@@ -7,7 +7,7 @@ import {
 import HeroCarousel from "@/components/custom/hero-carousel";
 import { format } from "date-fns";
 import Link from "next/link";
-import { getYtThumbnail, stripHtml } from "@/lib/utils";
+import { generateThumbnail, stripHtml } from "@/lib/utils";
 import { categoriesOrder } from "@/constants/categories-order";
 import { Data } from "@/types/response";
 
@@ -88,20 +88,26 @@ function CategoryPattern({ category }: { category: CategoryWiseNews }) {
             >
               <div className="relative aspect-[16/10] overflow-hidden rounded-sm bg-gray-100">
                 <img
-                  src={
-                    post.images?.[0] ||
-                    post.thumbnail ||
-                    getYtThumbnail(post.videos?.[0])
-                  }
+                  src={generateThumbnail({
+                    thumbnail: post.thumbnail,
+                    images: post.images,
+                    videos: post.videos,
+                  })}
                   alt={post.title}
                   className="object-cover size-full group-hover:scale-105 transition-transform duration-700"
                 />
               </div>
               <div className="space-y-2">
-                <h3 className="text-xl font-serif font-black text-gray-900 leading-[1.1] group-hover:text-accent transition-colors">
+                <h3
+                  title={post.title}
+                  className="text-xl font-serif font-black text-gray-900 leading-[1.1] group-hover:text-accent transition-colors"
+                >
                   {post.title}
                 </h3>
-                <p className="text-gray-600 text-base font-serif line-clamp-3 leading-relaxed italic">
+                <p
+                  title={stripHtml(post.body)}
+                  className="text-gray-600 text-base font-serif line-clamp-3 leading-relaxed italic"
+                >
                   {stripHtml(post.body)}
                 </p>
               </div>
@@ -119,17 +125,20 @@ function CategoryPattern({ category }: { category: CategoryWiseNews }) {
             >
               <div className="relative w-36 aspect-[16/10] shrink-0 overflow-hidden rounded-sm bg-gray-100 shadow-sm">
                 <img
-                  src={
-                    post.images?.[0] ||
-                    post.thumbnail ||
-                    getYtThumbnail(post.videos?.[0])
-                  }
+                  src={generateThumbnail({
+                    thumbnail: post.thumbnail,
+                    images: post.images,
+                    videos: post.videos,
+                  })}
                   alt={post.title}
                   className="object-cover size-full group-hover:scale-110 transition-transform duration-500"
                 />
               </div>
 
-              <h3 className="text-lg font-serif font-bold text-gray-900 leading-tight group-hover:text-accent transition-colors line-clamp-3">
+              <h3
+                title={post.title}
+                className="text-lg font-serif font-bold text-gray-900 leading-tight group-hover:text-accent transition-colors line-clamp-3"
+              >
                 {post.title}
               </h3>
             </Link>
@@ -146,17 +155,20 @@ function CategoryPattern({ category }: { category: CategoryWiseNews }) {
             >
               <div className="relative w-36 aspect-[16/10] shrink-0 overflow-hidden rounded-sm bg-gray-100 shadow-sm">
                 <img
-                  src={
-                    post.images?.[0] ||
-                    post.thumbnail ||
-                    getYtThumbnail(post.videos?.[0])
-                  }
+                  src={generateThumbnail({
+                    thumbnail: post.thumbnail,
+                    images: post.images,
+                    videos: post.videos,
+                  })}
                   alt={post.title}
                   className="object-cover size-full group-hover:scale-110 transition-transform duration-500"
                 />
               </div>
 
-              <h3 className="text-lg font-serif font-bold text-gray-900 leading-tight group-hover:text-accent transition-colors line-clamp-3">
+              <h3
+                title={post.title}
+                className="text-lg font-serif font-bold text-gray-900 leading-tight group-hover:text-accent transition-colors line-clamp-3"
+              >
                 {post.title}
               </h3>
             </Link>

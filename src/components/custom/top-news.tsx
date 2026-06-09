@@ -3,7 +3,7 @@ import { format } from "date-fns";
 import { ArrowRight, Calendar } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
-import { getYtThumbnail, stripHtml } from "@/lib/utils";
+import { generateThumbnail, stripHtml } from "@/lib/utils";
 
 export default function TopNews({
   data,
@@ -34,20 +34,26 @@ export default function TopNews({
             >
               <div className="relative aspect-[16/10] overflow-hidden rounded-sm bg-gray-100">
                 <img
-                  src={
-                    featured.images?.[0] ||
-                    featured.thumbnail ||
-                    getYtThumbnail(featured.videos?.[0])
-                  }
+                  src={generateThumbnail({
+                    thumbnail: featured.thumbnail,
+                    images: featured.images,
+                    videos: featured.videos,
+                  })}
                   alt={featured.title}
                   className="object-cover size-full group-hover:scale-105 transition-transform duration-700"
                 />
               </div>
               <div className="space-y-4">
-                <h3 className="text-4xl md:text-5xl font-serif font-black text-gray-900 leading-[1.1] group-hover:text-accent transition-colors">
+                <h3
+                  title={featured.title}
+                  className="text-4xl line-clamp-3 md:text-5xl font-serif font-black text-gray-900 leading-[1.1] group-hover:text-accent transition-colors"
+                >
                   {featured.title}
                 </h3>
-                <p className="text-gray-600 text-lg leading-relaxed font-serif line-clamp-4">
+                <p
+                  title={stripHtml(featured.body)}
+                  className="text-gray-600 text-lg leading-relaxed font-serif line-clamp-4"
+                >
                   {stripHtml(featured.body)}
                 </p>
               </div>
@@ -92,17 +98,20 @@ function SmallNewsItem({ post }: { post: Data }) {
     <Link href={`/news/${post.id}`} className="group flex gap-4 items-start">
       <div className="relative w-40 aspect-[16/10] shrink-0 overflow-hidden rounded-md shadow-sm bg-gray-100">
         <img
-          src={
-            post.images?.[0] ||
-            post.thumbnail ||
-            getYtThumbnail(post.videos?.[0])
-          }
+          src={generateThumbnail({
+            thumbnail: post.thumbnail,
+            images: post.images,
+            videos: post.videos,
+          })}
           alt={post.title}
           className="object-cover size-full group-hover:scale-110 transition-transform duration-500"
         />
       </div>
       <div className="flex-1">
-        <h4 className="text-lg font-serif font-bold text-gray-900 leading-snug group-hover:text-accent transition-colors line-clamp-3">
+        <h4
+          title={post.title}
+          className="text-lg font-serif font-bold text-gray-900 leading-snug group-hover:text-accent transition-colors line-clamp-3"
+        >
           {post.title}
         </h4>
       </div>

@@ -1,5 +1,5 @@
 import { getLatestNews } from "@/actions/news";
-import { getYtThumbnail, stripHtml } from "@/lib/utils";
+import { generateThumbnail, stripHtml } from "@/lib/utils";
 import { format } from "date-fns";
 import Link from "next/link";
 
@@ -26,11 +26,11 @@ export default async function Page() {
             <Link href={`/news/${featured.id}`} className="group block">
               <div className="relative aspect-video rounded-xl overflow-hidden shadow-lg">
                 <img
-                  src={
-                    featured.images?.[0] ||
-                    featured.thumbnail ||
-                    getYtThumbnail(featured.videos[0])
-                  }
+                  src={generateThumbnail({
+                    thumbnail: featured.thumbnail,
+                    images: featured.images,
+                    videos: featured.videos,
+                  })}
                   alt={featured.title}
                   className="object-cover size-full group-hover:scale-105 transition-transform duration-500"
                 />
@@ -39,11 +39,17 @@ export default async function Page() {
           </div>
           <div className="lg:col-span-5 space-y-4">
             <Link href={`/news/${featured.id}`} className="group block">
-              <h1 className="text-4xl md:text-6xl font-serif font-black text-gray-900 leading-[1.05] group-hover:text-primary transition-colors">
+              <h1
+                title={featured.title}
+                className="text-4xl md:text-6xl font-serif font-black text-gray-900 leading-[1.05] group-hover:text-primary transition-colors"
+              >
                 {featured.title}
               </h1>
             </Link>
-            <p className="text-gray-600 text-xl font-serif line-clamp-4 leading-relaxed italic border-l-4 border-primary/10 pl-6 py-2">
+            <p
+              title={stripHtml(featured.body)}
+              className="text-gray-600 text-xl font-serif line-clamp-4 leading-relaxed italic border-l-4 border-primary/10 pl-6 py-2"
+            >
               {stripHtml(featured.body)}
             </p>
             <div className="flex items-center gap-2 text-xs font-black uppercase tracking-widest text-primary/60">
@@ -67,17 +73,20 @@ export default async function Page() {
             >
               <div className="relative aspect-video rounded-lg overflow-hidden shadow-sm">
                 <img
-                  src={
-                    post.images?.[0] ||
-                    post.thumbnail ||
-                    getYtThumbnail(post.videos[0])
-                  }
+                  src={generateThumbnail({
+                    thumbnail: post.thumbnail,
+                    images: post.images,
+                    videos: post.videos,
+                  })}
                   alt={post.title}
                   className="object-cover size-full group-hover:scale-110 transition-transform duration-500"
                 />
               </div>
               <div className="space-y-2">
-                <h3 className="text-lg font-serif font-bold text-gray-900 leading-snug group-hover:text-primary transition-colors line-clamp-3">
+                <h3
+                  title={post.title}
+                  className="text-lg font-serif font-bold text-gray-900 leading-snug group-hover:text-primary transition-colors line-clamp-3"
+                >
                   {post.title}
                 </h3>
                 <div className="text-[10px] font-black uppercase tracking-widest text-primary/50">

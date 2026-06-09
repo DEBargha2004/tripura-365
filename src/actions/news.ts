@@ -85,7 +85,7 @@ export async function getTopNews(page: number = 1) {
   );
 
   if (err || !res || !res.data) return createEmptyDataInstance<Data[]>([]);
-
+  // console.log(res.data);
   const data = res.data.map(mapArticleFullToData);
 
   return {
@@ -507,7 +507,7 @@ export async function getImageGallery(): Promise<ImageItem[]> {
 
 export async function getHeadline(): Promise<Headline[]> {
   const fetchOpts = await getFetchOptions({
-    next: { revalidate: 60 * 5 }, // 5 minutes
+    next: { revalidate: 0 }, // 5 minutes
   });
   const [err, res] = await catchError<ApiEnvelope<Headline[]>>(
     retry(() =>
