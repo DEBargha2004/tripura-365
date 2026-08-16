@@ -153,7 +153,8 @@ export default async function Page({
               <div className="flex items-center gap-2 text-gray-300 text-sm bg-black/30 backdrop-blur-sm px-3 py-1.5 rounded-full">
                 <Clock className="h-4 w-4" />
                 <span>
-                  {article.published_on && format(new Date(article.published_on), "PPP")}
+                  {article.published_on &&
+                    format(new Date(article.published_on), "PPP")}
                 </span>
               </div>
             </div>

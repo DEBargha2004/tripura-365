@@ -28,7 +28,7 @@ export default function Weather() {
         ) : weatherData === null ? (
           "N/A"
         ) : (
-          `${weatherData?.main.temp.toFixed()}° Celsius`
+          `${weatherData?.main.temp?.toFixed()}° Celsius`
         )}
       </div>
     </section>
