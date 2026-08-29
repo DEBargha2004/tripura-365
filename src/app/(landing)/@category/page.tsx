@@ -40,7 +40,7 @@ export default async function Page() {
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-x-12 gap-y-16">
-          {sortCategories(res ?? [])?.map((category) => (
+          {res?.map((category) => (
             <div key={category.name} className="flex flex-col gap-6">
               {/* Category Header */}
               <div className="flex items-center justify-between border-b border-gray-100 pb-4">
