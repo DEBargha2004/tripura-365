@@ -3,6 +3,7 @@ import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import Navbar from "@/components/custom/navbar";
 import Footer from "@/components/custom/footer";
+import DurgaPujaBanner from "@/components/custom/durga-puja-banner";
 import { GoogleAnalytics } from "@next/third-parties/google";
 
 const geistSans = Geist({
@@ -33,6 +34,7 @@ export default function RootLayout({
         className={`${geistSans.variable} ${geistMono.variable} antialiased min-h-dvh`}
       >
         <div>
+          <DurgaPujaBanner />
           <Navbar />
           <GoogleAnalytics gaId={process.env.NEXT_PUBLIC_GA_ID ?? ""} />
           <main>{children}</main>
@@ -42,3 +44,4 @@ export default function RootLayout({
     </html>
   );
 }
+
