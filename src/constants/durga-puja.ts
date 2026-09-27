@@ -58,7 +58,7 @@ export const DURGA_PUJA_SCHEDULES: DurgaPujaYearSchedule[] = [
 ];
 
 export const DURGA_PUJA_CONFIG = {
-  defaultImagePath: "/images/durga-stock.webp",
+  defaultImagePath: "/images/durga-logo.jpeg",
   imageAlt: "মা দুর্গা প্রতিমা",
   festivalGreetingSubtitle: "সার্বজনীন শারদোৎসবের আন্তরিক প্রীতি ও শুভেচ্ছা",
   mahalayaGreetingSubtitle: "দেবীপক্ষের পুণ্য সূচনায় সকলকে জানাই শুভ মহালয়ার আন্তরিক প্রীতি ও শুভেচ্ছা",
@@ -178,6 +178,6 @@ export const DURGA_PUJA_EVENT: EventConfig<DurgaPujaYearSchedule> = {
       subtitle: DURGA_PUJA_CONFIG.bijoyaGreetingSubtitle,
     },
   ],
-  formatCountdownTitle: (bengaliDays) => `দুর্গাপূজা আসতে আর মাত্র ${bengaliDays} দিন`,
+  formatCountdownTitle: (bengaliDays) => `পূজোর প্রতীক্ষার ${bengaliDays} দিন`,
 };
 

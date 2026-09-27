@@ -69,6 +69,28 @@ export default function DurgaPujaBanner({
 
   const { countdown, isFestivalActive } = status;
 
+  const renderTitleWithCosmetics = (title: string) => {
+    const numberRegex = /([০-৯0-9]+)/g;
+    if (!numberRegex.test(title)) {
+      return title;
+    }
+    const parts = title.split(numberRegex);
+    return parts.map((part, index) => {
+      if (/^[০-৯0-9]+$/.test(part)) {
+        return (
+          <span
+            key={index}
+            className="festive-number-masked"
+            suppressHydrationWarning
+          >
+            {part}
+          </span>
+        );
+      }
+      return part;
+    });
+  };
+
   return (
     <aside
       role="banner"
@@ -99,11 +121,11 @@ export default function DurgaPujaBanner({
                 galada.className
               )}
             >
-              {status.title}
+              {renderTitleWithCosmetics(status.title)}
             </h2>
-            <p className="text-xs sm:text-sm text-amber-100/85 truncate">
+            {/* <p className="text-xs sm:text-sm text-amber-100/85 truncate">
               {status.subtitle}
-            </p>
+            </p> */}
           </div>
         </div>
 

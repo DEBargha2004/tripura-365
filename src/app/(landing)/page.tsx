@@ -16,7 +16,7 @@ import { Dot, Globe, Plane, TramFront } from "lucide-react";
 import { IconType } from "react-icons";
 import { Galada } from "next/font/google";
 import { cn, getYtThumbnail } from "@/lib/utils";
-import siteLogo from "@/../public/logo.png";
+import siteLogo from "@/../public/logo.jpg";
 import { Category } from "@/types/response";
 import { categoriesOrder } from "@/constants/categories-order";
 

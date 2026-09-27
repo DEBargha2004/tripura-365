@@ -1,5 +1,5 @@
 import Image, { ImageProps } from "next/image";
-import logo from "@/../public/logo.png";
+import logo from "@/../public/logo.jpg";
 import { cn } from "@/lib/utils";
 
 export default function Logo({ className, ...props }: Partial<ImageProps>) {

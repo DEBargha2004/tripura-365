@@ -279,7 +279,7 @@ export function getEventStatus<T extends EventYearSchedule = EventYearSchedule>(
 
   const title = event.formatCountdownTitle
     ? event.formatCountdownTitle(bengaliDays, calendarDays)
-    : `${event.name} আসতে আর মাত্র ${bengaliDays} দিন`;
+    : `পূজোর প্রতীক্ষার ${bengaliDays} দিন`;
 
   return {
     stage: "COUNTDOWN",
@@ -302,3 +302,4 @@ export function getDurgaPujaStatus(
 ): EventStatus {
   return getEventStatus(DURGA_PUJA_EVENT, currentDate, overrideDateString);
 }
+
